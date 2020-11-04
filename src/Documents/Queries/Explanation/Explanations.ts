@@ -12,6 +12,6 @@ export class Explanations {
     }
 
     public update(queryResult: QueryResult) {
-        this._explanations = queryResult.explanations;
+        this._explanations = queryResult.Explanations;
     }
 }

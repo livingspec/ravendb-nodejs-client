@@ -1,7 +1,7 @@
 export interface StreamQueryStatistics {
-    indexName: string;
-    stale: boolean;
-    indexTimestamp: Date;
-    totalResults: number;
-    resultEtag: number;
+    IndexName: string;
+    Stale: boolean;
+    IndexTimestamp: Date;
+    TotalResults: number;
+    ResultEtag: number;
 }

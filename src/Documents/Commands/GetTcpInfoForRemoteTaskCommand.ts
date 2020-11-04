@@ -31,7 +31,7 @@ export class GetTcpInfoForRemoteTaskCommand extends RavenCommand<TcpConnectionIn
     }
 
     createRequest(node: ServerNode): HttpRequestParameters {
-        let uri = node.url + "/info/remote-task/tcp?" +
+        let uri = node.Url + "/info/remote-task/tcp?" +
             "database=" + this._urlEncode(this._remoteDatabase) +
             "&remote-task=" + this._urlEncode(this._remoteTask) +
             "&tag=" + this._urlEncode(this._tag);

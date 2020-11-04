@@ -36,13 +36,13 @@ describe("RavenDB_15282", function () {
         }
 
         const vals = await store.operations.send(new GetCountersOperation(docId, counterNames, true));
-        assertThat(vals.counters)
+        assertThat(vals.Counters)
             .hasSize(1000);
 
         for (let i = 0; i < 1000; i++) {
-            assertThat(vals.counters[i].counterValues)
+            assertThat(vals.Counters[i].CounterValues)
                 .hasSize(1);
-            const values = vals.counters[i].counterValues;
+            const values = vals.Counters[i].CounterValues;
             assertThat(values[Object.keys(values)[0]])
                 .isEqualTo(1);
         }

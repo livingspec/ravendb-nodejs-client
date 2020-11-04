@@ -31,9 +31,9 @@ describe("RavenDB-11058", function () {
         }
 
         let stats = await store.maintenance.send(new GetStatisticsOperation());
-        assertThat(stats.countOfAttachments)
+        assertThat(stats.CountOfAttachments)
             .isEqualTo(2);
-        assertThat(stats.countOfUniqueAttachments)
+        assertThat(stats.CountOfUniqueAttachments)
             .isEqualTo(2);
 
         {
@@ -47,9 +47,9 @@ describe("RavenDB-11058", function () {
         }
 
         stats = await store.maintenance.send(new GetStatisticsOperation());
-        assertThat(stats.countOfAttachments)
+        assertThat(stats.CountOfAttachments)
             .isEqualTo(3);
-        assertThat(stats.countOfUniqueAttachments)
+        assertThat(stats.CountOfUniqueAttachments)
             .isEqualTo(2);
 
         {
@@ -76,9 +76,9 @@ describe("RavenDB-11058", function () {
         }
 
         stats = await store.maintenance.send(new GetStatisticsOperation());
-        assertThat(stats.countOfAttachments)
+        assertThat(stats.CountOfAttachments)
             .isEqualTo(4);
-        assertThat(stats.countOfUniqueAttachments)
+        assertThat(stats.CountOfUniqueAttachments)
             .isEqualTo(2);
 
         {
@@ -127,9 +127,9 @@ describe("RavenDB-11058", function () {
         }
 
         let stats = await store.maintenance.send(new GetStatisticsOperation());
-        assertThat(stats.countOfAttachments)
+        assertThat(stats.CountOfAttachments)
             .isEqualTo(3);
-        assertThat(stats.countOfUniqueAttachments)
+        assertThat(stats.CountOfUniqueAttachments)
             .isEqualTo(3);
 
         {
@@ -143,9 +143,9 @@ describe("RavenDB-11058", function () {
         }
 
         stats = await store.maintenance.send(new GetStatisticsOperation());
-        assertThat(stats.countOfAttachments)
+        assertThat(stats.CountOfAttachments)
             .isEqualTo(3);
-        assertThat(stats.countOfUniqueAttachments)
+        assertThat(stats.CountOfUniqueAttachments)
             .isEqualTo(3);
 
         {
@@ -177,9 +177,9 @@ describe("RavenDB-11058", function () {
         }
 
         stats = await store.maintenance.send(new GetStatisticsOperation());
-        assertThat(stats.countOfAttachments)
+        assertThat(stats.CountOfAttachments)
             .isEqualTo(3);
-        assertThat(stats.countOfUniqueAttachments)
+        assertThat(stats.CountOfUniqueAttachments)
             .isEqualTo(3);
 
         {
@@ -229,9 +229,9 @@ describe("RavenDB-11058", function () {
         }
 
         let stats = await store.maintenance.send(new GetStatisticsOperation());
-        assertThat(stats.countOfAttachments)
+        assertThat(stats.CountOfAttachments)
             .isEqualTo(2);
-        assertThat(stats.countOfUniqueAttachments)
+        assertThat(stats.CountOfUniqueAttachments)
             .isEqualTo(2);
 
         {
@@ -242,9 +242,9 @@ describe("RavenDB-11058", function () {
         }
 
         stats = await store.maintenance.send(new GetStatisticsOperation());
-        assertThat(stats.countOfAttachments)
+        assertThat(stats.CountOfAttachments)
             .isEqualTo(2);
-        assertThat(stats.countOfUniqueAttachments)
+        assertThat(stats.CountOfUniqueAttachments)
             .isEqualTo(2);
 
         {
@@ -263,9 +263,9 @@ describe("RavenDB-11058", function () {
         }
 
         stats = await store.maintenance.send(new GetStatisticsOperation());
-        assertThat(stats.countOfAttachments)
+        assertThat(stats.CountOfAttachments)
             .isEqualTo(2);
-        assertThat(stats.countOfUniqueAttachments)
+        assertThat(stats.CountOfUniqueAttachments)
             .isEqualTo(2);
 
         {
@@ -278,9 +278,9 @@ describe("RavenDB-11058", function () {
         }
 
         stats = await store.maintenance.send(new GetStatisticsOperation());
-        assertThat(stats.countOfAttachments)
+        assertThat(stats.CountOfAttachments)
             .isEqualTo(2);
-        assertThat(stats.countOfUniqueAttachments)
+        assertThat(stats.CountOfUniqueAttachments)
             .isEqualTo(2);
 
     });

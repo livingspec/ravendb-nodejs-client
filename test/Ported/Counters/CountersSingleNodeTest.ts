@@ -43,7 +43,7 @@ describe("CountersSingleNodeTest", function () {
         await store.operations.send(new CounterBatchOperation(counterBatch));
 
         let details = await store.operations.send(new GetCountersOperation("users/1-A", ["likes"]));
-        let val = details.counters[0].totalValue;
+        let val = details.Counters[0].TotalValue;
         assert.strictEqual(val, 0);
 
         documentCountersOperation = new DocumentCountersOperation();
@@ -53,7 +53,7 @@ describe("CountersSingleNodeTest", function () {
         counterBatch.documents = [documentCountersOperation];
         await store.operations.send(new CounterBatchOperation(counterBatch));
         details = await store.operations.send(new GetCountersOperation("users/1-A", ["likes"]));
-        val = details.counters[0].totalValue;
+        val = details.Counters[0].TotalValue;
         assert.strictEqual(val, 10);
 
         documentCountersOperation = new DocumentCountersOperation();
@@ -66,7 +66,7 @@ describe("CountersSingleNodeTest", function () {
         counterBatch.documents = [documentCountersOperation];
         await store.operations.send(new CounterBatchOperation(counterBatch));
         details = await store.operations.send(new GetCountersOperation("users/1-A", ["likes"]));
-        val = details.counters[0].totalValue;
+        val = details.Counters[0].TotalValue;
         assert.strictEqual(val, 7);
     });
 
@@ -92,7 +92,7 @@ describe("CountersSingleNodeTest", function () {
         counterBatch.documents = [documentCountersOperation];
         const b = await store.operations.send(new CounterBatchOperation(counterBatch));
         const details = await store.operations.send(new GetCountersOperation("users/1-A", ["likes"]));
-        const val = details.counters[0].totalValue;
+        const val = details.Counters[0].TotalValue;
         assert.strictEqual(val, 15);
     });
 
@@ -125,9 +125,9 @@ describe("CountersSingleNodeTest", function () {
         await store.operations.send(new CounterBatchOperation(counterBatch));
 
         const countersDetail = await store.operations.send(new GetCountersOperation("users/1-A", ["likes"]));
-        assertThat(countersDetail.counters)
+        assertThat(countersDetail.Counters)
             .hasSize(1);
-        assertThat(countersDetail.counters[0])
+        assertThat(countersDetail.Counters[0])
             .isNull();
 
         deleteCounter = new DocumentCountersOperation();
@@ -138,9 +138,9 @@ describe("CountersSingleNodeTest", function () {
 
         await store.operations.send(new CounterBatchOperation(counterBatch));
         const deleteResult = await store.operations.send(new GetCountersOperation("users/2-A", ["likes"]));
-        assertThat(countersDetail.counters)
+        assertThat(countersDetail.Counters)
             .hasSize(1);
-        assertThat(countersDetail.counters[0])
+        assertThat(countersDetail.Counters[0])
             .isNull();
     });
 
@@ -162,11 +162,11 @@ describe("CountersSingleNodeTest", function () {
         const counterBatch = new CounterBatch();
         counterBatch.documents = [documentCountersOperation1];
         await store.operations.send(new CounterBatchOperation(counterBatch));
-        const { counters } = await store.operations.send(new GetCountersOperation("users/1-A", ["likes", "dislikes"]));
-        assert.strictEqual(counters.length, 2);
+        const { Counters } = await store.operations.send(new GetCountersOperation("users/1-A", ["likes", "dislikes"]));
+        assert.strictEqual(Counters.length, 2);
         assert.strictEqual(
-            counters.filter(x => x.counterName === "likes")[0].totalValue, 5);
-        assert.strictEqual(counters.filter(x => x.counterName === "dislikes")[0].totalValue, 10);
+            Counters.filter(x => x.CounterName === "likes")[0].TotalValue, 5);
+        assert.strictEqual(Counters.filter(x => x.CounterName === "dislikes")[0].TotalValue, 10);
     });
 
     it("multiSetAndGetViaBatch", async function() {
@@ -206,16 +206,16 @@ describe("CountersSingleNodeTest", function () {
         const getBatch = new CounterBatch();
         getBatch.documents = [documentCountersOperation1, documentCountersOperation2];
         const countersDetail = await store.operations.send(new CounterBatchOperation(getBatch));
-        assert.strictEqual(countersDetail.counters.length, 3);
-        assert.strictEqual(countersDetail.counters[0].counterName, "likes");
-        assert.strictEqual(countersDetail.counters[0].documentId, "users/1-A");
-        assert.strictEqual(countersDetail.counters[0].totalValue, 5);
-        assert.strictEqual(countersDetail.counters[1].counterName, "dislikes");
-        assert.strictEqual(countersDetail.counters[1].documentId, "users/1-A");
-        assert.strictEqual(countersDetail.counters[1].totalValue, 10);
-        assert.strictEqual(countersDetail.counters[2].counterName, "rank");
-        assert.strictEqual(countersDetail.counters[2].documentId, "users/2-A");
-        assert.strictEqual(countersDetail.counters[2].totalValue, 20);
+        assert.strictEqual(countersDetail.Counters.length, 3);
+        assert.strictEqual(countersDetail.Counters[0].CounterName, "likes");
+        assert.strictEqual(countersDetail.Counters[0].DocumentId, "users/1-A");
+        assert.strictEqual(countersDetail.Counters[0].TotalValue, 5);
+        assert.strictEqual(countersDetail.Counters[1].CounterName, "dislikes");
+        assert.strictEqual(countersDetail.Counters[1].DocumentId, "users/1-A");
+        assert.strictEqual(countersDetail.Counters[1].TotalValue, 10);
+        assert.strictEqual(countersDetail.Counters[2].CounterName, "rank");
+        assert.strictEqual(countersDetail.Counters[2].DocumentId, "users/2-A");
+        assert.strictEqual(countersDetail.Counters[2].TotalValue, 20);
     });
 
     it("deleteCreateWithSameNameDeleteAgain", async function () {
@@ -236,7 +236,7 @@ describe("CountersSingleNodeTest", function () {
         batch.documents = [documentCountersOperation1];
         await store.operations.send(new CounterBatchOperation(batch));
         let result = await store.operations.send(new GetCountersOperation("users/1-A", ["likes"]));
-        assert.strictEqual(result.counters[0].totalValue, 10);
+        assert.strictEqual(result.Counters[0].TotalValue, 10);
         documentCountersOperation1 = new DocumentCountersOperation();
         documentCountersOperation1.documentId = "users/1-A";
         documentCountersOperation1.operations = [
@@ -246,9 +246,9 @@ describe("CountersSingleNodeTest", function () {
         batch.documents = [documentCountersOperation1];
         await store.operations.send(new CounterBatchOperation(batch));
         result = await store.operations.send(new GetCountersOperation("users/1-A", [ "likes" ]));
-        assertThat(result.counters)
+        assertThat(result.Counters)
             .hasSize(1);
-        assertThat(result.counters[0])
+        assertThat(result.Counters[0])
             .isNull();
 
         documentCountersOperation1 = new DocumentCountersOperation();
@@ -260,7 +260,7 @@ describe("CountersSingleNodeTest", function () {
         batch.documents = [documentCountersOperation1];
         await store.operations.send(new CounterBatchOperation(batch));
         result = await store.operations.send(new GetCountersOperation("users/1-A", ["likes"]));
-        assert.strictEqual(result.counters[0].totalValue, 20);
+        assert.strictEqual(result.Counters[0].TotalValue, 20);
         documentCountersOperation1 = new DocumentCountersOperation();
         documentCountersOperation1.documentId = "users/1-A";
         documentCountersOperation1.operations = [
@@ -270,9 +270,9 @@ describe("CountersSingleNodeTest", function () {
         batch.documents = [documentCountersOperation1];
         await store.operations.send(new CounterBatchOperation(batch));
         result = await store.operations.send(new GetCountersOperation("users/1-A", ["likes"]));
-        assertThat(result.counters)
+        assertThat(result.Counters)
             .hasSize(1);
-        assertThat(result.counters[0])
+        assertThat(result.Counters[0])
             .isNull();
     });
 

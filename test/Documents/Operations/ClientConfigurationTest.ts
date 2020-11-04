@@ -26,9 +26,9 @@ describe("Client configuration", function () {
 
     it("canSaveAndReadServerWideClientConfiguration", async () => {
         const configurationToSave: ClientConfiguration = {
-            maxNumberOfRequestsPerSession: 80,
-            readBalanceBehavior: "FastestNode",
-            disabled: true
+            MaxNumberOfRequestsPerSession: 80,
+            ReadBalanceBehavior: "FastestNode",
+            Disabled: true
         };
 
         const saveOperation = new PutServerWideClientConfigurationOperation(configurationToSave);
@@ -40,26 +40,26 @@ describe("Client configuration", function () {
 
         assertThat(newConfiguration)
             .isNotNull();
-        assertThat(newConfiguration.disabled)
+        assertThat(newConfiguration.Disabled)
             .isTrue();
-        assertThat(newConfiguration.maxNumberOfRequestsPerSession)
+        assertThat(newConfiguration.MaxNumberOfRequestsPerSession)
             .isEqualTo(80);
-        assertThat(newConfiguration.readBalanceBehavior)
+        assertThat(newConfiguration.ReadBalanceBehavior)
             .isEqualTo("FastestNode");
     });
 
     it("can handle no configuration", async () => {
         const operation = new GetClientConfigurationOperation();
         const result: IRavenResponse = await store.maintenance.send(operation);
-        assert.ok(result.etag);
+        assert.ok(result.Etag);
     });
 
     it("can save and read client configuration", async () => {
         const configurationToSave: ClientConfiguration = {
-            etag: 123,
-            maxNumberOfRequestsPerSession: 80,
-            readBalanceBehavior: "FastestNode",
-            disabled: true
+            Etag: 123,
+            MaxNumberOfRequestsPerSession: 80,
+            ReadBalanceBehavior: "FastestNode",
+            Disabled: true
         };
 
         const saveOperation = new PutClientConfigurationOperation(configurationToSave);
@@ -67,10 +67,10 @@ describe("Client configuration", function () {
 
         const operation = new GetClientConfigurationOperation();
         const result = await store.maintenance.send(operation);
-        const configuration = result.configuration;
-        assert.ok(configuration.etag);
-        assert.ok(configuration.disabled);
-        assert.strictEqual(configuration.maxNumberOfRequestsPerSession, 80);
-        assert.strictEqual(configuration.readBalanceBehavior, "FastestNode");
+        const configuration = result.Configuration;
+        assert.ok(configuration.Etag);
+        assert.ok(configuration.Disabled);
+        assert.strictEqual(configuration.MaxNumberOfRequestsPerSession, 80);
+        assert.strictEqual(configuration.ReadBalanceBehavior, "FastestNode");
     });
 });

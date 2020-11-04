@@ -54,9 +54,9 @@ export class ReplicationTestContext {
 
     public static async addWatcherToReplicationTopology(store: IDocumentStore, watcher: ExternalReplicationBase, ...urls: string[]): Promise<ModifyOngoingTaskResult> {
         const connectionString = new RavenConnectionString();
-        connectionString.name = watcher.connectionStringName;
-        connectionString.database = watcher.database;
-        connectionString.topologyDiscoveryUrls = urls && urls.length ? urls : store.urls;
+        connectionString.Name = watcher.connectionStringName;
+        connectionString.Database = watcher.database;
+        connectionString.TopologyDiscoveryUrls = urls && urls.length ? urls : store.urls;
 
         await store.maintenance.send(new PutConnectionStringOperation(connectionString));
 

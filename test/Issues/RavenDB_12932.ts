@@ -21,11 +21,11 @@ describe("RavenDB_12932", function () {
 
         const indexDefinition = await store.maintenance.send(new GetIndexOperation("Orders/ProfitByProductAndOrderedAt"));
 
-        assertThat(indexDefinition.outputReduceToCollection)
+        assertThat(indexDefinition.OutputReduceToCollection)
             .isEqualTo("Profits");
-        assertThat(indexDefinition.patternForOutputReduceToCollectionReferences)
+        assertThat(indexDefinition.PatternForOutputReduceToCollectionReferences)
             .isEqualTo("reports/daily/{OrderedAt:yyyy-MM-dd}");
-        assertThat(indexDefinition.patternReferencesCollectionName)
+        assertThat(indexDefinition.PatternReferencesCollectionName)
             .isEqualTo("CustomCollection");
     });
 });

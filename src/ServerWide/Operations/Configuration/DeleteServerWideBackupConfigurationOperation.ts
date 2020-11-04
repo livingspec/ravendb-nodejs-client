@@ -51,7 +51,7 @@ class DeleteServerWideBackupConfigurationCommand extends RavenCommand<void> impl
     }
 
     createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/admin/configuration/server-wide/backup?name=" + encodeURIComponent(this._name);
+        const uri = node.Url + "/admin/configuration/server-wide/backup?name=" + encodeURIComponent(this._name);
 
         return {
             method: "DELETE",

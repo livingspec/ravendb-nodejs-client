@@ -28,8 +28,8 @@ export class GetIndexesOperation implements IMaintenanceOperation<IndexDefinitio
 
 const indexDefTypeInfo = {
     nestedTypes: {
-        "results[]": "IndexDefinition",
-        "results[].maps": "Set"
+        "Results[]": "IndexDefinition",
+        "Results[].Maps": "Set"
     },
 };
 const knownTypes = new Map([[IndexDefinition.name, IndexDefinition]]);
@@ -47,7 +47,7 @@ export class GetIndexesCommand extends RavenCommand<IndexDefinition[]> {
     }
 
     public createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/databases/" + node.database
+        const uri = node.Url + "/databases/" + node.Database
             + "/indexes?start=" + this._start + "&pageSize=" + this._pageSize;
         return { uri };
     }
@@ -61,14 +61,10 @@ export class GetIndexesCommand extends RavenCommand<IndexDefinition[]> {
         await this._pipeline<object>()
             .collectBody(b => body = b)
             .parseJsonSync()
-            .objectKeysTransform({
-                defaultTransform: "camel",
-                ignorePaths: [/fields\.[^.]+$/i, /results\.\[]\.configuration\./i]
-            })
             .process(bodyStream)
             .then((result) => {
                 this.result = this._reviveResultTypes(
-                    result, this._conventions, indexDefTypeInfo, knownTypes)["results"];
+                    result, this._conventions, indexDefTypeInfo, knownTypes)["Results"];
             });
         return body;
     }

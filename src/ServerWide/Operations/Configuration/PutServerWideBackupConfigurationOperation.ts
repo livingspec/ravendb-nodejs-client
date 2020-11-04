@@ -51,7 +51,7 @@ class PutServerWideClientConfigurationCommand extends RavenCommand<PutServerWide
     }
 
     createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/admin/configuration/server-wide/backup";
+        const uri = node.Url + "/admin/configuration/server-wide/backup";
 
         const body = this._serializer.serialize(this._configuration);
 

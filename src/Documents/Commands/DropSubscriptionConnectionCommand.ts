@@ -12,7 +12,7 @@ export class DropSubscriptionConnectionCommand extends RavenCommand<void> {
     }
 
     public createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/databases/" + node.database + "/subscriptions/drop?name=" + this._name;
+        const uri = node.Url + "/databases/" + node.Database + "/subscriptions/drop?name=" + this._name;
 
         return {
             method: "POST",

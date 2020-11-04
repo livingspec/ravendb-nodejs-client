@@ -36,7 +36,7 @@ describe("RDBC-244", function () {
             await bulk.finish();
         }
         
-        const moreThan1024Ids = items.map(x => x.id);
+        const moreThan1024Ids = items.map(x => x.Id);
         assert.strictEqual(moreThan1024Ids.length, 1500);
 
         {

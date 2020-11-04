@@ -160,16 +160,16 @@ export abstract class RavenTestDriver {
             return Promise.resolve()
                 .then(() => admin.send(new GetStatisticsOperation()))
                 .then((dbStats: DatabaseStatistics) => {
-                    const indexes = dbStats.indexes.filter(x => x.state !== "Disabled");
+                    const indexes = dbStats.Indexes.filter(x => x.State !== "Disabled");
 
-                    const errIndexes = indexes.filter(x => x.state === "Error");
+                    const errIndexes = indexes.filter(x => x.State === "Error");
                     if (errIndexes.length && throwOnIndexErrors) {
                         throwError("IndexInvalidException",
-                            `The following indexes are erroneous: ${errIndexes.map(x => x.name).join(", ")}`);
+                            `The following indexes are erroneous: ${errIndexes.map(x => x.Name).join(", ")}`);
                     }
 
-                    return indexes.every(x => !x.isStale
-                        && !x.name.startsWith(CONSTANTS.Documents.Indexing.SIDE_BY_SIDE_INDEX_NAME_PREFIX));
+                    return indexes.every(x => !x.IsStale
+                        && !x.Name.startsWith(CONSTANTS.Documents.Indexing.SIDE_BY_SIDE_INDEX_NAME_PREFIX));
                 });
         };
 
@@ -286,17 +286,17 @@ export abstract class RavenTestDriver {
             const session = store.openSession();
 
             const entityA = Object.assign(new Entity(), {
-                id: "entity/1",
+                Id: "entity/1",
                 name: "A"
             });
 
             const entityB = Object.assign(new Entity(), {
-                id: "entity/2",
+                Id: "entity/2",
                 name: "B"
             });
 
             const entityC = Object.assign(new Entity(), {
-                id: "entity/3",
+                Id: "entity/3",
                 name: "C"
             });
 
@@ -304,9 +304,9 @@ export abstract class RavenTestDriver {
             await session.store(entityB);
             await session.store(entityC);
 
-            entityA.references = entityB.id;
-            entityB.references = entityC.id;
-            entityC.references = entityA.id;
+            entityA.references = entityB.Id;
+            entityB.references = entityC.Id;
+            entityC.references = entityA.Id;
 
             await session.saveChanges();
         }
@@ -357,16 +357,16 @@ export abstract class RavenTestDriver {
             await session.store(pheobe);
 
             //dogs/1 => dogs/2
-            arava.likes = [ oscar.id ];
-            arava.dislikes = [ pheobe.id ];
+            arava.likes = [ oscar.Id ];
+            arava.dislikes = [ pheobe.Id ];
 
             //dogs/2 => dogs/2,dogs/3 (cycle!)
-            oscar.likes = [ oscar.id, pheobe.id ];
+            oscar.likes = [ oscar.Id, pheobe.Id ];
             oscar.dislikes = [];
 
             //dogs/3 => dogs/2
-            pheobe.likes = [ oscar.id ];
-            pheobe.dislikes = [ arava.id ];
+            pheobe.likes = [ oscar.Id ];
+            pheobe.dislikes = [ arava.Id ];
 
             await session.saveChanges();
         }
@@ -378,16 +378,16 @@ export abstract class RavenTestDriver {
 
             const scifi = Object.assign(new Genre(), {
                 name: "Sci-Fi",
-                id: "genres/1"
+                Id: "genres/1"
             });
 
             const fantasy = Object.assign(new Genre(), {
-                id: "genres/2",
+                Id: "genres/2",
                 name: "Fantasy"
             });
 
             const adventure = Object.assign(new Genre(), {
-                id: "genres/3",
+                Id: "genres/3",
                 name: "Adventure"
             });
 
@@ -396,19 +396,19 @@ export abstract class RavenTestDriver {
             await session.store(adventure);
 
             const starwars = Object.assign(new Movie(), {
-                id: "movies/1",
+                Id: "movies/1",
                 name: "Star Wars Ep.1",
                 genres: [ "genres/1", "genres/2" ]
             });
 
             const firefly = Object.assign(new Movie(), {
-                id: "movies/2",
+                Id: "movies/2",
                 name: "Firefly Serenity",
                 genres: [ "genres/2", "genres/3" ]
             });
 
             const indianaJones = Object.assign(new Movie(), {
-                id: "movies/3",
+                Id: "movies/3",
                 name: "Indiana Jones and the Temple Of Doom",
                 genres: [ "genres/3" ]
             });
@@ -418,7 +418,7 @@ export abstract class RavenTestDriver {
             await session.store(indianaJones);
 
             const user1 = Object.assign(new User(), {
-                id: "users/1",
+                Id: "users/1",
                 name: "Jack"
             });
 
@@ -436,7 +436,7 @@ export abstract class RavenTestDriver {
             await session.store(user1);
 
             const user2 = Object.assign(new User(), {
-                id: "users/2",
+                Id: "users/2",
                 name: "Jill"
             });
 
@@ -455,7 +455,7 @@ export abstract class RavenTestDriver {
             await session.store(user2);
 
             const user3 = Object.assign(new User(), {
-                id: "users/3",
+                Id: "users/3",
                 name: "Bob"
             });
 

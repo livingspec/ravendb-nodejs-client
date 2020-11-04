@@ -44,7 +44,7 @@ export class GetIndexCommand extends RavenCommand<IndexDefinition> {
     }
 
     public createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/databases/" + node.database + "/indexes?name="
+        const uri = node.Url + "/databases/" + node.Database + "/indexes?name="
             + encodeURIComponent(this._indexName);
 
         return { uri };
@@ -59,21 +59,17 @@ export class GetIndexCommand extends RavenCommand<IndexDefinition> {
         await this._pipeline()
             .collectBody(b => body = b)
             .parseJsonSync()
-            .objectKeysTransform({
-                defaultTransform: "camel",
-                ignorePaths: [/fields\.[^.]+$/i]
-            })
             .process(bodyStream)
             .then((result: object) => {
                 const indexDefTypeInfo = {
                     nestedTypes: {
-                        "results[]": "IndexDefinition",
-                        "results[].maps": "Set"
+                        "Results[]": "IndexDefinition",
+                        "Results[].Maps": "Set"
                     },
                 };
                 const knownTypes = new Map([[IndexDefinition.name, IndexDefinition]]);
                 const allResults = this._reviveResultTypes(result, this._conventions, indexDefTypeInfo, knownTypes);
-                this.result = allResults["results"][0] || null;
+                this.result = allResults["Results"][0] || null;
             });
 
         return body;

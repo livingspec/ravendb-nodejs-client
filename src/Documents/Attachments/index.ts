@@ -5,15 +5,15 @@ import { closeHttpResponse } from "../../Utility/HttpUtil";
 export type AttachmentType = "Document" | "Revision";
 
 export interface AttachmentName {
-    name: string;
-    hash: string;
-    contentType: string;
-    size: number;
+    Name: string;
+    Hash: string;
+    ContentType: string;
+    Size: number;
 }
 
 export interface AttachmentDetails extends AttachmentName {
-    changeVector: string;
-    documentId?: string;
+    ChangeVector: string;
+    DocumentId?: string;
 }
 
 export class AttachmentResult {

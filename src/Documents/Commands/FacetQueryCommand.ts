@@ -27,19 +27,18 @@ export class FacetQueryCommand extends QueryCommand {
 
         const rawResult = await RavenCommandResponsePipeline.create<QueryResult>()
             .collectBody(bodyCallback)
-            .parseJsonAsync()
-            .jsonKeysTransform("FacetQuery")
+            .parseJsonSync()
             .process(bodyStream);
         const queryResult = conventions.objectMapper.fromObjectLiteral<QueryResult>(rawResult, {
             typeName: QueryResult.name,
             nestedTypes: {
-                indexTimestamp: "date",
-                lastQueryTime: "date"
+                IndexTimestamp: "date",
+                LastQueryTime: "date"
             }
-        }, new Map([[QueryResult.name, QueryResult]]));
+        }, true, new Map([[QueryResult.name, QueryResult]]));
 
         if (fromCache) {
-            queryResult.durationInMs = -1;
+            queryResult.DurationInMs = -1;
         }
 
         return queryResult;

@@ -26,7 +26,7 @@ describe("RevisionsSubscriptionsTest", function () {
 
     it("plain revisions subscriptions", async function() {
         const subscriptionId = await store.subscriptions.createForRevisions({
-            documentType: User
+            DocumentType: User
         });
 
         const defaultCollection = new RevisionsCollectionConfiguration();
@@ -66,8 +66,8 @@ describe("RevisionsSubscriptionsTest", function () {
         }
 
         const sub = store.subscriptions.getSubscriptionWorkerForRevisions<User>({
-            documentType: User,
-            subscriptionName: subscriptionId
+            DocumentType: User,
+            SubscriptionName: subscriptionId
         });
 
         try {
@@ -81,8 +81,8 @@ describe("RevisionsSubscriptionsTest", function () {
                         batch.items.forEach(item => {
                             const result = item.result;
                             names.add(
-                                (result.current ? result.current.name : null)
-                                + (result.previous ? result.previous.name : null));
+                                (result.Current ? result.Current.name : null)
+                                + (result.Previous ? result.Previous.name : null));
 
                             if (names.size === 100) {
                                 resolve();
@@ -103,7 +103,7 @@ describe("RevisionsSubscriptionsTest", function () {
 
     it("plain revisions subscriptions compare docs", async function() {
         const subscriptionId = await store.subscriptions.createForRevisions({
-            documentType: User
+            DocumentType: User
         });
 
         const defaultCollection = new RevisionsCollectionConfiguration();
@@ -142,8 +142,8 @@ describe("RevisionsSubscriptionsTest", function () {
         }
 
         const sub = await store.subscriptions.getSubscriptionWorkerForRevisions<User>({
-            subscriptionName: subscriptionId,
-            documentType: User
+            SubscriptionName: subscriptionId,
+            DocumentType: User
         });
 
         try {
@@ -156,11 +156,11 @@ describe("RevisionsSubscriptionsTest", function () {
                     batch.items.forEach(item => {
                         const x = item.result;
 
-                        if (x.current.age > maxAge && x.current.age  > (x.previous ? x.previous.age : -1)) {
+                        if (x.Current.age > maxAge && x.Current.age  > (x.Previous ? x.Previous.age : -1)) {
                             names.add(
-                                (x.current ? x.current.name : null)
-                                + " " + (x.previous ? x.previous.name : null));
-                            maxAge = x.current.age;
+                                (x.Current ? x.Current.name : null)
+                                + " " + (x.Previous ? x.Previous.name : null));
+                            maxAge = x.Current.age;
                         }
 
                         if (names.size === 10) {
@@ -176,77 +176,4 @@ describe("RevisionsSubscriptionsTest", function () {
         }
     });
 
-    it("test revisions subscription with PascalCasing", async function() {
-        const store2 = new DocumentStore(store.urls, store.database);
-        try {
-            store2.conventions.findCollectionNameForObjectLiteral = () => "test";
-            store2.conventions.entityFieldNameConvention = "camel";
-            store2.conventions.remoteEntityFieldNameConvention = "pascal";
-            store2.initialize();
-            const subscriptionId = await store2.subscriptions.createForRevisions({
-                documentType: User
-            });
-
-            const defaultCollection = new RevisionsCollectionConfiguration();
-            defaultCollection.disabled = false;
-            defaultCollection.minimumRevisionsToKeep = 51;
-
-            const configuration = new RevisionsConfiguration();
-            configuration.defaultConfig = defaultCollection;
-
-            const operation = new ConfigureRevisionsOperation(configuration);
-            await store2.maintenance.send(operation);
-
-            const expectedNames = [];
-            for (let i = 0; i < 1; i++) {
-                for (let j = 0; j < 10; j++) {
-                    const session = store2.openSession();
-                    const user = new User();
-                    user.age = i;
-                    user.name = "users" + (i + 1) + " ver " + j;
-                    expectedNames.push(user.name);
-                    await session.store(user, "users/" + (i + 1));
-                    await session.saveChanges();
-                }
-            }
-
-            const sub = store2.subscriptions.getSubscriptionWorkerForRevisions<User>({
-                documentType: User,
-                subscriptionName: subscriptionId
-            });
-
-            let items;
-            await new Promise(resolve => {
-                sub.on("batch", (batch, callback) => {
-                    items = batch.items;
-                    callback();
-                    resolve();
-                });
-            });
-
-            assert.strictEqual(items.length, 10);
-            assert.strictEqual(items[0].id, "users/1");
-            assert.strictEqual(items[0].rawMetadata["@id"], "users/1");
-
-            expectedNames.sort();
-            const actualCurrentNames = items.map(x => x.rawResult.current.name);
-            actualCurrentNames.sort();
-
-            assert.strictEqual(actualCurrentNames.length, 10);
-            assert.strictEqual(JSON.stringify(actualCurrentNames), JSON.stringify(expectedNames));
-
-            const actualPreviousNames = items
-                .filter(x => x.rawResult.previous)
-                .map(x => x.rawResult.previous.name);
-            
-            actualPreviousNames.sort();
-            assert.strictEqual(actualPreviousNames.length, 9);
-            assert.strictEqual(
-                JSON.stringify(actualPreviousNames), 
-                JSON.stringify(expectedNames.filter(x => x !== "users1 ver 9")));
-
-        } finally {
-            store2.dispose();
-        }
-    });
 });

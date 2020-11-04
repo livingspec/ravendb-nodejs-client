@@ -1,4 +1,4 @@
 export class RetentionPolicy {
-    disabled: boolean;
-    minimumBackupAgeToKeep: string;
+    Disabled: boolean;
+    MinimumBackupAgeToKeep: string;
 }

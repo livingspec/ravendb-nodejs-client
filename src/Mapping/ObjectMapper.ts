@@ -19,7 +19,7 @@ export interface NestedTypes {
 }
 
 export interface ITypesAwareObjectMapper {
-    fromObjectLiteral<TResult extends object>(raw: object, typeInfo?: TypeInfo): TResult;
+    fromObjectLiteral<TResult extends object>(raw: object, typeInfo?: TypeInfo, cloneObject?: boolean): TResult;
 
     toObjectLiteral<TFrom extends object>(obj: TFrom, typeInfo?: (typeInfo: TypeInfo) => void): object;
 }
@@ -50,13 +50,13 @@ export class TypesAwareObjectMapper implements ITypesAwareObjectMapper {
         this._throwMappingErrors = value;
     }
 
-    public fromObjectLiteral<TResult extends object>(rawResult: object, typeInfo?: TypeInfo): TResult;
+    public fromObjectLiteral<TResult extends object>(rawResult: object, typeInfo?: TypeInfo, cloneObject?: boolean): TResult;
     public fromObjectLiteral<TResult extends object>(
-        rawResult: object, typeInfo?: TypeInfo, knownTypes?: Map<string, ObjectTypeDescriptor>): TResult;
+        rawResult: object, typeInfo?: TypeInfo, cloneObject?: boolean, knownTypes?: Map<string, ObjectTypeDescriptor>): TResult;
     public fromObjectLiteral<TResult extends object>(
-        rawResult: object, typeInfo?: TypeInfo, knownTypes?: Map<string, ObjectTypeDescriptor>): TResult {
+        rawResult: object, typeInfo?: TypeInfo, cloneObject?: boolean, knownTypes?: Map<string, ObjectTypeDescriptor>): TResult {
 
-        rawResult = ObjectUtil.clone(rawResult);
+        rawResult = cloneObject ? ObjectUtil.clone(rawResult) : rawResult;
         const typeName = typeInfo ? typeInfo.typeName : null;
         const nestedTypes = typeInfo ? typeInfo.nestedTypes : null;
         const types = knownTypes || this._conventions.knownEntityTypesByName;

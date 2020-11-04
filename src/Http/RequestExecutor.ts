@@ -317,7 +317,7 @@ export class RequestExecutor implements IDisposable {
         const preferredNode = this._nodeSelector.getPreferredNode();
 
         return preferredNode
-            ? preferredNode.currentNode.url
+            ? preferredNode.currentNode.Url
             : null;
     }
 
@@ -478,8 +478,8 @@ export class RequestExecutor implements IDisposable {
                 return;
             }
 
-            this._conventions.updateFrom(clientConfigOpResult.configuration);
-            this._clientConfigurationEtag = clientConfigOpResult.etag;
+            this._conventions.updateFrom(clientConfigOpResult.Configuration);
+            this._clientConfigurationEtag = clientConfigOpResult.Etag;
         } catch (err) {
             this._log.error(err, "Error getting client configuration.");
         } finally {
@@ -519,7 +519,7 @@ export class RequestExecutor implements IDisposable {
                         return false;
                     }
 
-                    this._log.info(`Update topology from ${parameters.node.url}.`);
+                    this._log.info(`Update topology from ${parameters.node.Url}.`);
 
                     const getTopology = new GetDatabaseTopologyCommand(parameters.debugTag, this.conventions.sendApplicationIdentifier ? parameters.applicationIdentifier : null);
                     const getTopologyPromise = this.execute(getTopology, null, {
@@ -757,7 +757,7 @@ export class RequestExecutor implements IDisposable {
                     url,
                     database: this._databaseName
                 });
-                serverNode.clusterTag = "!";
+                serverNode.ClusterTag = "!";
                 return serverNode;
             });
         }
@@ -850,7 +850,7 @@ export class RequestExecutor implements IDisposable {
 
         const { chosenNode, nodeIndex, shouldRetry } = options;
 
-        this._log.info(`Actual execute ${command.constructor.name} on ${chosenNode.url}`
+        this._log.info(`Actual execute ${command.constructor.name} on ${chosenNode.Url}`
             + ` ${ shouldRetry ? "with" : "without" } retry.`);
 
         let url: string;
@@ -968,7 +968,7 @@ export class RequestExecutor implements IDisposable {
         if (refreshTopology || refreshClientConfiguration) {
             const serverNode = new ServerNode({
                 database: this._databaseName,
-                url: chosenNode.url
+                url: chosenNode.Url
             });
 
             const updateParameters = new UpdateTopologyParameters(serverNode);
@@ -1068,7 +1068,7 @@ export class RequestExecutor implements IDisposable {
             if (version && "4.1".localeCompare(version) > 0) {
                 throwError(
                     "ClientVersionMismatchException",
-                    "The server on " + chosenNode.url + " has an old version and can't perform "
+                    "The server on " + chosenNode.Url + " has an old version and can't perform "
                     + "the command since this command dependent on a cluster transaction "
                     + " which this node doesn't support.");
             }
@@ -1145,8 +1145,8 @@ export class RequestExecutor implements IDisposable {
             + "none of the attempt succeeded." + os.EOL;
 
         if (this._topologyTakenFromNode) {
-            message += "I was able to fetch " + this._topologyTakenFromNode.database
-                + " topology from " + this._topologyTakenFromNode.url + "." + os.EOL;
+            message += "I was able to fetch " + this._topologyTakenFromNode.Database
+                + " topology from " + this._topologyTakenFromNode.Url + "." + os.EOL;
         }
 
         let nodes: ServerNode[];
@@ -1163,9 +1163,9 @@ export class RequestExecutor implements IDisposable {
                 const error = command.failedNodes.get(node);
 
                 message += os.EOL +
-                    "[Url: " + node.url + ", " +
-                    "ClusterTag: " + node.clusterTag + ", " +
-                    "ServerRole: " + node.serverRole + ", " +
+                    "[Url: " + node.Url + ", " +
+                    "ClusterTag: " + node.ClusterTag + ", " +
+                    "ServerRole: " + node.ServerRole + ", " +
                     "Exception: " + (error ? error.message : "No exception") + "]";
             }
         }
@@ -1214,7 +1214,7 @@ export class RequestExecutor implements IDisposable {
                     return BluebirdPromise.reject(err);
                 });
 
-            if (nodes[i].clusterTag === chosenNode.clusterTag) {
+            if (nodes[i].ClusterTag === chosenNode.ClusterTag) {
                 preferredTask = task;
             }
 
@@ -1323,7 +1323,7 @@ export class RequestExecutor implements IDisposable {
             case StatusCodes.Forbidden:
                 const msg = await readBody();
                 throwError("AuthorizationException",
-                    `Forbidden access to ${chosenNode.database}@${chosenNode.url}`
+                    `Forbidden access to ${chosenNode.Database}@${chosenNode.Url}`
                     + `, ${req.method || "GET"} ${req.uri}` + os.EOL + msg);
                 break;
             case StatusCodes.Gone:
@@ -1531,7 +1531,7 @@ export class RequestExecutor implements IDisposable {
 
         const exceptions = Array.from(command.failedNodes
             .entries())
-            .map(x => x[0].url + ": " + x[1].message)
+            .map(x => x[0].Url + ": " + x[1].message)
             .join(", ");
 
         throwError("AllTopologyNodesDownException", "Broadcasting " + command.constructor.name + " failed: " + exceptions);
@@ -1594,7 +1594,7 @@ export class RequestExecutor implements IDisposable {
             return;
         }
 
-        this._log.info(`Spawn health checks for node ${chosenNode.url}.`);
+        this._log.info(`Spawn health checks for node ${chosenNode.Url}.`);
 
         const nodeStatus: NodeStatus = new NodeStatus(
             nodeIndex,
@@ -1633,7 +1633,7 @@ export class RequestExecutor implements IDisposable {
                             }
                         },
                         err => {
-                            this._log.error(err, `${serverNode.clusterTag} is still down`);
+                            this._log.error(err, `${serverNode.ClusterTag} is still down`);
 
                             status = this._failedNodesTimers.get(nodeStatus.node);
                             if (status) {

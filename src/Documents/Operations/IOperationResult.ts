@@ -1,3 +1,3 @@
 export interface IOperationResult {
-    message: string;
+    Message: string;
 }

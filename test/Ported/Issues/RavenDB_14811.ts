@@ -34,7 +34,7 @@ describe("RavenDB_14811", function () {
 
             assertThat(result)
                 .isNotNull();
-            assertThat(result.id)
+            assertThat(result.Id)
                 .isEqualTo(undefined);
             assertThat(result.name)
                 .isEqualTo(user.name);
@@ -43,15 +43,15 @@ describe("RavenDB_14811", function () {
         {
             const session = store.openSession();
             const result = await session.query(User)
-                .selectFields<UserProjectionIntId>(new QueryData(["id"], ["name"]), UserProjectionIntId)
+                .selectFields<UserProjectionIntId>(new QueryData(["Id"], ["name"]), UserProjectionIntId)
                 .firstOrNull();
 
             assertThat(result)
                 .isNotNull();
-            assertThat(result.id)
+            assertThat(result.Id)
                 .isEqualTo(undefined);
             assertThat(result.name)
-                .isEqualTo(user.id);
+                .isEqualTo(user.Id);
         }
     });
 
@@ -82,12 +82,12 @@ describe("RavenDB_14811", function () {
         {
             const session = store.openSession();
             const result = await session.query(User)
-                .selectFields<UserProjectionIntId>(new QueryData(["age", "name"], ["id", "name"]), UserProjectionIntId)
+                .selectFields<UserProjectionIntId>(new QueryData(["age", "name"], ["Id", "name"]), UserProjectionIntId)
                 .firstOrNull();
 
             assertThat(result)
                 .isNotNull();
-            assertThat(result.id)
+            assertThat(result.Id)
                 .isEqualTo(user.age);
             assertThat(result.name)
                 .isEqualTo(user.name);
@@ -96,13 +96,13 @@ describe("RavenDB_14811", function () {
         {
             const session = store.openSession();
             const result = await session.query(User)
-                .selectFields<UserProjectionStringId>(["id", "name"], UserProjectionStringId)
+                .selectFields<UserProjectionStringId>(["Id", "name"], UserProjectionStringId)
                 .firstOrNull();
 
             assertThat(result)
                 .isNotNull();
-            assertThat(result.id)
-                .isEqualTo(user.id);
+            assertThat(result.Id)
+                .isEqualTo(user.Id);
             assertThat(result.name)
                 .isEqualTo(user.name);
         }
@@ -110,12 +110,12 @@ describe("RavenDB_14811", function () {
         {
             const session = store.openSession();
             const result = await session.query(User)
-                .selectFields<UserProjectionStringId>(new QueryData(["name", "name"], ["id", "name"]), UserProjectionStringId)
+                .selectFields<UserProjectionStringId>(new QueryData(["name", "name"], ["Id", "name"]), UserProjectionStringId)
                 .firstOrNull();
 
             assertThat(result)
                 .isNotNull();
-            assertThat(result.id)
+            assertThat(result.Id)
                 .isEqualTo(user.name);
             assertThat(result.name)
                 .isEqualTo(user.name);
@@ -124,17 +124,17 @@ describe("RavenDB_14811", function () {
 });
 
 class User {
-    public id: string;
+    public Id: string;
     public name: string;
     public age: number;
 }
 
 class UserProjectionIntId {
-    public id: number;
+    public Id: number;
     public name: string;
 }
 
 class UserProjectionStringId {
-    public id: string;
+    public Id: string;
     public name: string;
 }

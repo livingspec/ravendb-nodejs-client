@@ -8,12 +8,12 @@ import * as stream from "readable-stream";
 import { DocumentConventions } from "../../Conventions/DocumentConventions";
 
 export interface HiLoResult {
-    prefix: string;
-    low: number;
-    high: number;
-    lastSize: number;
-    serverTag: string;
-    lastRangeAt: Date;
+    Prefix: string;
+    Low: number;
+    High: number;
+    LastSize: number;
+    ServerTag: string;
+    LastRangeAt: Date;
 }
 
 export class NextHiloCommand extends RavenCommand<HiLoResult> {
@@ -63,7 +63,7 @@ export class NextHiloCommand extends RavenCommand<HiLoResult> {
             lastMax: this._lastRangeMax
         });
 
-        const uri = `${node.url}/databases/${node.database}/hilo/next?${queryString}`;
+        const uri = `${node.Url}/databases/${node.Database}/hilo/next?${queryString}`;
         return { uri };
     }
 
@@ -76,7 +76,7 @@ export class NextHiloCommand extends RavenCommand<HiLoResult> {
                     this._conventions, 
                     {
                         nestedTypes: {
-                            lastRangeAt: "date"
+                            LastRangeAt: "date"
                         }
                     });
             });

@@ -49,12 +49,12 @@ describe("AdvancedPatchingTest", function () {
             const session = store.openSession();
 
             const type1 = Object.assign(new CustomType(), {
-                id: "Item/1",
+                Id: "Item/1",
                 value: 1
             });
 
             const type2 = Object.assign(new CustomType(), {
-                id: "Item/2",
+                Id: "Item/2",
                 value: 2
             });
 
@@ -64,8 +64,8 @@ describe("AdvancedPatchingTest", function () {
         }
 
         const def1 = new IndexDefinition();
-        def1.name = "TestIndex";
-        def1.maps = new Set(["from doc in docs.CustomTypes select new { doc.value }"]);
+        def1.Name = "TestIndex";
+        def1.Maps = new Set(["from doc in docs.CustomTypes select new { doc.value }"]);
 
         await store.maintenance.send(new PutIndexesOperation(def1));
 
@@ -107,7 +107,7 @@ describe("AdvancedPatchingTest", function () {
         {
             const session = store.openSession();
             const test = new CustomType();
-            test.id = "someId";
+            test.Id = "someId";
             test.owner = "bob";
             test.value = 12143;
             test.comments = ["one", "two", "seven"];
@@ -141,19 +141,19 @@ describe("AdvancedPatchingTest", function () {
 
         const patch1 = new PatchOperation("doc", null, PatchRequest.forScript("this.owner = '123';"));
         let result = await store.operations.send<CustomType>(patch1, null, CustomType);
-        assert.strictEqual(result.status, "Patched");
-        assert.strictEqual(result.document.owner, "123");
+        assert.strictEqual(result.Status, "Patched");
+        assert.strictEqual(result.Document.owner, "123");
 
         const patch2 = new PatchOperation("doc", null, PatchRequest.forScript("this.owner = '123';"));
         result = await store.operations.send<CustomType>(patch2, null, CustomType);
-        assert.strictEqual(result.status, "NotModified");
-        assert.strictEqual(result.document.owner, "123");
+        assert.strictEqual(result.Status, "NotModified");
+        assert.strictEqual(result.Document.owner, "123");
 
     });
 });
 
 export class CustomType {
-    public id: string;
+    public Id: string;
     public owner: string;
     public value: number;
     public comments: string[];

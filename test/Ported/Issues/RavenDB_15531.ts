@@ -17,7 +17,7 @@ describe("RavenDB_15531", function () {
         const session = store.openSession();
 
         const doc = Object.assign(new SimpleDoc(), {
-            id: "TestDoc",
+            Id: "TestDoc",
             name: "State1"
         });
 
@@ -85,6 +85,6 @@ describe("RavenDB_15531", function () {
 });
 
 class SimpleDoc {
-    public id: string;
+    public Id: string;
     public name: string;
 }

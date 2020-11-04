@@ -47,7 +47,7 @@ describe("RavenDB-12169", function () {
             assertThat(c4.name)
                 .isEqualTo("C4");
 
-            const ids = [ c1.id, c3.id ];
+            const ids = [ c1.Id, c3.Id ];
 
             session.advanced.defer(
                 new BatchPatchCommandData(
@@ -55,7 +55,7 @@ describe("RavenDB-12169", function () {
 
             session.advanced.defer(
                 new BatchPatchCommandData(
-                    PatchRequest.forScript("this.name = 'test2'; "), null, c4.id));
+                    PatchRequest.forScript("this.name = 'test2'; "), null, c4.Id));
 
             await session.saveChanges();
         }
@@ -84,7 +84,7 @@ describe("RavenDB-12169", function () {
             
             session.advanced.defer(
                 new BatchPatchCommandData(
-                    PatchRequest.forScript("this.name = 'test2'"), null, { id: c2.id,  changeVector: "invalidCV" }));
+                    PatchRequest.forScript("this.name = 'test2'"), null, { id: c2.Id,  changeVector: "invalidCV" }));
 
             await assertThrows(async () => {
                 await session.saveChanges();

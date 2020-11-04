@@ -1,8 +1,8 @@
 export interface DatabasePutResult {
-    raftCommandIndex: number;
-    name: string;
-    topology: DatabaseTopology;
-    nodesAddedTo: string[];
+    RaftCommandIndex: number;
+    Name: string;
+    Topology: DatabaseTopology;
+    NodesAddedTo: string[];
 }
 
 export type DatabasePromotionStatus =
@@ -17,21 +17,21 @@ export type DatabasePromotionStatus =
     | "HighDirtyMemory";
 
 export interface DatabaseTopology {
-    members: string[];
-    promotables: string[];
-    rehabs: string[];
-    predefinedMentors: { [key: string]: string };
-    demotionReasons: { [key: string]: string };
-    promotablesStatus: { [key: string]: DatabasePromotionStatus };
-    replicationFactor: number;
-    dynamicNodesDistribution: boolean;
-    stamp: LeaderStamp;
-    databaseTopologyIdBase64: string;
-    priorityOrder: string[];
+    Members: string[];
+    Promotables: string[];
+    Rehabs: string[];
+    PredefinedMentors: { [key: string]: string };
+    DemotionReasons: { [key: string]: string };
+    PromotablesStatus: { [key: string]: DatabasePromotionStatus };
+    ReplicationFactor: number;
+    DynamicNodesDistribution: boolean;
+    Stamp: LeaderStamp;
+    DatabaseTopologyIdBase64: string;
+    PriorityOrder: string[];
 }
 
 export interface LeaderStamp {
-    index: number;
-    term: number;
-    leadersTicks: number;
+    Index: number;
+    Term: number;
+    LeadersTicks: number;
 }

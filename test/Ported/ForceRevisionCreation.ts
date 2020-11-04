@@ -29,7 +29,7 @@ describe("ForceRevisionCreation", function () {
 
             await session.store(company);
 
-            companyId = company.id;
+            companyId = company.Id;
             await session.saveChanges();
         }
 
@@ -62,8 +62,8 @@ describe("ForceRevisionCreation", function () {
             await session.store(company1);
             await session.store(company2);
 
-            companyId1 = company1.id;
-            companyId2 = company2.id;
+            companyId1 = company1.Id;
+            companyId2 = company2.Id;
 
             await session.saveChanges();
         }
@@ -116,13 +116,13 @@ describe("ForceRevisionCreation", function () {
 
             session.advanced.revisions.forceRevisionCreationFor(company);
 
-            let revisionsCount = (await session.advanced.revisions.getFor<Company>(company.id)).length;
+            let revisionsCount = (await session.advanced.revisions.getFor<Company>(company.Id)).length;
             assertThat(revisionsCount)
                 .isZero();
 
             await session.saveChanges();
 
-            revisionsCount = (await session.advanced.revisions.getFor<Company>(company.id)).length;
+            revisionsCount = (await session.advanced.revisions.getFor<Company>(company.Id)).length;
             assertThat(revisionsCount)
                 .isEqualTo(1);
         }
@@ -147,7 +147,7 @@ describe("ForceRevisionCreation", function () {
                     .contains("Can't force revision creation - the document was not saved on the server yet");
             });
 
-            const revisionsCount = (await session.advanced.revisions.getFor<Company>(company.id)).length;
+            const revisionsCount = (await session.advanced.revisions.getFor<Company>(company.Id)).length;
             assertThat(revisionsCount)
                 .isZero();
         }
@@ -166,9 +166,9 @@ describe("ForceRevisionCreation", function () {
             await session.store(company);
             await session.saveChanges();
 
-            companyId = company.id;
+            companyId = company.Id;
 
-            const revisionsCount = (await session.advanced.revisions.getFor<Company>(company.id)).length;
+            const revisionsCount = (await session.advanced.revisions.getFor<Company>(company.Id)).length;
             assertThat(revisionsCount)
                 .isZero();
         }
@@ -202,9 +202,9 @@ describe("ForceRevisionCreation", function () {
             await session.store(company);
             await session.saveChanges();
 
-            companyId = company.id;
+            companyId = company.Id;
 
-            const revisionsCount = (await session.advanced.revisions.getFor<Company>(company.id)).length;
+            const revisionsCount = (await session.advanced.revisions.getFor<Company>(company.Id)).length;
             assertThat(revisionsCount)
                 .isZero();
         }
@@ -218,7 +218,7 @@ describe("ForceRevisionCreation", function () {
             session.advanced.revisions.forceRevisionCreationFor(company);
             await session.saveChanges();
 
-            const revisions = await session.advanced.revisions.getFor<Company>(company.id);
+            const revisions = await session.advanced.revisions.getFor<Company>(company.Id);
             const revisionsCount = revisions.length;
 
             assertThat(revisionsCount)
@@ -244,9 +244,9 @@ describe("ForceRevisionCreation", function () {
             await session.store(company);
             await session.saveChanges();
 
-            companyId = company.id;
+            companyId = company.Id;
 
-            const revisionsCount = (await session.advanced.revisions.getFor<Company>(company.id)).length;
+            const revisionsCount = (await session.advanced.revisions.getFor<Company>(company.Id)).length;
             assertThat(revisionsCount)
                 .isZero();
         }
@@ -258,10 +258,10 @@ describe("ForceRevisionCreation", function () {
             const company = await session.load<Company>(companyId, Company);
             company.name = "HR V2";
 
-            session.advanced.revisions.forceRevisionCreationFor(company.id);
+            session.advanced.revisions.forceRevisionCreationFor(company.Id);
             await session.saveChanges();
 
-            const revisions = await session.advanced.revisions.getFor<Company>(company.id);
+            const revisions = await session.advanced.revisions.getFor<Company>(company.Id);
             const revisionsCount = revisions.length;
 
             assertThat(revisionsCount)
@@ -284,9 +284,9 @@ describe("ForceRevisionCreation", function () {
             await session.store(company);
             await session.saveChanges();
 
-            companyId = company.id;
+            companyId = company.Id;
 
-            const revisionsCount = (await session.advanced.revisions.getFor<Company>(company.id)).length;
+            const revisionsCount = (await session.advanced.revisions.getFor<Company>(company.Id)).length;
             assertThat(revisionsCount)
                 .isZero();
         }
@@ -301,7 +301,7 @@ describe("ForceRevisionCreation", function () {
             session.advanced.revisions.forceRevisionCreationFor(company);
             // The above request should not throw - we ignore duplicate requests with SAME strategy
 
-            await assertThrows(() => session.advanced.revisions.forceRevisionCreationFor(company.id, "None"), err => {
+            await assertThrows(() => session.advanced.revisions.forceRevisionCreationFor(company.Id, "None"), err => {
                 assertThat(err.name)
                     .isEqualTo("InvalidOperationException");
                 assertThat(err.message)
@@ -310,7 +310,7 @@ describe("ForceRevisionCreation", function () {
 
             await session.saveChanges();
 
-            const revisions = await session.advanced.revisions.getFor<Company>(company.id);
+            const revisions = await session.advanced.revisions.getFor<Company>(company.Id);
             const revisionsCount = revisions.length;
 
             assertThat(revisionsCount)
@@ -334,16 +334,16 @@ describe("ForceRevisionCreation", function () {
             await session.store(company);
             await session.saveChanges();
 
-            companyId = company.id;
+            companyId = company.Id;
 
-            let revisionsCount = (await session.advanced.revisions.getFor<Company>(company.id)).length;
+            let revisionsCount = (await session.advanced.revisions.getFor<Company>(company.Id)).length;
             assertThat(revisionsCount)
                 .isZero();
 
             session.advanced.revisions.forceRevisionCreationFor(company);
             await session.saveChanges();
 
-            revisionsCount = (await session.advanced.revisions.getFor<Company>(company.id)).length;
+            revisionsCount = (await session.advanced.revisions.getFor<Company>(company.Id)).length;
             assertThat(revisionsCount)
                 .isEqualTo(1);
 
@@ -351,7 +351,7 @@ describe("ForceRevisionCreation", function () {
             session.advanced.revisions.forceRevisionCreationFor(company);
             await session.saveChanges();
 
-            revisionsCount = (await session.advanced.revisions.getFor<Company>(company.id)).length;
+            revisionsCount = (await session.advanced.revisions.getFor<Company>(company.Id)).length;
             assertThat(revisionsCount)
                 .isEqualTo(1);
         }
@@ -364,7 +364,7 @@ describe("ForceRevisionCreation", function () {
             await session.advanced.revisions.forceRevisionCreationFor(company);
             await session.saveChanges();
 
-            let revisions = await session.advanced.revisions.getFor<Company>(company.id);
+            let revisions = await session.advanced.revisions.getFor<Company>(company.Id);
             let revisionsCount = revisions.length;
 
             assertThat(revisionsCount)
@@ -377,7 +377,7 @@ describe("ForceRevisionCreation", function () {
             session.advanced.revisions.forceRevisionCreationFor(company);
             await session.saveChanges();
 
-            revisions = await session.advanced.revisions.getFor<Company>(company.id);
+            revisions = await session.advanced.revisions.getFor<Company>(company.Id);
             revisionsCount = revisions.length;
 
             assertThat(revisionsCount)
@@ -434,17 +434,17 @@ describe("ForceRevisionCreation", function () {
 
             await session.store(company);
 
-            companyId = company.id;
+            companyId = company.Id;
             await session.saveChanges();
 
-            let revisionsCount = (await session.advanced.revisions.getFor<Company>(company.id)).length;
+            let revisionsCount = (await session.advanced.revisions.getFor<Company>(company.Id)).length;
             assertThat(revisionsCount)
                 .isEqualTo(1); // one revision because configuration is set
 
             session.advanced.revisions.forceRevisionCreationFor(company);
             await session.saveChanges();
 
-            revisionsCount = (await session.advanced.revisions.getFor<Company>(company.id)).length;
+            revisionsCount = (await session.advanced.revisions.getFor<Company>(company.Id)).length;
             assertThat(revisionsCount)
                 .isEqualTo(1); // no new revision created - already exists due to configuration settings
 
@@ -499,14 +499,14 @@ describe("ForceRevisionCreation", function () {
 
             await session.saveChanges();
 
-            company1Id = company1.id;
-            company2Id = company2.id;
+            company1Id = company1.Id;
+            company2Id = company2.Id;
 
-            let revisionsCount = (await session.advanced.revisions.getFor<Company>(company1.id)).length;
+            let revisionsCount = (await session.advanced.revisions.getFor<Company>(company1.Id)).length;
             assertThat(revisionsCount)
                 .isZero();
 
-            revisionsCount = (await session.advanced.revisions.getFor<Company>(company2.id)).length;
+            revisionsCount = (await session.advanced.revisions.getFor<Company>(company2.Id)).length;
             assertThat(revisionsCount)
                 .isZero();
         }

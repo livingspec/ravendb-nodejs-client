@@ -67,7 +67,7 @@ export class PutAttachmentCommand extends RavenCommand<AttachmentDetails> {
     }
 
     public createRequest(node: ServerNode): HttpRequestParameters {
-        let uri = node.url + "/databases/" + node.database
+        let uri = node.Url + "/databases/" + node.Database
             + "/attachments?id=" + encodeURIComponent(this._documentId)
             + "&name=" + encodeURIComponent(this._name);
 

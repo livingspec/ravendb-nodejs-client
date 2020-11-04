@@ -60,10 +60,10 @@ export abstract class AggregationQueryBase {
         this.emit("afterQueryExecuted", queryResult);
         const results: FacetResultObject = {};
         const mapper = new TypesAwareObjectMapper();
-        for (const result of queryResult.results) {
+        for (const result of queryResult.Results) {
             const facetResult = mapper.fromObjectLiteral<FacetResult>(
-                result, FACET_RESULT_TYPE_INFO, FACET_RESULT_TYPES_MAP);
-            results[facetResult.name] = facetResult;
+                result, FACET_RESULT_TYPE_INFO, true, FACET_RESULT_TYPES_MAP);
+            results[facetResult.Name] = facetResult;
         }
 
         QueryOperation.ensureIsAcceptable(

@@ -37,7 +37,7 @@ export class GetIndexErrorsCommand extends RavenCommand<IndexErrors[]> {
     }
 
     public createRequest(node: ServerNode): HttpRequestParameters {
-        let uri = node.url + "/databases/" + node.database + "/indexes/errors";
+        let uri = node.Url + "/databases/" + node.Database + "/indexes/errors";
 
         if (this._indexNames && this._indexNames.length) {
             uri += "?";
@@ -57,14 +57,14 @@ export class GetIndexErrorsCommand extends RavenCommand<IndexErrors[]> {
 
         const typeInfo = {
             nestedTypes: {
-                "results[].errors[].timestamp": "date"
+                "Results[].Errors[].Timestamp": "date"
             }
         };
 
         let body: string = null;
         await this._defaultPipeline(_ => body = _).process(bodyStream)
             .then(results => {
-                this.result = this._reviveResultTypes(results, this._conventions, typeInfo)["results"];
+                this.result = this._reviveResultTypes(results, this._conventions, typeInfo)["Results"];
             });
         return body;
     }

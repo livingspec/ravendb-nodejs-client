@@ -17,7 +17,7 @@ export class GetSubscriptionsCommand extends RavenCommand<SubscriptionState[]> {
     }
 
     public createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/databases/" + node.database
+        const uri = node.Url + "/databases/" + node.Database
             + "/subscriptions?start=" + this._start + "&pageSize=" + this._pageSize;
 
         return {
@@ -35,7 +35,7 @@ export class GetSubscriptionsCommand extends RavenCommand<SubscriptionState[]> {
         await this._defaultPipeline(_ => body = _)
             .process(bodyStream)
             .then(data => {
-                const results = data["results"] as SubscriptionState[];
+                const results = data["Results"] as SubscriptionState[];
                 if (!results) {
                     this._throwInvalidResponse();
                     return;

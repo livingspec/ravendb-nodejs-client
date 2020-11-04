@@ -29,7 +29,7 @@ export class MultiGetCommand extends RavenCommand<GetResponse[]> {
     }
 
     public createRequest(node: ServerNode): HttpRequestParameters {
-        this._baseUrl = node.url + "/databases/" + node.database;
+        this._baseUrl = node.Url + "/databases/" + node.Database;
 
         const requests = [];
         const bodyObj = { Requests: requests };
@@ -50,7 +50,7 @@ export class MultiGetCommand extends RavenCommand<GetResponse[]> {
 
             Object.assign(headers, command.headers);
             const req = {
-                Url: "/databases/" + node.database + command.url,
+                Url: "/databases/" + node.Database + command.url,
                 Query: command.query,
                 Method: command.method || "GET",
                 Headers: headers,
@@ -71,24 +71,12 @@ export class MultiGetCommand extends RavenCommand<GetResponse[]> {
         }
 
         const result = await this._pipeline<GetResponse[]>()
-            .parseJsonAsync()
-            .jsonKeysTransform({
-                getCurrentTransform(key, stack) {
-                    if (stack.length === 1
-                        || stack.length === 2
-                        || stack.length === 3) {
-                        // results.0.result
-                        return "camel";
-                    }
-
-                    return null;
-                }
-            })
+            .parseJsonSync()
             .process(bodyStream);
         
-        const responses = result["results"].reduce((result: GetResponse[], next) => {
+        const responses = result["Results"].reduce((result: GetResponse[], next) => {
             // TODO try to get it directly from parser
-            next.result = JSON.stringify(next.result);
+            next.Result = JSON.stringify(next.Result);
             return [...result, next];
         }, []);
 
@@ -104,28 +92,28 @@ export class MultiGetCommand extends RavenCommand<GetResponse[]> {
     }
 
     private _maybeReadFromCache(getResponse: GetResponse, command: GetRequest): void {
-        if (getResponse.statusCode !== StatusCodes.NotModified) {
+        if (getResponse.StatusCode !== StatusCodes.NotModified) {
             return;
         }
 
         const cacheKey = this._getCacheKey(command);
         let cachedResponse = null;
         this._cache.get(cacheKey, x => cachedResponse = x.response);
-        getResponse.result = cachedResponse;
+        getResponse.Result = cachedResponse;
     }
 
     private _maybeSetCache(getResponse: GetResponse, command: GetRequest): void {
-        if (getResponse.statusCode === StatusCodes.NotModified) {
+        if (getResponse.StatusCode === StatusCodes.NotModified) {
             return;
         }
 
         const cacheKey = this._getCacheKey(command);
-        const result = getResponse.result;
+        const result = getResponse.Result;
         if (!result) {
             return;
         }
 
-        const changeVector = getEtagHeader(getResponse.headers);
+        const changeVector = getEtagHeader(getResponse.Headers);
         if (!changeVector) {
             return;
         }

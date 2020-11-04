@@ -3,11 +3,11 @@ import { AutoIndexFieldOptions } from "./AutoIndexFieldOptions";
 
 
 export interface AutoIndexDefinition {
-    type: IndexType;
-    name: string;
-    priority: IndexPriority;
-    state: IndexState;
-    collection: string;
-    mapFields: Record<string, AutoIndexFieldOptions>;
-    groupByFields: Record<string, AutoIndexFieldOptions>;
+    Type: IndexType;
+    Name: string;
+    Priority: IndexPriority;
+    State: IndexState;
+    Collection: string;
+    MapFields: Record<string, AutoIndexFieldOptions>;
+    GroupByFields: Record<string, AutoIndexFieldOptions>;
 }

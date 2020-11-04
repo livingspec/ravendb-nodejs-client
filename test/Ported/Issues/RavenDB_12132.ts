@@ -21,7 +21,7 @@ describe("RavenDB-12132", function () {
 
     it("canPutObjectWithId", async () => {
         {
-            const user = Object.assign(new User(), { id: "users/1", name: "Grisha" });
+            const user = Object.assign(new User(), { Id: "users/1", name: "Grisha" });
            
             const res = await store.operations.send(
                 new PutCompareExchangeValueOperation<User>("test", user, 0));
@@ -31,14 +31,14 @@ describe("RavenDB-12132", function () {
 
             assertThat(res.value.name)
                     .isEqualTo("Grisha");
-            assertThat(res.value.id)
+            assertThat(res.value.Id)
                     .isEqualTo("users/1");
 
         }
     });
 
     it("canCreateClusterTransactionRequest1", async function () {
-            const user = Object.assign(new User(), { id: "this/is/my/id", name: "Grisha" });
+            const user = Object.assign(new User(), { Id: "this/is/my/id", name: "Grisha" });
             const sessionOpts = { transactionMode: "ClusterWide" } as SessionOptions;
             
             const session = store.openSession(sessionOpts);
@@ -48,7 +48,7 @@ describe("RavenDB-12132", function () {
                 .getCompareExchangeValue<User>("usernames/ayende")).value;
             assertThat(userFromCluster.name)
                 .isEqualTo(user.name);
-            assertThat(userFromCluster.id)
-                .isEqualTo(user.id);
+            assertThat(userFromCluster.Id)
+                .isEqualTo(user.Id);
     });
 });

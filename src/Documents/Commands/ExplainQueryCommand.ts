@@ -7,8 +7,8 @@ import { ServerNode } from "../../Http/ServerNode";
 import * as stream from "readable-stream";
 
 export interface ExplainQueryResult {
-    index: string;
-    reason: string;
+    Index: string;
+    Reason: string;
 }
 
 export class ExplainQueryCommand extends RavenCommand<ExplainQueryResult[]> {
@@ -32,7 +32,7 @@ export class ExplainQueryCommand extends RavenCommand<ExplainQueryResult[]> {
     }
 
     public createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/databases/" + node.database + "/queries?debug=explain";
+        const uri = node.Url + "/databases/" + node.Database + "/queries?debug=explain";
 
         const headers = this._headers().typeAppJson().build();
         return {
@@ -53,7 +53,7 @@ export class ExplainQueryCommand extends RavenCommand<ExplainQueryResult[]> {
         await this._defaultPipeline(_ => body = _)
             .process(bodyStream)
             .then(data => {
-                const explainResults = data["results"] as ExplainQueryResult[];
+                const explainResults = data["Results"] as ExplainQueryResult[];
                 if (!explainResults) {
                     this._throwInvalidResponse();
                     return;

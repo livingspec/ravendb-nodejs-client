@@ -83,23 +83,23 @@ export class ServerOperationExecutor implements IDisposable {
         const topology: Topology = await this._getTopology(requestExecutor);
 
         const node = topology.nodes
-            .find(x => StringUtil.equalsIgnoreCase(x.clusterTag, nodeTag));
+            .find(x => StringUtil.equalsIgnoreCase(x.ClusterTag, nodeTag));
 
         if (!node) {
             const availableNodes = topology
                 .nodes
-                .map(x => x.clusterTag)
+                .map(x => x.ClusterTag)
                 .join(", ");
 
             throwError("InvalidOperationException",
                 "Could not find node '" + nodeTag + "' in the topology. Available nodes: " + availableNodes);
         }
 
-        const clusterExecutor = ClusterRequestExecutor.createForSingleNode(node.url, {
+        const clusterExecutor = ClusterRequestExecutor.createForSingleNode(node.Url, {
             authOptions: this._store.authOptions
         });
 
-        return new ServerOperationExecutor(this._store, clusterExecutor, requestExecutor, this._cache, node.clusterTag);
+        return new ServerOperationExecutor(this._store, clusterExecutor, requestExecutor, this._cache, node.ClusterTag);
     }
 
     public send(operation: AwaitableServerOperation): Promise<ServerWideOperationCompletionAwaiter>;
@@ -114,8 +114,8 @@ export class ServerOperationExecutor implements IDisposable {
                 if (operation.resultType === "OperationId") {
                     const idResult = command.result as OperationIdResult;
                     return new ServerWideOperationCompletionAwaiter(
-                        this._requestExecutor, this._requestExecutor.conventions, idResult.operationId,
-                        command.selectedNodeTag || idResult.operationNodeTag
+                        this._requestExecutor, this._requestExecutor.conventions, idResult.OperationId,
+                        command.selectedNodeTag || idResult.OperationNodeTag
                     );
                 }
 

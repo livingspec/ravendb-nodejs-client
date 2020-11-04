@@ -1,11 +1,11 @@
 export interface IndexErrors {
-    name: string;
-    errors: IndexingError[];
+    Name: string;
+    Errors: IndexingError[];
 }
 
 export interface IndexingError {
-    error: string;
-    timestamp: Date;
-    document: string;
-    action: string;
+    Error: string;
+    Timestamp: Date;
+    Document: string;
+    Action: string;
 }

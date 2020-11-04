@@ -17,7 +17,7 @@ export interface IRavenObject<T = any> {
 }
 
 export interface IRavenArrayResult {
-    results: any[];
+    Results: any[];
 }
 
 export interface ClassConstructor<T extends Object = Object> {

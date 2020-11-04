@@ -55,7 +55,7 @@ export class GetCompareExchangeValueCommand<T> extends RavenCommand<CompareExcha
     }
 
     public createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/databases/" + node.database + "/cmpxchg?key=" + encodeURIComponent(this._key);
+        const uri = node.Url + "/databases/" + node.Database + "/cmpxchg?key=" + encodeURIComponent(this._key);
         return { uri };
     }
 
@@ -68,7 +68,6 @@ export class GetCompareExchangeValueCommand<T> extends RavenCommand<CompareExcha
         await this._pipeline<object>()
             .collectBody(x => body = x)
             .parseJsonSync()
-            .objectKeysTransform("camel")
             .process(bodyStream)
             .then(results => {
                 this.result = CompareExchangeValueResultParser.getValue(

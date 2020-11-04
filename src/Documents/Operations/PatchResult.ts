@@ -2,12 +2,12 @@ import { PatchStatus } from "./PatchStatus";
 
 export class PatchResult {
 
-    public status: PatchStatus;
-    public modifiedDocument: object;
-    public originalDocument: object;
-    public debug: object;
+    public Status: PatchStatus;
+    public ModifiedDocument: object;
+    public OriginalDocument: object;
+    public Debug: object;
 
-    public changeVector: string;
-    public collection: string;
-    public lastModified: Date;
+    public ChangeVector: string;
+    public Collection: string;
+    public LastModified: Date;
 }

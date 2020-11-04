@@ -7,8 +7,8 @@ import * as stream from "readable-stream";
 import { JsonSerializer } from "../../Mapping/Json/Serializer";
 
 export interface PutResult {
-    id: string;
-    changeVector: string;
+    Id: string;
+    ChangeVector: string;
 }
 
 export class PutDocumentCommand extends RavenCommand<PutResult> {
@@ -40,7 +40,7 @@ export class PutDocumentCommand extends RavenCommand<PutResult> {
     }
 
     public createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = `${node.url}/databases/${node.database}/docs?id=${encodeURIComponent(this._id)}`;
+        const uri = `${node.Url}/databases/${node.Database}/docs?id=${encodeURIComponent(this._id)}`;
 
         // we don't use conventions here on purpose
         // doc that's got here should already have proper casing

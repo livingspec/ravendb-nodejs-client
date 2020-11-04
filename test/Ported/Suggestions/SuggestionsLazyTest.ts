@@ -17,12 +17,12 @@ describe("SuggestionsLazyTest", function () {
 
     it("using linq", async () => {
         const indexDefinition = new IndexDefinition();
-        indexDefinition.name = "Test";
-        indexDefinition.maps = new Set<string>(["from doc in docs.Users select new { doc.name }"]);
+        indexDefinition.Name = "Test";
+        indexDefinition.Maps = new Set<string>(["from doc in docs.Users select new { doc.name }"]);
 
         const indexFieldOptions = new IndexFieldOptions();
         indexFieldOptions.suggestions = true;
-        indexDefinition.fields = {
+        indexDefinition.Fields = {
             name: indexFieldOptions
         };
 

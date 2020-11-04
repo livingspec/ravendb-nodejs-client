@@ -59,8 +59,8 @@ export class MaintenanceOperationExecutor {
                 if (operation.resultType === "OperationId") {
                     const idResult = command.result as OperationIdResult;
                     return new OperationCompletionAwaiter(
-                        this.requestExecutor, this.requestExecutor.conventions, idResult.operationId,
-                        command.selectedNodeTag || idResult.operationNodeTag);
+                        this.requestExecutor, this.requestExecutor.conventions, idResult.OperationId,
+                        command.selectedNodeTag || idResult.OperationNodeTag);
                 }
 
                 return command.result as TResult;

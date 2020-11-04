@@ -22,7 +22,7 @@ export class StreamCommand extends RavenCommand<StreamResultResponse> {
 
     public createRequest(node: ServerNode): HttpRequestParameters {
         return {
-            uri: `${node.url}/databases/${node.database}/${this._url}`
+            uri: `${node.Url}/databases/${node.Database}/${this._url}`
         };
     }
 

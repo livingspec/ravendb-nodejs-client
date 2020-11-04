@@ -2064,7 +2064,7 @@ export abstract class AbstractDocumentQuery<T extends object, TSelf extends Abst
         callback = callback || TypeUtil.NOOP;
         this._take(0);
         const result = BluebirdPromise.resolve(this.getQueryResult())
-            .then(queryResult => queryResult.totalResults)
+            .then(queryResult => queryResult.TotalResults)
             .tap(x => callback(null, x))
             .tapCatch(err => callback(err));
         return Promise.resolve(result);
@@ -2095,7 +2095,7 @@ export abstract class AbstractDocumentQuery<T extends object, TSelf extends Abst
 
         this._take(0);
         const queryResult = await this.getQueryResult();
-        return queryResult.totalResults > 0;
+        return queryResult.TotalResults > 0;
     }
 
     // tslint:disable:function-name

@@ -48,7 +48,7 @@ class ReplaceClusterCertificateCommand extends RavenCommand<void> implements IRa
     }
 
     createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/admin/certificates/replace-cluster-cert?replaceImmediately=" + (this._replaceImmediately ? "true" : "false");
+        const uri = node.Url + "/admin/certificates/replace-cluster-cert?replaceImmediately=" + (this._replaceImmediately ? "true" : "false");
 
         const body = this._serializer.serialize({
             Certificate: this._certBytes.toString("base64")

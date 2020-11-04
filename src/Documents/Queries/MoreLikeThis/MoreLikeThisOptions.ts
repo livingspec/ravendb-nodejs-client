@@ -1,14 +1,14 @@
 export interface MoreLikeThisOptions {
-    minimumTermFrequency?: number;
-    maximumQueryTerms?: number;
-    maximumNumberOfTokensParsed?: number;
-    minimumWordLength?: number;
-    maximumWordLength?: number;
-    minimumDocumentFrequency?: number;
-    maximumDocumentFrequency?: number;
-    maximumDocumentFrequencyPercentage?: number;
-    boost?: boolean;
-    boostFactor?: number;
-    stopWordsDocumentId?: string;
-    fields?: string[];
+    MinimumTermFrequency?: number;
+    MaximumQueryTerms?: number;
+    MaximumNumberOfTokensParsed?: number;
+    MinimumWordLength?: number;
+    MaximumWordLength?: number;
+    MinimumDocumentFrequency?: number;
+    MaximumDocumentFrequency?: number;
+    MaximumDocumentFrequencyPercentage?: number;
+    Boost?: boolean;
+    BoostFactor?: number;
+    StopWordsDocumentId?: string;
+    Fields?: string[];
 }

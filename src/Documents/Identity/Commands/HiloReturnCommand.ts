@@ -35,7 +35,7 @@ export class HiloReturnCommand extends RavenCommand<void> {
     }
 
     public createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = `${node.url}/databases/${node.database}/hilo/return?`
+        const uri = `${node.Url}/databases/${node.Database}/hilo/return?`
             + `tag=${this._tag}&end=${this._end}&last=${this._last}`;
         return {
             method: "PUT",

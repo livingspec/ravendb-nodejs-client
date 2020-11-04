@@ -40,7 +40,7 @@ export class GetDatabaseNamesCommand extends RavenCommand<string[]> {
     }
 
     public createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = `${node.url}/databases?start=${this._start}&pageSize=${this._pageSize}&namesOnly=true`;
+        const uri = `${node.Url}/databases?start=${this._start}&pageSize=${this._pageSize}&namesOnly=true`;
         return { uri };
     }
 
@@ -53,12 +53,12 @@ export class GetDatabaseNamesCommand extends RavenCommand<string[]> {
         let body: string = null;
         const results = await this._defaultPipeline(_ => body = _)
             .process(bodyStream);
-        const { databases } = results as any;
-        if (!databases || !Array.isArray(databases)) {
+        const { Databases } = results as any;
+        if (!Databases || !Array.isArray(Databases)) {
             this._throwInvalidResponse();
         }
 
-        this.result = databases;
+        this.result = Databases;
 
         return body;
     }

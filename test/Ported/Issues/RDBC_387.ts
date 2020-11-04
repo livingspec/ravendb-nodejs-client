@@ -25,7 +25,7 @@ describe("RDBC_387", function () {
             await session.store(u);
             await session.saveChanges();
 
-            userIdViaSessionId = u.id;
+            userIdViaSessionId = u.Id;
         }
 
         {
@@ -34,7 +34,7 @@ describe("RDBC_387", function () {
             const u = Object.assign(new User(), { name: "Marcin" });
             await bulkInsert.store(u);
 
-            userIdViaBulkInsert = u.id;
+            userIdViaBulkInsert = u.Id;
 
             // flush data and finish
             await bulkInsert.finish();
@@ -45,14 +45,14 @@ describe("RDBC_387", function () {
             const sessionUser = await session.load<object>(userIdViaSessionId, Object);
             const bulkInsertUser = await session.load<object>(userIdViaBulkInsert, Object);
 
-            assertThat(sessionUser["id"])
-                .isNotNull(); // this is different than in java
             assertThat(sessionUser["Id"])
+                .isNotNull(); // this is different than in java
+            assertThat(sessionUser["id"])
                 .isNull();
 
-            assertThat(bulkInsertUser["id"])
-                .isNotNull(); // this is different than in java
             assertThat(bulkInsertUser["Id"])
+                .isNotNull(); // this is different than in java
+            assertThat(bulkInsertUser["id"])
                 .isNull();
         }
     });

@@ -58,7 +58,8 @@ export class QueryOperation {
 
         return new QueryCommand(this._session.conventions, this._indexQuery, {
             metadataOnly: this._metadataOnly,
-            indexEntriesOnly: this._indexEntriesOnly
+            indexEntriesOnly: this._indexEntriesOnly,
+            noTracking: this._noTracking
         });
     }
 
@@ -120,11 +121,11 @@ export class QueryOperation {
 
     private _completeInternal<T extends object>(documentType: DocumentType<T>, queryResult: QueryResult, addToResult: (item: T) => void): void {
         if (!this._noTracking) {
-            this._session.registerIncludes(queryResult.includes);
+            this._session.registerIncludes(queryResult.Includes);
         }
 
         try {
-            for (const document of queryResult.results) {
+            for (const document of queryResult.Results) {
                 if (document[`${CONSTANTS.Documents.Metadata.KEY}.${CONSTANTS.Documents.Metadata.NESTED_OBJECT_TYPES}`]) {
                     document[CONSTANTS.Documents.Metadata.KEY][CONSTANTS.Documents.Metadata.NESTED_OBJECT_TYPES]
                         = document[`${CONSTANTS.Documents.Metadata.KEY}.${CONSTANTS.Documents.Metadata.NESTED_OBJECT_TYPES}`];
@@ -155,10 +156,10 @@ export class QueryOperation {
 
         if (!this._noTracking) {
             this._session.registerMissingIncludes(
-                queryResult.results, queryResult.includes, queryResult.includedPaths);
+                queryResult.Results, queryResult.Includes, queryResult.IncludedPaths);
             
-            if (queryResult.counterIncludes) {
-                this._session.registerCounters(queryResult.counterIncludes, queryResult.includedCounterNames);
+            if (queryResult.CounterIncludes) {
+                this._session.registerCounters(queryResult.CounterIncludes, queryResult.IncludedCounterNames);
             }
         }
     }
@@ -230,7 +231,7 @@ export class QueryOperation {
         session.onBeforeConversionToEntityInvoke(id, clazz, documentRef);
         document = documentRef.value;
 
-        const raw: T = conventions.objectMapper.fromObjectLiteral(document);
+        const raw: T = conventions.objectMapper.fromObjectLiteral(document, null, !disableEntitiesTracking);
 
         // tslint:disable-next-line:new-parens
         const result = projType ? new (Function.prototype.bind.apply(projType)) : {};
@@ -249,7 +250,7 @@ export class QueryOperation {
                 const mapped = mapper.fromObjectLiteral(raw, {
                     typeName: "object",
                     nestedTypes
-                })
+                }, !disableEntitiesTracking)
 
                 result[key] = mapped[key];
             }
@@ -301,7 +302,7 @@ export class QueryOperation {
         this._currentQueryResults = result;
 
         // logging
-        const isStale = result.isStale ? " stale " : " ";
+        const isStale = result.IsStale ? " stale " : " ";
 
         const parameters = new StringBuilder();
         if (this._indexQuery.queryParameters
@@ -331,7 +332,7 @@ export class QueryOperation {
             + this._indexQuery.query + "' "
             + parameters.toString()
             + "returned "
-            + result.results.length + isStale + "results (total index results: " + result.totalResults + ")");
+            + result.Results.length + isStale + "results (total index results: " + result.TotalResults + ")");
         // end logging
     }
 
@@ -345,7 +346,7 @@ export class QueryOperation {
             return QueryOperation.ensureIsAcceptable(result, waitForNonStaleResults, duration.elapsed, session);
         }
 
-        if (waitForNonStaleResults && result.isStale) {
+        if (waitForNonStaleResults && result.IsStale) {
             const msg = "Waited for " + duration.toString() + " for the query to return non stale result.";
             throwError("TimeoutException", msg);
         }

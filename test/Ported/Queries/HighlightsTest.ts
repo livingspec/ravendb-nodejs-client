@@ -15,7 +15,7 @@ interface ISearchable {
 }
 
 class EventsItem implements ISearchable {
-    public id: string;
+    public Id: string;
     public title: string;
     public slug: string;
     public content: string;
@@ -114,13 +114,13 @@ describe("HighlightsTest", function () {
             assert.ok(contentHighlighting);
 
             assert.strictEqual(titleHighlighting.fieldName, "title");
-            assert.strictEqual(titleHighlighting.getFragments(eventItem.id).length, 0);
+            assert.strictEqual(titleHighlighting.getFragments(eventItem.Id).length, 0);
 
             assert.strictEqual(slugHighlighting.fieldName, "slug");
-            assert.strictEqual(slugHighlighting.getFragments(eventItem.id).length, 0);
+            assert.strictEqual(slugHighlighting.getFragments(eventItem.Id).length, 0);
 
             assert.strictEqual(contentHighlighting.fieldName, "content");
-            const fragments = contentHighlighting.getFragments(eventItem.id);
+            const fragments = contentHighlighting.getFragments(eventItem.Id);
             assert.strictEqual(fragments.length, 1);
             assert.ok(fragments[0].indexOf(`<span style='background: yellow'>session</span>`) !== -1);
 

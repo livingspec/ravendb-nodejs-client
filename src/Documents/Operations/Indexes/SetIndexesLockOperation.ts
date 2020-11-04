@@ -79,7 +79,7 @@ export class SetIndexLockCommand extends RavenCommand<void> implements IRaftComm
     }
 
     public createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/databases/" + node.database + "/indexes/set-lock";
+        const uri = node.Url + "/databases/" + node.Database + "/indexes/set-lock";
         const body = this._serializer.serialize(this._parameters);
         const headers = this._headers()
             .typeAppJson().build();

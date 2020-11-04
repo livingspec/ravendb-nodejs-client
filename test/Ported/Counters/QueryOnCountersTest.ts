@@ -264,17 +264,17 @@ describe("QueryOnCountersTest", function () {
             assert.strictEqual(session.advanced.numberOfRequests, 1);
 
             let order = queryResult[0];
-            assert.strictEqual(order["id"], "orders/1-A");
+            assert.strictEqual(order["Id"], "orders/1-A");
             let val = await session.countersFor(order).get("downloads");
             assert.strictEqual(val, 100);
 
             order = queryResult[1];
-            assert.strictEqual(order["id"], "orders/2-A");
+            assert.strictEqual(order["Id"], "orders/2-A");
             val = await session.countersFor(order).get("downloads");
             assert.strictEqual(val, 200);
 
             order = queryResult[2];
-            assert.strictEqual(order["id"], "orders/3-A");
+            assert.strictEqual(order["Id"], "orders/3-A");
             val = await session.countersFor(order).get("downloads");
             assert.strictEqual(val, 300);
 
@@ -307,17 +307,17 @@ describe("QueryOnCountersTest", function () {
             assert.strictEqual(session.advanced.numberOfRequests, 1);
 
             let order = queryResult[0];
-            assert.strictEqual(order["id"], "orders/1-A");
+            assert.strictEqual(order["Id"], "orders/1-A");
             assert.strictEqual(await session.countersFor(order).get("downloads"), 100);
             assert.strictEqual(await session.countersFor(order).get("likes"), 1000);
 
             order = queryResult[1];
-            assert.strictEqual(order["id"], "orders/2-A");
+            assert.strictEqual(order["Id"], "orders/2-A");
             assert.strictEqual(await session.countersFor(order).get("downloads"), 200);
             assert.strictEqual(await session.countersFor(order).get("likes"), 2000);
 
             order = queryResult[2];
-            assert.strictEqual(order["id"], "orders/3-A");
+            assert.strictEqual(order["Id"], "orders/3-A");
             assert.strictEqual(await session.countersFor(order).get("downloads"), 300);
             assert.strictEqual(await session.countersFor(order).get("likes"), null);
 
@@ -353,20 +353,20 @@ describe("QueryOnCountersTest", function () {
                 assert.strictEqual(session.advanced.numberOfRequests, 1);
 
                 let order = queryResult[0];
-                assert.strictEqual(order["id"], "orders/1-A");
+                assert.strictEqual(order["Id"], "orders/1-A");
                 let counters = await session.countersFor(order).getAll();
                 assert.strictEqual(counters["Downloads"], 100);
                 assert.strictEqual(counters["Likes"], 1000);
                 assert.strictEqual(counters["Votes"], 10000);
 
                 order = queryResult[1];
-                assert.strictEqual(order["id"], "orders/2-A");
+                assert.strictEqual(order["Id"], "orders/2-A");
                 counters = await session.countersFor(order).getAll();
                 assert.strictEqual(counters["Downloads"], 200);
                 assert.strictEqual(counters["Likes"], 2000);
 
                 order = queryResult[2];
-                assert.strictEqual(order["id"], "orders/3-A");
+                assert.strictEqual(order["Id"], "orders/3-A");
                 counters = await session.countersFor(order).getAll();
                 assert.strictEqual(counters["Cats"], 5);
                 assert.strictEqual(counters["Downloads"], 300);
@@ -414,15 +414,15 @@ describe("QueryOnCountersTest", function () {
             assert.strictEqual(session.advanced.numberOfRequests, 1);
 
             let order = queryResult[0];
-            assert.strictEqual(order["id"], "orders/1-A");
+            assert.strictEqual(order["Id"], "orders/1-A");
             assert.strictEqual(await session.countersFor(order).get("downloads"), 100);
 
             order = queryResult[1];
-            assert.strictEqual(order["id"], "orders/2-A");
+            assert.strictEqual(order["Id"], "orders/2-A");
             assert.strictEqual(await session.countersFor(order).get("downloads"), 200);
 
             order = queryResult[2];
-            assert.strictEqual(order["id"], "orders/3-A");
+            assert.strictEqual(order["Id"], "orders/3-A");
             assert.strictEqual(await session.countersFor(order).get("downloads"), 300);
 
             assert.strictEqual(session.advanced.numberOfRequests, 1);
@@ -565,21 +565,21 @@ describe("QueryOnCountersTest", function () {
 
             // included counters should be in cache
             let order = orders[0];
-            assertThat(order.id)
+            assertThat(order.Id)
                 .isEqualTo("orders/1-A");
             let val = await session.countersFor(order).get("likes");
             assertThat(val)
                 .isEqualTo(100);
 
             order = orders[1];
-            assertThat(order.id)
+            assertThat(order.Id)
                 .isEqualTo("orders/2-A");
             val = await session.countersFor(order).get("likes");
             assertThat(val)
                 .isEqualTo(200);
 
             order = orders[2];
-            assertThat(order.id)
+            assertThat(order.Id)
                 .isEqualTo("orders/3-A");
             val = await session.countersFor(order).get("likes");
             assertThat(val)
@@ -651,7 +651,7 @@ describe("QueryOnCountersTest", function () {
 
             // included counters should be in cache
             let order = orders[0];
-            assertThat(order.id)
+            assertThat(order.Id)
                 .isEqualTo("orders/1-A");
             let dic = await session.countersFor(order).getAll();
             assertThat(dic)
@@ -660,7 +660,7 @@ describe("QueryOnCountersTest", function () {
                 .containsEntry("downloads", 1000);
 
             order = orders[1];
-            assertThat(order.id)
+            assertThat(order.Id)
                 .isEqualTo("orders/2-A");
 
             dic = await session.countersFor(order).getAll();
@@ -670,7 +670,7 @@ describe("QueryOnCountersTest", function () {
                 .containsEntry("downloads", 2000);
 
             order = orders[2];
-            assertThat(order.id)
+            assertThat(order.Id)
                 .isEqualTo("orders/3-A");
 
             dic = await session.countersFor(order).getAll();

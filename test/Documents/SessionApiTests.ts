@@ -36,7 +36,7 @@ describe("Session API dev experience tests", function () {
                         done(err);
                     }
 
-                    assert.strictEqual(user.id, "users/1-A");
+                    assert.strictEqual(user.Id, "users/1-A");
                     done();
                 });
             });
@@ -47,7 +47,7 @@ describe("Session API dev experience tests", function () {
                         done(err);
                     }
 
-                    assert.strictEqual(user.id, "users/1");
+                    assert.strictEqual(user.Id, "users/1");
                     done();
                 });
             });
@@ -58,7 +58,7 @@ describe("Session API dev experience tests", function () {
                         done(err);
                     }
 
-                    assert.strictEqual(user.id, "users/1");
+                    assert.strictEqual(user.Id, "users/1");
                     done();
                 });
             });
@@ -69,7 +69,7 @@ describe("Session API dev experience tests", function () {
                         done(err);
                     }
 
-                    assert.strictEqual(user.id, "users/1-A");
+                    assert.strictEqual(user.Id, "users/1-A");
                     done();
                 });
             });
@@ -80,7 +80,7 @@ describe("Session API dev experience tests", function () {
                         done(err);
                     }
 
-                    assert.strictEqual(user.id, "users/1");
+                    assert.strictEqual(user.Id, "users/1");
                     done();
                 });
             });
@@ -98,17 +98,17 @@ describe("Session API dev experience tests", function () {
 
             it("id and opts", async () => {
                 await session.store(user, "users/1", { changeVector: "aaa" });
-                assert.strictEqual(user.id, "users/1");
+                assert.strictEqual(user.Id, "users/1");
             });
 
             it("id and type", async () => {
                 await session.store(user, "users/1", User);
-                assert.strictEqual(user.id, "users/1");
+                assert.strictEqual(user.Id, "users/1");
             });
 
             it("only id", async () => {
                 await session.store(user, "users/1");
-                assert.strictEqual(user.id, "users/1");
+                assert.strictEqual(user.Id, "users/1");
             });
         });
 
@@ -156,7 +156,7 @@ describe("Session API dev experience tests", function () {
         describe("can use callbacks", () => {
 
             it("pass only id and callback", (done) => {
-                session.load(user.id, (err, result) => {
+                session.load(user.Id, (err, result) => {
                     if (err) {
                         done(err);
                         return;
@@ -168,7 +168,7 @@ describe("Session API dev experience tests", function () {
             });
 
             it("pass id, type, callback", (done) => {
-                session.load(user.id, User, (err, result) => {
+                session.load(user.Id, User, (err, result) => {
                     if (err) {
                         done(err);
                         return;
@@ -180,7 +180,7 @@ describe("Session API dev experience tests", function () {
             });
 
             it("pass id, opts, callback", (done) => {
-                session.load(user.id, { documentType: User }, (err, result) => {
+                session.load(user.Id, { documentType: User }, (err, result) => {
                     if (err) {
                         done(err);
                         return;
@@ -196,17 +196,17 @@ describe("Session API dev experience tests", function () {
         describe("can use async/promises", () => {
 
             it("pass id", async () => {
-                const result = await session.load(user.id);
+                const result = await session.load(user.Id);
                 assertLoadResult(result);
             });
 
             it("pass id and type", async () => {
-                const result = await session.load(user.id, User);
+                const result = await session.load(user.Id, User);
                 assertLoadResult(result);
             });
 
             it("pass id and opts", async () => {
-                const result = await session.load(user.id, { documentType: User });
+                const result = await session.load(user.Id, { documentType: User });
                 assertLoadResult(result);
             });
 
@@ -236,13 +236,13 @@ describe("Session API dev experience tests", function () {
                 session = store.openSession();
                 await session.store(user);
                 await session.saveChanges();
-                assert.ok(user.id);
-                assert.strictEqual(user.id, "users/1-A");
+                assert.ok(user.Id);
+                assert.strictEqual(user.Id, "users/1-A");
             }
 
             {
                 session = store.openSession();
-                const loaded: any = await session.load(user.id);
+                const loaded: any = await session.load(user.Id);
                 assert.ok(loaded);
                 assert.strictEqual(loaded.name, "John");
             }
@@ -253,7 +253,7 @@ describe("Session API dev experience tests", function () {
                 assert.strictEqual(results.length, 1);
                 assert.strictEqual((results[0] as any).name, "John");
 
-                const loaded: any = await session.load(user.id);
+                const loaded: any = await session.load(user.Id);
                 await session.delete(loaded);
                 await session.saveChanges();
             }
@@ -295,13 +295,13 @@ describe("Session API dev experience tests", function () {
                 session = store.openSession();
                 await session.store(user);
                 await session.saveChanges();
-                assert.ok(user.id);
-                assert.strictEqual(user.id, "users/1-A");
+                assert.ok(user.Id);
+                assert.strictEqual(user.Id, "users/1-A");
             }
 
             {
                 session = store.openSession();
-                const loaded: any = await session.load(user.id);
+                const loaded: any = await session.load(user.Id);
                 assert.ok(loaded);
                 assert.strictEqual(loaded.name, "John");
                 assert.strictEqual(loaded.constructor, User);
@@ -313,7 +313,7 @@ describe("Session API dev experience tests", function () {
                 assert.strictEqual(results.length, 1);
                 assert.strictEqual((results[0] as any).name, "John");
 
-                const loaded: any = await session.load(user.id);
+                const loaded: any = await session.load(user.Id);
                 await session.delete(loaded);
                 await session.saveChanges();
             }
@@ -327,7 +327,7 @@ describe("Session API dev experience tests", function () {
         const entity = { name: "test" };
         await session.store(entity);
         await session.saveChanges();
-        assert.ok(entity["id"]);
+        assert.ok(entity["Id"]);
     });
 
 });

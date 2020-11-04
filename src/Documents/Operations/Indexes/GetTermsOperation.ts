@@ -67,7 +67,7 @@ export class GetTermsCommand extends RavenCommand<string[]> {
     }
 
     public createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/databases/" + node.database
+        const uri = node.Url + "/databases/" + node.Database
             + "/indexes/terms?name=" + encodeURIComponent(this._indexName)
             + "&field=" + encodeURIComponent(this._field)
             + "&fromValue=" + (this._fromValue || "")
@@ -84,7 +84,7 @@ export class GetTermsCommand extends RavenCommand<string[]> {
         let body: string = null;
         await this._defaultPipeline(_ => body = _).process(bodyStream)
             .then(results => {
-                this.result = results["terms"];
+                this.result = results["Terms"];
             });
         return body;
     }

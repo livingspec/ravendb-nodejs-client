@@ -118,14 +118,14 @@ export abstract class AbstractIndexCreationTaskBase {
             this.conventions = conventions || this.conventions || store.getRequestExecutor(databaseForConventions).conventions;
 
             const indexDefinition = this.createIndexDefinition();
-            indexDefinition.name = this.getIndexName();
+            indexDefinition.Name = this.getIndexName();
 
             if (this.lockMode) {
-                indexDefinition.lockMode = this.lockMode;
+                indexDefinition.LockMode = this.lockMode;
             }
 
             if (this.priority) {
-                indexDefinition.priority = this.priority;
+                indexDefinition.Priority = this.priority;
             }
 
             await store.maintenance.forDatabase(database || store.database)

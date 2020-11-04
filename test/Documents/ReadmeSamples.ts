@@ -160,7 +160,7 @@ describe("Readme query samples", function () {
             });
 
             it("get attachment", (done) => {
-                session.advanced.attachments.get(doc.id, "tubes.png")
+                session.advanced.attachments.get(doc.Id, "tubes.png")
                     .then(attachment => {
                         print(attachment.details);
 
@@ -176,14 +176,14 @@ describe("Readme query samples", function () {
             });
 
             it("attachment exists", async () => {
-                print(await session.advanced.attachments.exists(doc.id, "tubes.png"));
-                print(await session.advanced.attachments.exists(doc.id, "x.png"));
+                print(await session.advanced.attachments.exists(doc.Id, "tubes.png"));
+                print(await session.advanced.attachments.exists(doc.Id, "x.png"));
             });
 
             it("get attachments names", async () => {
                 {
                     const session2 = store.openSession();
-                    const entity = await session2.load(doc.id);
+                    const entity = await session2.load(doc.Id);
                     print(await session2.advanced.attachments.getNames(entity));
                 }
             });
@@ -363,15 +363,15 @@ describe("Readme query samples", function () {
                 .statistics(s => stats = s);
             results = await query.all();
             assert.ok(stats);
-            assert.strictEqual(stats.totalResults, 1);
-            assert.strictEqual(stats.skippedResults, 0);
-            assert.strictEqual(stats.indexName, "Auto/users/Byage");
-            assert.strictEqual(stats.isStale, false);
-            assert.ok(stats.resultEtag);
-            assert.ok(stats.durationInMs);
-            assert.ok(stats.lastQueryTime instanceof Date);
-            assert.ok(stats.timestamp instanceof Date);
-            assert.ok(stats.indexTimestamp instanceof Date);
+            assert.strictEqual(stats.TotalResults, 1);
+            assert.strictEqual(stats.SkippedResults, 0);
+            assert.strictEqual(stats.IndexName, "Auto/users/Byage");
+            assert.strictEqual(stats.IsStale, false);
+            assert.ok(stats.ResultEtag);
+            assert.ok(stats.DurationInMs);
+            assert.ok(stats.LastQueryTime instanceof Date);
+            assert.ok(stats.Timestamp instanceof Date);
+            assert.ok(stats.IndexTimestamp instanceof Date);
         });
 
         it("can stream users", async () => {
@@ -418,10 +418,10 @@ describe("Readme query samples", function () {
                     try {
                         assert.ok(items.length);
                         assert.ok(stats);
-                        assert.strictEqual(stats.totalResults, 1);
-                        assert.strictEqual(stats.indexName, "Auto/users/Byage");
-                        assert.ok(stats.resultEtag);
-                        assert.ok(stats.indexTimestamp instanceof Date);
+                        assert.strictEqual(stats.TotalResults, 1);
+                        assert.strictEqual(stats.IndexName, "Auto/users/Byage");
+                        assert.ok(stats.ResultEtag);
+                        assert.ok(stats.IndexTimestamp instanceof Date);
                     } catch (err) {
                         reject(err);
                     }
@@ -455,11 +455,11 @@ describe("Readme query samples", function () {
 
             // create a subscription
             const subscriptionName = await store.subscriptions.create({
-                query: "from users where age >= 30"
+                Query: "from users where age >= 30"
             });
 
             // get subscription worker for your subscription
-            const subscription = store.subscriptions.getSubscriptionWorker({ subscriptionName });
+            const subscription = store.subscriptions.getSubscriptionWorker({ SubscriptionName: subscriptionName });
 
             subscription.on("error", err => {
                 // handle errors

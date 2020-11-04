@@ -78,8 +78,8 @@ describe("RavenDB_9584", function () {
 async function setup(store: IDocumentStore) {
 
     const indexDefinition = new IndexDefinition();
-    indexDefinition.name = "test";
-    indexDefinition.maps = new Set(["from doc in docs.Users select new { doc.name, doc.company }"]);
+    indexDefinition.Name = "test";
+    indexDefinition.Maps = new Set(["from doc in docs.Users select new { doc.name, doc.company }"]);
 
     const nameIndexFieldOptions = new IndexFieldOptions();
     nameIndexFieldOptions.suggestions = true;
@@ -87,7 +87,7 @@ async function setup(store: IDocumentStore) {
     const companyIndexFieldOptions= new IndexFieldOptions();
     companyIndexFieldOptions.suggestions = true;
 
-    indexDefinition.fields = {
+    indexDefinition.Fields = {
         "name": nameIndexFieldOptions,
         "company": companyIndexFieldOptions
     };
@@ -98,8 +98,8 @@ async function setup(store: IDocumentStore) {
     assertThat(results)
         .hasSize(1);
 
-    assertThat(results[0].index)
-        .isEqualTo(indexDefinition.name);
+    assertThat(results[0].Index)
+        .isEqualTo(indexDefinition.Name);
 
     {
         const session = store.openSession();

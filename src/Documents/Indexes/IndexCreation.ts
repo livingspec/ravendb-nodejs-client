@@ -54,8 +54,8 @@ export class IndexCreation {
             .map(x => {
                 x.conventions = conventions;
                 const definition = x.createIndexDefinition();
-                definition.name = x.getIndexName();
-                definition.priority = x.priority || "Normal";
+                definition.Name = x.getIndexName();
+                definition.Priority = x.priority || "Normal";
                 return definition;
             });
     }

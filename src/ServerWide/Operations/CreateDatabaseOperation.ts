@@ -45,15 +45,15 @@ export class CreateDatabaseCommand extends RavenCommand<DatabasePutResult> imple
         this._replicationFactor = replicationFactor;
         this._etag = etag;
 
-        if (!databaseRecord || !databaseRecord.databaseName) {
+        if (!databaseRecord || !databaseRecord.DatabaseName) {
             throwError("InvalidOperationException", "Database name is required");
         }
 
-        this._databaseName = databaseRecord.databaseName;
+        this._databaseName = databaseRecord.DatabaseName;
     }
 
     public createRequest(node: ServerNode): HttpRequestParameters {
-        let uri = node.url + "/admin/databases?name=" + this._databaseName;
+        let uri = node.Url + "/admin/databases?name=" + this._databaseName;
 
         uri += "&replicationFactor=" + this._replicationFactor;
 

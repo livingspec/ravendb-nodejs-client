@@ -43,7 +43,7 @@ export class DeleteIndexCommand extends RavenCommand<void> implements IRaftComma
     }
 
     public createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/databases/" + node.database
+        const uri = node.Url + "/databases/" + node.Database
             + "/indexes?name=" + encodeURIComponent(this._indexName);
         return { method: "DELETE", uri };
     }

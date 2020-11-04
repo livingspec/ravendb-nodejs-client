@@ -40,7 +40,7 @@ export class LoadOperation {
             + this._ids.join(",") + " from " + this._session.storeIdentifier);
 
         const opts: GetDocumentsByIdsCommandOptions = {
-                ids: this._ids,
+                Ids: this._ids,
                 includes: this._includes,
                 metadataOnly: false,
                 conventions: this._session.conventions
@@ -98,11 +98,11 @@ export class LoadOperation {
                 throwError("InvalidOperationException", "Cannot execute getDocument before operation execution.");
             }
 
-            if (!this._results || !this._results.results || !this._results.results.length) {
+            if (!this._results || !this._results.Results || !this._results.Results.length) {
                 return null;
             }
 
-            const document = this._results.results[0];
+            const document = this._results.Results[0];
             if (!document) {
                 return null;
             }
@@ -149,17 +149,17 @@ export class LoadOperation {
                     return result;
                 }, {});
 
-            if (!this._results || !this._results.results || !this._results.results.length) {
+            if (!this._results || !this._results.Results || !this._results.Results.length) {
                 return finalResults;
             }
             
-            for (const document of this._results.results) {
+            for (const document of this._results.Results) {
                 if (!document) {
                     continue;
                 }
 
                 const newDocumentInfo = DocumentInfo.getNewDocumentInfo(document);
-                finalResults[newDocumentInfo.id] = this._session.trackEntity(clazz, newDocumentInfo);
+                finalResults[newDocumentInfo.Id] = this._session.trackEntity(clazz, newDocumentInfo);
             }
             
             return finalResults;
@@ -185,14 +185,14 @@ export class LoadOperation {
             return;
         }
 
-        this._session.registerIncludes(result.includes);
+        this._session.registerIncludes(result.Includes);
 
         if (this._includeAllCounters || this._countersToInclude) {
             this._session.registerCounters(
-                result.counterIncludes, this._ids, this._countersToInclude, this._includeAllCounters);
+                result.CounterIncludes, this._ids, this._countersToInclude, this._includeAllCounters);
         }
 
-        for (const document of result.results) {
+        for (const document of result.Results) {
             if (!document || TypeUtil.isNullOrUndefined(document)) {
                 continue;
             }
@@ -208,6 +208,6 @@ export class LoadOperation {
             }
         }
 
-        this._session.registerMissingIncludes(result.results, result.includes, this._includes);
+        this._session.registerMissingIncludes(result.Results, result.Includes, this._includes);
     }
 }

@@ -2,11 +2,11 @@ import { AggregationOperation, AutoFieldIndexing, FieldStorage, GroupByArrayBeha
 import { AutoSpatialOptions } from "./Spatial/AutoSpatialOptions";
 
 export interface AutoIndexFieldOptions {
-    storage: FieldStorage;
-    indexing: AutoFieldIndexing;
-    aggregation: AggregationOperation;
-    spatial: AutoSpatialOptions;
-    groupByArrayBehavior: GroupByArrayBehavior;
-    suggestions: boolean;
-    isNameQuoted: boolean;
+    Storage: FieldStorage;
+    Indexing: AutoFieldIndexing;
+    Aggregation: AggregationOperation;
+    Spatial: AutoSpatialOptions;
+    GroupByArrayBehavior: GroupByArrayBehavior;
+    Suggestions: boolean;
+    IsNameQuoted: boolean;
 }

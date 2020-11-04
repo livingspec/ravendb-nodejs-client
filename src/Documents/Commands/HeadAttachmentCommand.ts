@@ -36,8 +36,8 @@ export class HeadAttachmentCommand extends RavenCommand<string> {
     }
 
     public createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url
-            + "/databases/" + node.database
+        const uri = node.Url
+            + "/databases/" + node.Database
             + "/attachments?id=" + encodeURIComponent(this._documentId)
             + "&name=" + encodeURIComponent(this._name);
 

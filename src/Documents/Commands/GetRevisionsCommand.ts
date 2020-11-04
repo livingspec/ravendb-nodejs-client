@@ -64,7 +64,7 @@ export class GetRevisionsCommand extends RavenCommand<IRavenArrayResult> {
     }
 
     public createRequest(node: ServerNode): HttpRequestParameters {
-        let uri = node.url + "/databases/" + node.database + "/revisions?";
+        let uri = node.Url + "/databases/" + node.Database + "/revisions?";
 
         if (this._id) {
             uri += "&id=" + encodeURIComponent(this._id);

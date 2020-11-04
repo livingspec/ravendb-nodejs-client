@@ -94,7 +94,7 @@ export abstract class DocumentSessionAttachmentsBase extends AdvancedSessionExte
             this._throwEntityNotInSessionOrMissingId(entity);
         }
 
-        return this.store(document.id, name, stream, contentType);
+        return this.store(document.Id, name, stream, contentType);
     }
 
     protected _throwEntityNotInSessionOrMissingId(entity: object): never {
@@ -115,7 +115,7 @@ export abstract class DocumentSessionAttachmentsBase extends AdvancedSessionExte
             this._throwEntityNotInSessionOrMissingId(entity);
         }
 
-        return this.delete(document.id, name);
+        return this.delete(document.Id, name);
     }
 
     public delete(entity: object, name: string): void;
@@ -203,7 +203,7 @@ export abstract class DocumentSessionAttachmentsBase extends AdvancedSessionExte
             this._throwEntityNotInSessionOrMissingId(destinationEntity);
         }
 
-        this._moveByEntityIds(sourceDocument.id, sourceName, destinationDocument.id, destinationName);
+        this._moveByEntityIds(sourceDocument.Id, sourceName, destinationDocument.Id, destinationName);
     }
 
     private _moveByEntityIds(
@@ -315,7 +315,7 @@ export abstract class DocumentSessionAttachmentsBase extends AdvancedSessionExte
             this._throwEntityNotInSessionOrMissingId(destinationEntity);
         }
         
-        this.copy(sourceDocument.id, sourceName, destinationDocument.id, destinationName);
+        this.copy(sourceDocument.Id, sourceName, destinationDocument.Id, destinationName);
     }
 
     private _copyByEntityIds(

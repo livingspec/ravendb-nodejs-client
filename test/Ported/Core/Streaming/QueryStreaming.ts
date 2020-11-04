@@ -130,10 +130,10 @@ describe("query streaming", function () {
             
             function assertStats(stats) {
                 assert.ok(stats);
-                assert.strictEqual(stats.indexName, "Users/ByName");
-                assert.strictEqual(stats.totalResults, 100);
-                assert.ok(stats.indexTimestamp instanceof Date);
-                assert.strictEqual(stats.indexTimestamp.toDateString(), new Date().toDateString());
+                assert.strictEqual(stats.IndexName, "Users/ByName");
+                assert.strictEqual(stats.TotalResults, 100);
+                assert.ok(stats.IndexTimestamp instanceof Date);
+                assert.strictEqual(stats.IndexTimestamp.toDateString(), new Date().toDateString());
             }
 
             assertStats(statsFromEvent);
@@ -205,10 +205,10 @@ describe("query streaming", function () {
             assert.strictEqual(items.length, 100);
 
             assert.ok(stats);
-            assert.strictEqual(stats.indexName, "Users/ByName");
-            assert.strictEqual(stats.totalResults, 100);
-            assert.ok(stats.indexTimestamp instanceof Date);
-            assert.strictEqual(stats.indexTimestamp.toDateString(), new Date().toDateString());
+            assert.strictEqual(stats.IndexName, "Users/ByName");
+            assert.strictEqual(stats.TotalResults, 100);
+            assert.ok(stats.IndexTimestamp instanceof Date);
+            assert.strictEqual(stats.IndexTimestamp.toDateString(), new Date().toDateString());
         }
     });
 
@@ -232,12 +232,12 @@ describe("query streaming", function () {
             assert.ok(result);
             const json = parseJsonVerbose(result);
             assert.ok(json);
-            const res = json.results;
+            const res = json.Results;
             assert.ok(res);
-            assert.strictEqual(json.indexName, "Users/ByName");
-            assert.ok(json.indexTimestamp);
-            assert.strictEqual(json.isStale, false);
-            assert.ok("resultEtag" in json);
+            assert.strictEqual(json.IndexName, "Users/ByName");
+            assert.ok(json.IndexTimestamp);
+            assert.strictEqual(json.IsStale, false);
+            assert.ok("ResultEtag" in json);
         }
     });
 });

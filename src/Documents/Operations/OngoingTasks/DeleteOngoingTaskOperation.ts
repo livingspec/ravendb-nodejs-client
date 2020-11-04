@@ -39,7 +39,7 @@ class DeleteOngoingTaskCommand extends RavenCommand<ModifyOngoingTaskResult> imp
     }
 
     createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/databases/" + node.database + "/admin/tasks?id=" + this._taskId + "&type=" + this._taskType;
+        const uri = node.Url + "/databases/" + node.Database + "/admin/tasks?id=" + this._taskId + "&type=" + this._taskType;
 
         return {
             uri,

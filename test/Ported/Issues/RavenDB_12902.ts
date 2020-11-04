@@ -35,7 +35,7 @@ describe("RavenDB_12902", function () {
 
             assertThat(results)
                 .hasSize(1);
-            assertThat(results["name"].values.length)
+            assertThat(results["name"].Values.length)
                 .isZero();
             assertThat(stats)
                 .isNotNull();
@@ -113,7 +113,7 @@ describe("RavenDB_12902", function () {
 
             assertThat(results)
                 .hasSize(1);
-            assertThat(results["name"].values)
+            assertThat(results["name"].Values)
                 .hasSize(0);
             assertThat(stats)
                 .isNotNull();
@@ -166,7 +166,7 @@ describe("RavenDB_12902", function () {
                 .aggregateBy(x => x.byField("name").sumOn("count"))
                 .execute();
 
-            assertThat(stats.indexName)
+            assertThat(stats.IndexName)
                 .isNotNull();
         }
     });
@@ -185,7 +185,7 @@ describe("RavenDB_12902", function () {
                 .suggestUsing(x => x.byField("name", "Orin"))
                 .execute();
 
-            assertThat(stats.indexName)
+            assertThat(stats.IndexName)
                 .isNotNull();
         }
     });

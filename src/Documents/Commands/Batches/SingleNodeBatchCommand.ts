@@ -69,7 +69,7 @@ export class SingleNodeBatchCommand extends RavenCommand<BatchCommandResult> imp
     }
 
     public createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/databases/" + node.database + "/bulk_docs";
+        const uri = node.Url + "/databases/" + node.Database + "/bulk_docs";
         const headers = HeadersBuilder.create().typeAppJson().build();
 
         const commandsArray = this._commands.reduce(
@@ -129,10 +129,6 @@ export class SingleNodeBatchCommand extends RavenCommand<BatchCommandResult> imp
         this.result = await RavenCommandResponsePipeline.create<BatchCommandResult>()
             .collectBody(_ => body = _)
             .parseJsonSync() // TODO: consider parseJsonAsync()
-            .objectKeysTransform({
-                defaultTransform: "camel",
-                ignoreKeys: [/^@/],
-            })
             .process(bodyStream);
         return body;
     }

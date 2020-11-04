@@ -332,7 +332,7 @@ export class DatabaseChanges implements IDatabaseChanges {
         let wasConnected = false;
 
         if (!this.connected) {
-            const urlString = this._serverNode.url + "/databases/" + this._database + "/changes";
+            const urlString = this._serverNode.Url + "/databases/" + this._database + "/changes";
             const url = StringUtil.toWebSocketPath(urlString);
 
             this._client = DatabaseChanges.createClientWebSocket(this._requestExecutor, url);

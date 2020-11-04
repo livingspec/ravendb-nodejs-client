@@ -13,6 +13,7 @@ import { RavenCommandResponsePipeline } from "../../Http/RavenCommandResponsePip
 export interface QueryCommandOptions {
     metadataOnly?: boolean;
     indexEntriesOnly?: boolean;
+    noTracking?: boolean;
 }
 
 export class QueryCommand extends RavenCommand<QueryResult> {
@@ -21,6 +22,7 @@ export class QueryCommand extends RavenCommand<QueryResult> {
     private readonly _indexQuery: IndexQuery;
     private readonly _metadataOnly: boolean;
     private readonly _indexEntriesOnly: boolean;
+    private readonly _noTracking: boolean;
 
     public constructor(
         conventions: DocumentConventions, indexQuery: IndexQuery, opts: QueryCommandOptions) {
@@ -37,6 +39,7 @@ export class QueryCommand extends RavenCommand<QueryResult> {
         opts = opts || {};
         this._metadataOnly = opts.metadataOnly;
         this._indexEntriesOnly = opts.indexEntriesOnly;
+        this._noTracking = opts.noTracking;
     }
 
     public createRequest(node: ServerNode): HttpRequestParameters {
@@ -45,9 +48,9 @@ export class QueryCommand extends RavenCommand<QueryResult> {
         // we won't allow aggressive caching of queries with WaitForNonStaleResults
         this._canCacheAggressively = this._canCache && !this._indexQuery.waitForNonStaleResults;
 
-        const path = new StringBuilder(node.url)
+        const path = new StringBuilder(node.Url)
             .append("/databases/")
-            .append(node.database)
+            .append(node.Database)
             .append("/queries?queryHash=")
             // we need to add a query hash because we are using POST queries
             // so we need to unique parameter per query so the query cache will
@@ -85,7 +88,7 @@ export class QueryCommand extends RavenCommand<QueryResult> {
 
         let body: string = null;
         this.result = await QueryCommand.parseQueryResultResponseAsync(
-            bodyStream, this._conventions, fromCache, b => body = b);
+            bodyStream, this._conventions, fromCache, b => body = b, this._noTracking);
 
         return body;
     }
@@ -95,31 +98,31 @@ export class QueryCommand extends RavenCommand<QueryResult> {
     }
 
     public static async parseQueryResultResponseAsync(
-        bodyStream: stream.Stream,
+        bodyStreamOrResult: stream.Stream,
         conventions: DocumentConventions,
         fromCache: boolean,
-        bodyCallback?: (body: string) => void): Promise<QueryResult> {
+        bodyCallback?: (body: string) => void,
+        noTracking?: boolean): Promise<QueryResult> {
 
         const rawResult = await RavenCommandResponsePipeline.create<QueryResult>()
             .collectBody(bodyCallback)
-            .parseJsonAsync()
-            .jsonKeysTransform("DocumentQuery", conventions)
-            .process(bodyStream);
+            .parseJsonSync()
+            .process(bodyStreamOrResult);
         const queryResult = conventions.objectMapper
             .fromObjectLiteral<QueryResult>(rawResult, {
                 typeName: QueryResult.name,
                 nestedTypes: {
-                    indexTimestamp: "date",
-                    lastQueryTime: "date"
+                    IndexTimestamp: "date",
+                    LastQueryTime: "date"
                 }
-            }, new Map([[QueryResult.name, QueryResult]]));
+            }, !noTracking, new Map([[QueryResult.name, QueryResult]]));
 
         if (fromCache) {
-            queryResult.durationInMs = -1;
+            queryResult.DurationInMs = -1;
 
-            if (queryResult.timingsInMs) {
-                queryResult.timingsInMs.durationInMs = -1;
-                queryResult.timingsInMs = null;
+            if (queryResult.TimingsInMs) {
+                queryResult.TimingsInMs.durationInMs = -1;
+                queryResult.TimingsInMs = null;
             }
         }
 

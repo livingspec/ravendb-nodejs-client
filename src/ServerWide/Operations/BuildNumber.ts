@@ -1,6 +1,6 @@
 export interface BuildNumber {
-    productVersion: string;
-    buildVersion: number;
-    commitHash: string;
-    fullVersion: string;
+    ProductVersion: string;
+    BuildVersion: number;
+    CommitHash: string;
+    FullVersion: string;
 }

@@ -14,11 +14,11 @@ export class DocumentsById {
     }
 
     public add(info: DocumentInfo): void {
-        if (this._inner.has(info.id)) {
+        if (this._inner.has(info.Id)) {
             return;
         }
 
-        this._inner.set(info.id, info);
+        this._inner.set(info.Id, info);
     }
 
     public remove(id: string): boolean {

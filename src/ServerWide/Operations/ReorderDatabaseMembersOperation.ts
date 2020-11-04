@@ -48,7 +48,7 @@ class ReorderDatabaseMembersCommand extends RavenCommand<void> implements IRaftC
     }
 
     createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/admin/databases/reorder?name=" + this._databaseName;
+        const uri = node.Url + "/admin/databases/reorder?name=" + this._databaseName;
 
         const body = this._serializer.serialize(this._parameters);
 

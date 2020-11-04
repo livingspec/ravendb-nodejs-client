@@ -23,9 +23,9 @@ describe("GetTcpInfoCommand", function () {
         const result = command.result;
 
         assert.ok(result);
-        assert.ok(result.hasOwnProperty("certificate"));
-        assert.ok(!result.certificate);
-        assert.ok(result.url);
+        assert.ok(result.hasOwnProperty("Certificate"));
+        assert.ok(!result.Certificate);
+        assert.ok(result.Url);
     });
 
 });

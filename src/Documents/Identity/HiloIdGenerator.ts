@@ -98,12 +98,12 @@ export class HiloIdGenerator {
         await this._store.getRequestExecutor(this._dbName).execute(hiloCmd);
 
         const result: HiLoResult = hiloCmd.result;
-        this._prefix = result.prefix;
-        this._lastBatchSize = result.lastSize;
-        this._serverTag = result.serverTag || null;
-        this._lastRangeAt = result.lastRangeAt;
+        this._prefix = result.Prefix;
+        this._lastBatchSize = result.LastSize;
+        this._serverTag = result.ServerTag || null;
+        this._lastRangeAt = result.LastRangeAt;
 
-        this._range = new HiloRangeValue(result.low, result.high);
+        this._range = new HiloRangeValue(result.Low, result.High);
     }
 
     protected _assembleDocumentId(currentRangeValue: number): string {

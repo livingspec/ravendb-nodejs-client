@@ -21,7 +21,7 @@ export class CaseInsensitiveKeysMap {
 
         const originalKeysStore = new CaseInsensitiveKeysStore();
 
-        result["keysCaseSensitive"] = false;
+        result["KeysCaseSensitive"] = false;
         result.set = function (...args) {
             const [ key, ...rest ] = args;
             validateKey(key);

@@ -23,7 +23,7 @@ class GetLogsConfigurationCommand extends RavenCommand<GetLogsConfigurationResul
     }
 
     createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/admin/logs/configuration";
+        const uri = node.Url + "/admin/logs/configuration";
 
         return {
             uri,

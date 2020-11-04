@@ -41,8 +41,8 @@ export class RemoveConnectionStringCommand<T extends ConnectionString>
     }
 
     createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/databases/" + node.database + "/admin/connection-strings?connectionString="
-            + encodeURIComponent(this._connectionString.name) + "&type=" + this._connectionString.type;
+        const uri = node.Url + "/databases/" + node.Database + "/admin/connection-strings?connectionString="
+            + encodeURIComponent(this._connectionString.Name) + "&type=" + this._connectionString.Type;
 
         return {
             method: "DELETE",
@@ -64,5 +64,5 @@ export class RemoveConnectionStringCommand<T extends ConnectionString>
 }
 
 export interface RemoveConnectionStringResult {
-    raftCommandIndex: number;
+    RaftCommandIndex: number;
 }

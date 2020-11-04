@@ -68,16 +68,16 @@ describe("Index operations", function () {
 
         await store.maintenance.send(new DisableIndexOperation(usersIndex.getIndexName()));
         let indexingStatus = await store.maintenance.send(new GetIndexingStatusOperation());
-        let indexStatus: IndexStatus = indexingStatus.indexes[0];
-        assert.strictEqual(indexStatus.status, "Disabled");
+        let indexStatus: IndexStatus = indexingStatus.Indexes[0];
+        assert.strictEqual(indexStatus.Status, "Disabled");
 
         await store.maintenance.send(new EnableIndexOperation(usersIndex.getIndexName()));
         indexingStatus = await store.maintenance.send(new GetIndexingStatusOperation());
-        assert.strictEqual(indexingStatus.status, "Running");
+        assert.strictEqual(indexingStatus.Status, "Running");
 
         indexingStatus = await store.maintenance.send(new GetIndexingStatusOperation());
-        indexStatus = indexingStatus.indexes[0];
-        assertThat(indexStatus.status)
+        indexStatus = indexingStatus.Indexes[0];
+        assertThat(indexStatus.Status)
             .isEqualTo("Running");
     });
 
@@ -86,7 +86,7 @@ describe("Index operations", function () {
         const indexDefinitions: IndexDefinition[] = await store.maintenance.send(new GetIndexesOperation(0, 10));
         assert.strictEqual(indexDefinitions.length, 1);
         assert.strictEqual(indexDefinitions[0].constructor, IndexDefinition);
-        assert.ok(TypeUtil.isSet(indexDefinitions[0].maps));
+        assert.ok(TypeUtil.isSet(indexDefinitions[0].Maps));
     });
 
     it("can get indexes stats", async () => {
@@ -94,8 +94,8 @@ describe("Index operations", function () {
 
         const indexStats: IndexStats[] = await store.maintenance.send(new GetIndexesStatisticsOperation());
         assert.strictEqual(indexStats.length, 1);
-        assert.ok(TypeUtil.isMap(indexStats[0].collections));
-        assert.strictEqual(indexStats[0].collections.size, 1);
+        assert.ok(TypeUtil.isMap(indexStats[0].Collections));
+        assert.strictEqual(indexStats[0].Collections.size, 1);
     });
 
     it("can get terms", async () => {
@@ -120,7 +120,7 @@ describe("Index operations", function () {
         let hasIndexChanged = await store.maintenance.send(new IndexHasChangedOperation(indexDef));
         assert.ok(!hasIndexChanged);
 
-        indexDef.maps = new Set(["from users"]);
+        indexDef.Maps = new Set(["from users"]);
         hasIndexChanged = await store.maintenance.send(new IndexHasChangedOperation(indexDef));
         assert.ok(hasIndexChanged);
     });
@@ -131,44 +131,44 @@ describe("Index operations", function () {
         await store.maintenance.send(new StopIndexingOperation());
 
         let indexingStatus = await store.maintenance.send(new GetIndexingStatusOperation());
-        assert.strictEqual(indexingStatus.status, "Paused");
+        assert.strictEqual(indexingStatus.Status, "Paused");
         await store.maintenance.send(new StartIndexingOperation());
         indexingStatus = await store.maintenance.send(new GetIndexingStatusOperation());
-        assert.strictEqual(indexingStatus.status, "Running");
+        assert.strictEqual(indexingStatus.Status, "Running");
     });
 
     it("can stop/start index", async () => {
         const indexDef = usersIndex.createIndexDefinition();
         await store.maintenance.send(new PutIndexesOperation(indexDef));
-        await store.maintenance.send(new StopIndexOperation(indexDef.name));
+        await store.maintenance.send(new StopIndexOperation(indexDef.Name));
 
         let indexingStatus = await store.maintenance.send(new GetIndexingStatusOperation());
-        assert.strictEqual(indexingStatus.status, "Running");
-        assert.strictEqual(indexingStatus.indexes[0].status, "Paused");
+        assert.strictEqual(indexingStatus.Status, "Running");
+        assert.strictEqual(indexingStatus.Indexes[0].Status, "Paused");
 
-        await store.maintenance.send(new StartIndexOperation(indexDef.name));
+        await store.maintenance.send(new StartIndexOperation(indexDef.Name));
         indexingStatus = await store.maintenance.send(new GetIndexingStatusOperation());
-        assert.strictEqual(indexingStatus.status, "Running");
-        assert.strictEqual(indexingStatus.indexes[0].status, "Running");
+        assert.strictEqual(indexingStatus.Status, "Running");
+        assert.strictEqual(indexingStatus.Indexes[0].Status, "Running");
 
     });
 
     it("can set index lock mode", async () => {
         const indexDef = usersIndex.createIndexDefinition();
         await store.maintenance.send(new PutIndexesOperation(indexDef));
-        await store.maintenance.send(new SetIndexesLockOperation(indexDef.name, "LockedError"));
+        await store.maintenance.send(new SetIndexesLockOperation(indexDef.Name, "LockedError"));
 
-        const newIndexDef = await store.maintenance.send(new GetIndexOperation(indexDef.name));
-        assert.strictEqual(newIndexDef.lockMode, "LockedError");
+        const newIndexDef = await store.maintenance.send(new GetIndexOperation(indexDef.Name));
+        assert.strictEqual(newIndexDef.LockMode, "LockedError");
     });
 
     it("can set index priority", async () => {
         const indexDef = usersIndex.createIndexDefinition();
         await store.maintenance.send(new PutIndexesOperation(indexDef));
-        await store.maintenance.send(new SetIndexesPriorityOperation(indexDef.name, "High"));
+        await store.maintenance.send(new SetIndexesPriorityOperation(indexDef.Name, "High"));
 
-        const newIndexDef = await store.maintenance.send(new GetIndexOperation(indexDef.name));
-        assert.strictEqual(newIndexDef.priority, "High");
+        const newIndexDef = await store.maintenance.send(new GetIndexOperation(indexDef.Name));
+        assert.strictEqual(newIndexDef.Priority, "High");
     });
 
     it("can list errors", async () => {
@@ -184,13 +184,13 @@ describe("Index operations", function () {
         await testContext.waitForIndexing(store, store.database, null, false);
 
         const indexErrors = await store.maintenance.send(new GetIndexErrorsOperation());
-        const perIndexErrors = await store.maintenance.send(new GetIndexErrorsOperation([indexDef.name]));
+        const perIndexErrors = await store.maintenance.send(new GetIndexErrorsOperation([indexDef.Name]));
 
         assert.strictEqual(indexErrors.length, 1);
         assert.strictEqual(perIndexErrors.length, 1);
-        assertThat(indexErrors[0].errors)
+        assertThat(indexErrors[0].Errors)
             .hasSize(1);
-        assertThat(perIndexErrors[0].errors)
+        assertThat(perIndexErrors[0].Errors)
             .hasSize(1);
     });
 
@@ -204,16 +204,16 @@ describe("Index operations", function () {
         await session.saveChanges();
 
         await testContext.waitForIndexing(store, store.database);
-        const stats = await store.maintenance.send(new GetIndexStatisticsOperation(indexDef.name));
-        assert.strictEqual(stats.entriesCount, 1);
+        const stats = await store.maintenance.send(new GetIndexStatisticsOperation(indexDef.Name));
+        assert.strictEqual(stats.EntriesCount, 1);
     });
 
     it("can get index with Pascal-cased fields", async () => {
         const indexDef = usersIndexWithPascalCasedFields.createIndexDefinition();
         await store.maintenance.send(new PutIndexesOperation(indexDef));
 
-        const newIndexDef = await store.maintenance.send(new GetIndexOperation(indexDef.name));
-        assert.ok(newIndexDef.fields["Name"]);
-        assert.ok(!newIndexDef.fields["name"]);
+        const newIndexDef = await store.maintenance.send(new GetIndexOperation(indexDef.Name));
+        assert.ok(newIndexDef.Fields["Name"]);
+        assert.ok(!newIndexDef.Fields["name"]);
     });
 });

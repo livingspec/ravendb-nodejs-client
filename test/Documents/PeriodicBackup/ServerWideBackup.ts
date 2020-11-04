@@ -56,7 +56,7 @@ import { DeleteServerWideBackupConfigurationOperation } from "../../../src/Serve
                 .hasSize(3);
 
             let databaseRecord = await store.maintenance.server.send(new GetDatabaseRecordOperation(store.database));
-            assertThat(databaseRecord.periodicBackups)
+            assertThat(databaseRecord.PeriodicBackups)
                 .hasSize(3);
 
             // update one of the tasks
@@ -65,17 +65,17 @@ import { DeleteServerWideBackupConfigurationOperation } from "../../../src/Serve
             await store.maintenance.server.send(new PutServerWideBackupConfigurationOperation(toUpdate));
 
             databaseRecord = await store.maintenance.server.send(new GetDatabaseRecordOperation(store.database));
-            assertThat(databaseRecord.periodicBackups)
+            assertThat(databaseRecord.PeriodicBackups)
                 .hasSize(3);
 
             // new database includes all server-wide backups
             const newDbName = store.database + "-testDatabase";
             const dbRecord: DatabaseRecord = {
-                databaseName: newDbName
+                DatabaseName: newDbName
             };
             await store.maintenance.server.send(new CreateDatabaseOperation(dbRecord));
             databaseRecord = await store.maintenance.server.send(new GetDatabaseRecordOperation(newDbName));
-            assertThat(databaseRecord.periodicBackups)
+            assertThat(databaseRecord.PeriodicBackups)
                 .hasSize(3);
 
             // get by name

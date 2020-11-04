@@ -43,7 +43,7 @@ export class StopIndexCommand extends RavenCommand<void> {
     }
 
     public createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/databases/" + node.database + "/admin/indexes/stop?name="
+        const uri = node.Url + "/databases/" + node.Database + "/admin/indexes/stop?name="
             + encodeURIComponent(this._indexName);
         return { method: "POST", uri };
     }

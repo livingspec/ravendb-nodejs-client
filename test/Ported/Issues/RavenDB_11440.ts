@@ -24,7 +24,7 @@ describe("RavenDB_11440", function () {
         try {
             let modeToSet: LogMode;
 
-            switch (configuration.currentMode) {
+            switch (configuration.CurrentMode) {
                 case "None":
                     modeToSet = "Information";
                     break;
@@ -35,7 +35,7 @@ describe("RavenDB_11440", function () {
                     modeToSet = "None";
                     break;
                 default:
-                    throwError("InvalidOperationException", "Invalid mode: " + configuration.currentMode);
+                    throwError("InvalidOperationException", "Invalid mode: " + configuration.CurrentMode);
             }
 
             const time = 1000 * 24 * 3600 * 1000;
@@ -50,18 +50,18 @@ describe("RavenDB_11440", function () {
 
             const configuration2 = await store.maintenance.server.send(new GetLogsConfigurationOperation());
 
-            assertThat(configuration2.currentMode)
+            assertThat(configuration2.CurrentMode)
                 .isEqualTo(modeToSet);
-            assertThat(configuration2.retentionTime)
+            assertThat(configuration2.RetentionTime)
                 .isEqualTo(TimeUtil.millisToTimeSpan(time));
-            assertThat(configuration2.mode)
-                .isEqualTo(configuration.mode);
-            assertThat(configuration2.useUtcTime)
-                .isEqualTo(configuration.useUtcTime);
+            assertThat(configuration2.Mode)
+                .isEqualTo(configuration.Mode);
+            assertThat(configuration2.UseUtcTime)
+                .isEqualTo(configuration.UseUtcTime);
         } finally {
             await store.maintenance.server.send(new SetLogsConfigurationOperation({
-                retentionTime: configuration.retentionTime,
-                mode: configuration.currentMode,
+                retentionTime: configuration.RetentionTime,
+                mode: configuration.CurrentMode,
                 compress: false
             }))
         }

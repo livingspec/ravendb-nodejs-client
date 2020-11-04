@@ -110,7 +110,7 @@ export class BulkInsertOperation {
             getId = true;
         }
 
-        return { id, metadata, getId, cb: callback };
+        return { id: id, metadata, getId, cb: callback };
     }
 
     public async store(entity: object);
@@ -248,9 +248,9 @@ export class BulkInsertOperation {
             return null;
         }
 
-        const result = stateRequest.result["result"];
+        const result = stateRequest.result["Result"];
 
-        if (stateRequest.result["status"] !== "Faulted") {
+        if (stateRequest.result["Status"] !== "Faulted") {
             return null;
         }
 
@@ -376,7 +376,7 @@ export class BulkInsertCommand extends RavenCommand<void> {
     }
 
     public createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/databases/" + node.database + "/bulk_insert?id=" + this._id;
+        const uri = node.Url + "/databases/" + node.Database + "/bulk_insert?id=" + this._id;
         const headers = this._headers().typeAppJson().build();
         // TODO: useCompression ? new GzipCompressingEntity(_stream) : _stream);
         return { 

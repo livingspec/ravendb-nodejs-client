@@ -600,13 +600,13 @@ export class DocumentConventions {
         }
 
         const orig = this._originalConfiguration;
-        if (configuration.disabled && !orig) { // nothing to do
+        if (configuration.Disabled && !orig) { // nothing to do
             return;
         }
 
-        if (configuration.disabled && orig) { // need to revert to original values
-            this._maxNumberOfRequestsPerSession = orig.maxNumberOfRequestsPerSession;
-            this._readBalanceBehavior = orig.readBalanceBehavior;
+        if (configuration.Disabled && orig) { // need to revert to original values
+            this._maxNumberOfRequestsPerSession = orig.MaxNumberOfRequestsPerSession;
+            this._readBalanceBehavior = orig.ReadBalanceBehavior;
 
             this._originalConfiguration = null;
             return;
@@ -614,17 +614,17 @@ export class DocumentConventions {
 
         if (!this._originalConfiguration) {
             this._originalConfiguration = {
-                etag: -1,
-                maxNumberOfRequestsPerSession: this._maxNumberOfRequestsPerSession,
-                readBalanceBehavior: this._readBalanceBehavior,
-                disabled: false
+                Etag: -1,
+                MaxNumberOfRequestsPerSession: this._maxNumberOfRequestsPerSession,
+                ReadBalanceBehavior: this._readBalanceBehavior,
+                Disabled: false
             };
         }
 
         this._maxNumberOfRequestsPerSession =
-            configuration.maxNumberOfRequestsPerSession || this._originalConfiguration.maxNumberOfRequestsPerSession;
+            configuration.MaxNumberOfRequestsPerSession || this._originalConfiguration.MaxNumberOfRequestsPerSession;
         this._readBalanceBehavior =
-            configuration.readBalanceBehavior || this._originalConfiguration.readBalanceBehavior;
+            configuration.ReadBalanceBehavior || this._originalConfiguration.ReadBalanceBehavior;
     }
 
     public static defaultTransformCollectionNameToDocumentIdPrefix(collectionName: string): string {

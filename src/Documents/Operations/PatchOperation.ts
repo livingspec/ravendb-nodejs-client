@@ -18,8 +18,8 @@ export interface Payload {
 }
 
 export class PatchOperationResult<TEntity> {
-    public status: PatchStatus;
-    public document: TEntity;
+    public Status: PatchStatus;
+    public Document: TEntity;
 }
 
 export class PatchOperation implements IOperation<PatchResult> {
@@ -143,7 +143,7 @@ export class PatchCommand extends RavenCommand<PatchResult> {
     }
 
     public createRequest(node: ServerNode): HttpRequestParameters {
-        let uri = node.url + "/databases/" + node.database + "/docs?id=" + encodeURIComponent(this._id);
+        let uri = node.Url + "/databases/" + node.Database + "/docs?id=" + encodeURIComponent(this._id);
 
         if (this._skipPatchIfChangeVectorMismatch) {
             uri += "&skipPatchIfChangeVectorMismatch=true";
@@ -177,8 +177,7 @@ export class PatchCommand extends RavenCommand<PatchResult> {
         let body;
         this.result = await this._pipeline<PatchResult>()
             .collectBody(_ => body = _)
-            .parseJsonAsync()
-            .jsonKeysTransform("Patch", this._conventions)
+            .parseJsonSync()
             .process(bodyStream);
         return body;
     }

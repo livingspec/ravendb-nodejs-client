@@ -23,7 +23,7 @@ export abstract class SessionCountersBase {
                 return;
             }
 
-            this._docId = document.id;
+            this._docId = document.Id;
         } else if (TypeUtil.isString(entityOrId)) {
             if (!entityOrId) {
                 throwError("InvalidArgumentException", "DocumentId cannot be empty.");

@@ -21,7 +21,7 @@ export class GetConflictsCommand extends RavenCommand<GetConflictsResult> {
     }
 
     public createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/databases/" + node.database
+        const uri = node.Url + "/databases/" + node.Database
             + "/replication/conflicts?docId=" + encodeURIComponent(this._id);
         return {
             method: "GET",
@@ -39,7 +39,7 @@ export class GetConflictsCommand extends RavenCommand<GetConflictsResult> {
             .then(results => {
                 this.result = this._conventions.objectMapper.fromObjectLiteral(results, {
                     nestedTypes: {
-                        "results[].lastModified": "date"
+                        "Results[].LastModified": "date"
                     }
                 });
             });

@@ -22,9 +22,9 @@ describe("RavenDB_10038Test", function () {
 
     it("compareExchangeAndIdentitiesCount", async function () {
         let stats = await store.maintenance.send(new GetDetailedStatisticsOperation());
-        assertThat(stats.countOfIdentities)
+        assertThat(stats.CountOfIdentities)
             .isEqualTo(0);
-        assertThat(stats.countOfCompareExchange)
+        assertThat(stats.CountOfCompareExchange)
             .isEqualTo(0);
 
         {
@@ -34,9 +34,9 @@ describe("RavenDB_10038Test", function () {
         }
         
         stats = await store.maintenance.send(new GetDetailedStatisticsOperation());
-        assertThat(stats.countOfIdentities)
+        assertThat(stats.CountOfIdentities)
             .isEqualTo(1);
-        assertThat(stats.countOfCompareExchange)
+        assertThat(stats.CountOfCompareExchange)
             .isEqualTo(0);
 
         {
@@ -47,15 +47,15 @@ describe("RavenDB_10038Test", function () {
         }
 
         stats = await store.maintenance.send(new GetDetailedStatisticsOperation());
-        assertThat(stats.countOfIdentities)
+        assertThat(stats.CountOfIdentities)
             .isEqualTo(2);
-        assertThat(stats.countOfCompareExchange)
+        assertThat(stats.CountOfCompareExchange)
             .isEqualTo(0);
         await store.operations.send(new PutCompareExchangeValueOperation<Person>("key/1", new Person(), 0));
         stats = await store.maintenance.send(new GetDetailedStatisticsOperation());
-        assertThat(stats.countOfIdentities)
+        assertThat(stats.CountOfIdentities)
             .isEqualTo(2);
-        assertThat(stats.countOfCompareExchange)
+        assertThat(stats.CountOfCompareExchange)
             .isEqualTo(1);
 
         let result = await store.operations.send(
@@ -64,9 +64,9 @@ describe("RavenDB_10038Test", function () {
             .isTrue();
 
         stats = await store.maintenance.send(new GetDetailedStatisticsOperation());
-        assertThat(stats.countOfIdentities)
+        assertThat(stats.CountOfIdentities)
             .isEqualTo(2);
-        assertThat(stats.countOfCompareExchange)
+        assertThat(stats.CountOfCompareExchange)
             .isEqualTo(2);
 
         result = await store.operations.send(
@@ -75,9 +75,9 @@ describe("RavenDB_10038Test", function () {
             .isTrue();
 
         stats = await store.maintenance.send(new GetDetailedStatisticsOperation());
-        assertThat(stats.countOfIdentities)
+        assertThat(stats.CountOfIdentities)
             .isEqualTo(2);
-        assertThat(stats.countOfCompareExchange)
+        assertThat(stats.CountOfCompareExchange)
             .isEqualTo(2);
 
         result = await store.operations.send(
@@ -86,9 +86,9 @@ describe("RavenDB_10038Test", function () {
             .isTrue();
 
         stats = await store.maintenance.send(new GetDetailedStatisticsOperation());
-        assertThat(stats.countOfIdentities)
+        assertThat(stats.CountOfIdentities)
             .isEqualTo(2);
-        assertThat(stats.countOfCompareExchange)
+        assertThat(stats.CountOfCompareExchange)
             .isEqualTo(1);
     });
 });

@@ -1,8 +1,8 @@
 import { ReadBalanceBehavior } from "../../../Http/ReadBalanceBehavior";
 
 export interface ClientConfiguration {
-    etag?: number;
-    disabled?: boolean;
-    maxNumberOfRequestsPerSession?: number;
-    readBalanceBehavior?: ReadBalanceBehavior;
+    Etag?: number;
+    Disabled?: boolean;
+    MaxNumberOfRequestsPerSession?: number;
+    ReadBalanceBehavior?: ReadBalanceBehavior;
 }

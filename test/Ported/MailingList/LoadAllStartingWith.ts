@@ -4,11 +4,11 @@ import { disposeTestDocumentStore, testContext } from "../../Utils/TestUtil";
 import { Lazy } from "../../../src/Documents/Lazy";
 
 export class Abc {
-    public id: string;
+    public Id: string;
 }
 
 export class Xyz {
-    public id: string;
+    public Id: string;
 }
 
 describe("LoadAllStartingWith", function () {
@@ -24,10 +24,10 @@ describe("LoadAllStartingWith", function () {
 
     it("can load all starting with", async () => {
         const doc1 = new Abc();
-        doc1.id = "abc/1";
+        doc1.Id = "abc/1";
 
         const doc2 = new Xyz();
-        doc2.id = "xyz/1";
+        doc2.Id = "xyz/1";
 
         {
             const session = store.openSession();
@@ -51,8 +51,8 @@ describe("LoadAllStartingWith", function () {
 
             assert.strictEqual(Object.keys(testClasses).length, 1);
             assert.strictEqual(test2Classes.length, 1);
-            assert.strictEqual(testClasses["abc/1"].id, "abc/1");
-            assert.strictEqual(test2Classes[0].id, "xyz/1");
+            assert.strictEqual(testClasses["abc/1"].Id, "abc/1");
+            assert.strictEqual(test2Classes[0].Id, "xyz/1");
         }
     });
 });

@@ -31,7 +31,7 @@ export class OperationCompletionAwaiter {
         const command: RavenCommand<IRavenResponse> = this._getOperationStateCommand(this._conventions, this._id, this._nodeTag);
         return Promise.resolve()
             .then(() => this._requestExecutor.execute(command))
-            .then(() => command.result);
+            .then (() => command.result);
     }
 
     protected _getOperationStateCommand(conventions: DocumentConventions, id: number, nodeTag?: string): RavenCommand<IRavenResponse> {
@@ -51,7 +51,7 @@ export class OperationCompletionAwaiter {
             return BluebirdPromise.resolve()
                 .then(() => this._fetchOperationStatus())
                 .then((operationStatusResult) => {
-                    const operationStatus = operationStatusResult.status as OperationStatus;
+                    const operationStatus = operationStatusResult.Status as OperationStatus;
                     switch (operationStatus) {
                         case "Completed":
                             return;
@@ -60,9 +60,8 @@ export class OperationCompletionAwaiter {
                                 `Operation of ID ${this._id} has been canceled.`);
                             break;
                         case "Faulted":
-                            const faultResult: OperationExceptionResult = operationStatusResult.result;
-                            const errorSchema = Object.assign({}, faultResult, { url: this._requestExecutor.getUrl() });
-                            throw ExceptionDispatcher.get(errorSchema, faultResult.statusCode);
+                            const faultResult: OperationExceptionResult = operationStatusResult.Result;
+                            throw ExceptionDispatcher.get({ message: faultResult.Message, url: this._requestExecutor.getUrl(), error: faultResult.Error, type: faultResult.Type }, faultResult.StatusCode);
                     }
 
                     return BluebirdPromise.delay(500)

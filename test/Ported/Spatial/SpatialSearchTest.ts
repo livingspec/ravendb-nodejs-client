@@ -52,7 +52,7 @@ describe("SpatialSearchTest", function () {
                 .orderByDescending("date")
                 .all();
 
-            assert.strictEqual(queryStats.totalResults, 2);
+            assert.strictEqual(queryStats.TotalResults, 2);
             assert.deepStrictEqual(events.map(x => x.venue), ["c/3", "b/2"]);
         }
     });
@@ -112,7 +112,7 @@ describe("SpatialSearchTest", function () {
                 .orderByDescending("date")
                 .all();
 
-            assert.strictEqual(queryStats.totalResults, 2);
+            assert.strictEqual(queryStats.TotalResults, 2);
             assert.deepStrictEqual(events.map(x => x.venue), ["c/3", "b/2"]);
         }
     });

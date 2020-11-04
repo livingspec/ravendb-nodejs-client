@@ -1,17 +1,17 @@
 import { QueryResult } from "../QueryResult";
 
 export class QueryTimings {
-    public durationInMs: number;
-    public timings: { [key: string]: QueryTimings };
+    public DurationInMs: number;
+    public Timings: { [key: string]: QueryTimings };
 
     public update(queryResult: QueryResult): void {
-        this.durationInMs = 0;
-        this.timings = null;
-        if (!queryResult.timings) {
+        this.DurationInMs = 0;
+        this.Timings = null;
+        if (!queryResult.Timings) {
             return;
         }
 
-        this.durationInMs = queryResult.timings.durationInMs;
-        this.timings = queryResult.timings.timings;
+        this.DurationInMs = queryResult.Timings.DurationInMs;
+        this.Timings = queryResult.Timings.Timings;
     }
 }

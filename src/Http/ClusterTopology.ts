@@ -1,22 +1,22 @@
 export class ClusterTopology {
 
-    public lastNodeId: string;
-    public topologyId: string;
-    public etag: number;
+    public LastNodeId: string;
+    public TopologyId: string;
+    public Etag: number;
 
-    public members: { [key: string]: string };
-    public promotables: { [key: string]: string };
-    public watchers: { [key: string]: string };
+    public Members: { [key: string]: string };
+    public Promotables: { [key: string]: string };
+    public Watchers: { [key: string]: string };
 
     public contains(node: string) {
-        if (this.members && this.members[node]) {
+        if (this.Members && this.Members[node]) {
             return true;
         }
-        if (this.promotables && this.promotables[node]) {
+        if (this.Promotables && this.Promotables[node]) {
             return true;
         }
 
-        return this.watchers && this.watchers[node];
+        return this.Watchers && this.Watchers[node];
     }
 
     public getUrlFromTag(tag: string): string {
@@ -24,22 +24,22 @@ export class ClusterTopology {
             return null;
         }
 
-        if (this.members && this.members[tag]) {
-            return this.members[tag];
+        if (this.Members && this.Members[tag]) {
+            return this.Members[tag];
         }
 
-        if (this.promotables && this.promotables[tag]) {
-            return this.promotables[tag];
+        if (this.Promotables && this.Promotables[tag]) {
+            return this.Promotables[tag];
         }
 
-        if (this.watchers && this.watchers[tag]) {
-            return this.watchers[tag];
+        if (this.Watchers && this.Watchers[tag]) {
+            return this.Watchers[tag];
         }
 
         return null;
     }
 
     public getAllNodes(): { [tag: string]: string } {
-        return Object.assign({}, this.members, this.promotables, this.watchers);
+        return Object.assign({}, this.Members, this.Promotables, this.Watchers);
     }
 }

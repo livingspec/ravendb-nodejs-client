@@ -80,28 +80,28 @@ export class OperationExecutor {
                     return new OperationCompletionAwaiter(
                         this._requestExecutor,
                         this._requestExecutor.conventions,
-                        idResult.operationId,
-                        command.selectedNodeTag || idResult.operationNodeTag);
+                        idResult.OperationId,
+                        command.selectedNodeTag || idResult.OperationNodeTag);
 
                 } else if (operation.resultType === "PatchResult") {
                     const patchOperationResult = new PatchOperationResult<TResult>();
                     if (command.statusCode === StatusCodes.NotModified) {
-                        patchOperationResult.status = "NotModified";
+                        patchOperationResult.Status = "NotModified";
                         return patchOperationResult;
                     }
 
                     if (command.statusCode === StatusCodes.NotFound) {
-                        patchOperationResult.status = "DocumentDoesNotExist";
+                        patchOperationResult.Status = "DocumentDoesNotExist";
                         return patchOperationResult;
                     }
 
                     const patchResult = command.result as any as PatchResult;
-                    patchOperationResult.status = patchResult.status;
+                    patchOperationResult.Status = patchResult.Status;
                     const { conventions } = this._requestExecutor;
                     conventions.tryRegisterJsType(documentType);
                     const entityType = conventions.getJsTypeByDocumentType(documentType);
-                    patchOperationResult.document = conventions.deserializeEntityFromJson(
-                        entityType, patchResult.modifiedDocument) as TResult;
+                    patchOperationResult.Document = conventions.deserializeEntityFromJson(
+                        entityType, patchResult.ModifiedDocument) as TResult;
                     return patchOperationResult;
                 }
 

@@ -43,17 +43,17 @@ describe("SessionCountersTest", function () {
         }
         {
             let counters = (await store.operations.send(
-                new GetCountersOperation("users/1-A", ["likes", "downloads"]))).counters;
+                new GetCountersOperation("users/1-A", ["likes", "downloads"]))).Counters;
             assert.strictEqual(counters.length, 2);
             assert.strictEqual(
-                counters.filter(x => x.counterName === "likes")[0].totalValue, 100);
+                counters.filter(x => x.CounterName === "likes")[0].TotalValue, 100);
             assert.strictEqual(
-                counters.filter(x => x.counterName === "downloads")[0].totalValue, 500);
+                counters.filter(x => x.CounterName === "downloads")[0].TotalValue, 500);
             
-            counters = (await store.operations.send(new GetCountersOperation("users/2-A", ["votes"]))).counters;
+            counters = (await store.operations.send(new GetCountersOperation("users/2-A", ["votes"]))).Counters;
             assert.strictEqual(counters.length, 1);
             assert.strictEqual(
-                counters.filter(x => x.counterName === "votes")[0].totalValue, 1000);
+                counters.filter(x => x.CounterName === "votes")[0].TotalValue, 1000);
         }
     });
 
@@ -72,9 +72,9 @@ describe("SessionCountersTest", function () {
             await session.saveChanges();
         }
 
-        let { counters } = (await store.operations
+        let { Counters } = (await store.operations
                    .send(new GetCountersOperation("users/1-A", ["likes", "downloads"])));
-        assert.strictEqual(counters.length, 2);
+        assert.strictEqual(Counters.length, 2);
 
         {
             const session = store.openSession();
@@ -86,18 +86,18 @@ describe("SessionCountersTest", function () {
 
         let countersDetail = await store.operations.send(new GetCountersOperation("users/1-A", ["likes", "downloads"]));
 
-        assertThat(countersDetail.counters)
+        assertThat(countersDetail.Counters)
             .hasSize(2);
 
-        assertThat(countersDetail.counters[0])
+        assertThat(countersDetail.Counters[0])
             .isNull();
-        assertThat(countersDetail.counters[1])
+        assertThat(countersDetail.Counters[1])
             .isNull();
 
         countersDetail = await store.operations.send(new GetCountersOperation("users/1-A", ["votes"]));
-        assertThat(countersDetail.counters)
+        assertThat(countersDetail.Counters)
             .hasSize(1);
-        assertThat(countersDetail.counters[0])
+        assertThat(countersDetail.Counters[0])
             .isNull();
     });
 
@@ -143,7 +143,7 @@ describe("SessionCountersTest", function () {
     it("sessionGetCountersWithNonDefaultDatabase", async function () {
         const dbName = "db-" + (Math.random() * 1000 + 1).toFixed(2);
         await store.maintenance.server.send(
-            new CreateDatabaseOperation({ databaseName: dbName }));
+            new CreateDatabaseOperation({ DatabaseName: dbName }));
         
         try {
             {

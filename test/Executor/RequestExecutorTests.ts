@@ -124,8 +124,8 @@ describe("Request executor", function () {
                 assert.strictEqual(nodes.length, 1);
 
                 const serverNode = nodes[0];
-                assert.strictEqual(serverNode.url, store.urls[0]);
-                assert.strictEqual(serverNode.database, store.database);
+                assert.strictEqual(serverNode.Url, store.urls[0]);
+                assert.strictEqual(serverNode.Database, store.database);
 
                 const command = new GetNextOperationIdCommand();
                 await executor.execute(command);
@@ -154,7 +154,7 @@ describe("Request executor", function () {
 
                 const nodes = executor.getTopologyNodes();
                 assert.strictEqual(nodes.length, 1);
-                assert.strictEqual(nodes[0].url, url);
+                assert.strictEqual(nodes[0].Url, url);
                 assert.strictEqual(executor.getUrl(), url);
             } finally {
                 executor.dispose();

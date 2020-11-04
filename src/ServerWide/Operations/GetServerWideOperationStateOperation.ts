@@ -37,7 +37,7 @@ export class GetServerWideOperationStateCommand extends RavenCommand<IRavenRespo
     }
 
     public createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/operations/state?id=" + this._id;
+        const uri = node.Url + "/operations/state?id=" + this._id;
 
         return {
             uri,

@@ -46,7 +46,7 @@ class SetDatabaseDynamicDistributionCommand extends RavenCommand<void> implement
     }
 
     createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/admin/databases/dynamic-node-distribution?name=" + this._databaseName + "&enabled=" + this._allowDynamicDistribution;
+        const uri = node.Url + "/admin/databases/dynamic-node-distribution?name=" + this._databaseName + "&enabled=" + this._allowDynamicDistribution;
 
         return {
             uri,

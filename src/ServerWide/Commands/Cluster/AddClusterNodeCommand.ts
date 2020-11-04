@@ -22,7 +22,7 @@ export class AddClusterNodeCommand extends RavenCommand<void> implements IRaftCo
     }
 
     createRequest(node: ServerNode): HttpRequestParameters {
-        let uri = node.url + "/admin/cluster/node?url=" + this._urlEncode(this._url) + "&watcher=" + this._watcher;
+        let uri = node.Url + "/admin/cluster/node?url=" + this._urlEncode(this._url) + "&watcher=" + this._watcher;
 
         if (this._tag) {
             uri += "&tag=" + this._tag;

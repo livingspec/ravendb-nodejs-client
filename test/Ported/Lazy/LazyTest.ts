@@ -21,7 +21,7 @@ describe("LazyTest", function () {
             const session = store.openSession();
             for (let i = 1; i <= 6; i++) {
                 const company = new Company();
-                company.id = "companies/" + i;
+                company.Id = "companies/" + i;
                 await session.store(company, "companies/" + i);
             }
             await session.saveChanges();
@@ -33,7 +33,7 @@ describe("LazyTest", function () {
             assert.ok(!lazyCompany.isValueCreated());
 
             let company = await lazyCompany.getValue();
-            assert.strictEqual(company.id, "companies/1");
+            assert.strictEqual(company.Id, "companies/1");
 
             const lazyOrders: Lazy<EntitiesCollectionObject<Company>>
                 = session.advanced.lazily.load<Company>(["companies/1", "companies/2"]);
@@ -46,13 +46,13 @@ describe("LazyTest", function () {
             assert.ok(company1);
             assert.ok(company2);
 
-            assert.strictEqual(company1.id, "companies/1");
-            assert.strictEqual(company2.id, "companies/2");
+            assert.strictEqual(company1.Id, "companies/1");
+            assert.strictEqual(company2.Id, "companies/2");
 
             lazyCompany = session.advanced.lazily.load<Company>("companies/3");
             assert.ok(!lazyCompany.isValueCreated());
             company = await lazyCompany.getValue();
-            assert.strictEqual(company.id, "companies/3");
+            assert.strictEqual(company.Id, "companies/3");
         }
     });
 
@@ -70,10 +70,10 @@ describe("LazyTest", function () {
         {
             const session = store.openSession();
             const company1 = new Company();
-            company1.id = "companies/1";
+            company1.Id = "companies/1";
             await session.store(company1, "companies/1");
             const company2 = new Company();
-            company2.id = "companies/2";
+            company2.Id = "companies/2";
             await session.store(company2, "companies/2");
             await session.saveChanges();
         }
@@ -105,8 +105,8 @@ describe("LazyTest", function () {
             assert.strictEqual(
                 session.advanced.numberOfRequests - beforeReqsCount, 1, "Should have performed 1 request.");
 
-            assert.strictEqual(company1Ref.id, "companies/1");
-            assert.strictEqual(company2Ref.id, "companies/2");
+            assert.strictEqual(company1Ref.Id, "companies/1");
+            assert.strictEqual(company2Ref.Id, "companies/2");
         }
     });
 

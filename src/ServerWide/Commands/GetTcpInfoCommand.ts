@@ -4,9 +4,9 @@ import { HttpRequestParameters } from "../../Primitives/Http";
 import * as stream from "readable-stream";
 
 export class TcpConnectionInfo {
-    public url: string;
-    public certificate: string;
-    public urls: string[];
+    public Url: string;
+    public Certificate: string;
+    public Urls: string[];
 }
 
 export class GetTcpInfoCommand extends RavenCommand<TcpConnectionInfo> {
@@ -26,9 +26,9 @@ export class GetTcpInfoCommand extends RavenCommand<TcpConnectionInfo> {
     public createRequest(node: ServerNode): HttpRequestParameters {
         let uri;
         if (!this._dbName) {
-            uri = `${node.url}/info/tcp?tcp=${this._tag}`;
+            uri = `${node.Url}/info/tcp?tcp=${this._tag}`;
         } else {
-            uri = `${node.url}/databases/${this._dbName}/info/tcp?tcp=${this._tag}`;
+            uri = `${node.Url}/databases/${this._dbName}/info/tcp?tcp=${this._tag}`;
         }
 
         this.requestedNode = node;

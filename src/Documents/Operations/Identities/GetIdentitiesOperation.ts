@@ -31,7 +31,7 @@ export class GetIdentitiesCommand extends RavenCommand<IdentitiesCollection> {
     }
 
     public createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/databases/" + node.database + "/debug/identities";
+        const uri = node.Url + "/databases/" + node.Database + "/debug/identities";
         return { uri };
     }
 

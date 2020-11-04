@@ -31,7 +31,7 @@ class AdminJsConsoleCommand extends RavenCommand<any> {
     }
 
     createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/admin/console?serverScript=true";
+        const uri = node.Url + "/admin/console?serverScript=true";
 
         const body = this._serializer.serialize({
             Script: this._script

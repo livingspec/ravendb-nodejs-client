@@ -34,9 +34,9 @@ describe("RavenDB-9587", function () {
                 .whereNotEquals("name", "HR")
                 .all();
 
-            assertThat(timings.durationInMs)
+            assertThat(timings.DurationInMs)
                 .isGreaterThan(0);
-            assertThat(timings.timings)
+            assertThat(timings.Timings)
                 .isNotNull();
         }
 

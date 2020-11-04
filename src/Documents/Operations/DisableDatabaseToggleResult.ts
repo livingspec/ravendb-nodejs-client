@@ -1,7 +1,7 @@
 
 export interface DisableDatabaseToggleResult {
-    disabled: boolean;
-    name: string;
-    success: boolean;
-    reason: string;
+    Disabled: boolean;
+    Name: string;
+    Success: boolean;
+    Reason: string;
 }

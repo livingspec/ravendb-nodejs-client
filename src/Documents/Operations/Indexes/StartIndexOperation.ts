@@ -42,7 +42,7 @@ export class StartIndexCommand extends RavenCommand<void> {
     }
 
     public createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/databases/" + node.database + "/admin/indexes/start?name="
+        const uri = node.Url + "/databases/" + node.Database + "/admin/indexes/start?name="
             + encodeURIComponent(this._indexName);
         return { method: "POST", uri };
     }

@@ -39,14 +39,14 @@ describe("HiLo", function () {
         });
         await Promise.all(storeOps);
 
-        const userIds = users.map(x => x.id);
+        const userIds = users.map(x => x.Id);
         assert.strictEqual(new Set(userIds).size, userIds.length, `Ids are not unique: ${userIds}`);
 
         userIds
             .map(id => id.split("/")[1])
             .forEach(numericPart => {
                 assert.ok(parseInt(numericPart, 10) < 33,
-                    "Obtained ids should be less than 33, though they are:" + users.map(x => x.id).toString());
+                    "Obtained ids should be less than 33, though they are:" + users.map(x => x.Id).toString());
             });
 
     });
@@ -69,7 +69,7 @@ describe("HiLo", function () {
                 const newUser = Object.assign(new User(), { name: "new" });
                 await session.store(newUser);
                 await session.saveChanges();
-                assert.strictEqual(newUser.id, "users/11-A");
+                assert.strictEqual(newUser.Id, "users/11-A");
             } finally {
                 store2.dispose();
             }
@@ -211,7 +211,7 @@ describe("HiLo", function () {
         await Promise.all(tasks);
 
         users
-            .map(x => x.id)
+            .map(x => x.Id)
             .map(id => id.split("/")[1])
             .map(x => x.split("-")[0])
             .forEach(numericPart => {
@@ -234,7 +234,7 @@ describe("HiLo", function () {
         await Promise.all(tasks);
 
         const idNumbers = users
-            .map(x => x.id)
+            .map(x => x.Id)
             .map(id => id.split("/")[1])
             .map(x => parseInt(x.split("-")[0], 10));
         

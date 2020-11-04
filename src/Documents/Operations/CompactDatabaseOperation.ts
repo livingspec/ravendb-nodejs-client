@@ -47,7 +47,7 @@ export class CompactDatabaseCommand extends RavenCommand<OperationIdResult> {
     }
 
     public createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/admin/compact";
+        const uri = node.Url + "/admin/compact";
         const body = this._serializer.serialize(this._compactSettings);
 
         return {

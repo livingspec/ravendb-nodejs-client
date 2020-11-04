@@ -76,29 +76,29 @@ export class LazyStartsWithOperation<T extends object> implements ILazyOperation
 
     public async handleResponseAsync(response: GetResponse): Promise<void> {
 
-        const { results } = await GetDocumentsCommand.parseDocumentsResultResponseAsync(
-            stringToReadable(response.result), this._sessionOperations.conventions);
+        const { Results } = await GetDocumentsCommand.parseDocumentsResultResponseAsync(
+            stringToReadable(response.Result), this._sessionOperations.conventions);
 
         const finalResults = {};
-        for (const document of results) {
+        for (const document of Results) {
             const newDocumentInfo = DocumentInfo.getNewDocumentInfo(document);
             this._sessionOperations.documentsById.add(newDocumentInfo);
-            if (!newDocumentInfo.id) {
+            if (!newDocumentInfo.Id) {
                 continue;
             }
 
-            if (this._sessionOperations.isDeleted(newDocumentInfo.id)) {
-                finalResults[newDocumentInfo.id] = null;
+            if (this._sessionOperations.isDeleted(newDocumentInfo.Id)) {
+                finalResults[newDocumentInfo.Id] = null;
                 continue;
             }
 
-            const doc = this._sessionOperations.documentsById.getValue(newDocumentInfo.id);
+            const doc = this._sessionOperations.documentsById.getValue(newDocumentInfo.Id);
             if (doc) {
-                finalResults[newDocumentInfo.id] = this._sessionOperations.trackEntity(this._clazz, doc);
+                finalResults[newDocumentInfo.Id] = this._sessionOperations.trackEntity(this._clazz, doc);
                 continue;
             }
 
-            finalResults[newDocumentInfo.id] = null;
+            finalResults[newDocumentInfo.Id] = null;
         }
 
         this.result = finalResults;

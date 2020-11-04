@@ -31,7 +31,7 @@ export class SeedIdentityForCommand extends RavenCommand<number> implements IRaf
     public createRequest(node: ServerNode): HttpRequestParameters {
         RavenCommand.ensureIsNotNullOrEmpty(this._id, "id");
 
-        let uri = node.url + "/databases/" + node.database
+        let uri = node.Url + "/databases/" + node.Database
             + "/identity/seed?name=" + encodeURIComponent(this._id) + "&value=" + this._value;
 
         if (this._forced) {
@@ -52,7 +52,7 @@ export class SeedIdentityForCommand extends RavenCommand<number> implements IRaf
         let body: string = null;
         await this._defaultPipeline(_ => body = _).process(bodyStream)
             .then(result => {
-                const newSeedValue = result["newSeedValue"];
+                const newSeedValue = result["NewSeedValue"];
                 if (TypeUtil.isNullOrUndefined(newSeedValue)) {
                     this._throwInvalidResponse();
                 }

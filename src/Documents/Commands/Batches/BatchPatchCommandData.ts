@@ -62,7 +62,7 @@ export class BatchPatchCommandData implements ICommandData {
                 "Could not add ID '" + id + "' because item with the same ID was already added");
         }
 
-        this._ids.push({ id, changeVector });
+        this._ids.push({ id: id, changeVector });
     }
 
     public get ids() {

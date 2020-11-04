@@ -65,14 +65,14 @@ export class LazySuggestionQueryOperation implements ILazyOperation {
     }
 
     public async handleResponseAsync(response: GetResponse) {
-        if (response.forceRetry) {
+        if (response.ForceRetry) {
             this._result = null;
             this._requiresRetry = true;
             return;
         }
 
         const result = await QueryCommand.parseQueryResultResponseAsync(
-            stringToReadable(response.result), this._conventions, false);
+            stringToReadable(response.Result), this._conventions, false);
 
         this._handleResponse(result);
     }

@@ -25,7 +25,7 @@ describe("CRUD tests", function () {
         await session.saveChanges();
 
         const documentsCommand = new GetDocumentsCommand({
-            id: "users/1",
+            Id: "users/1",
             includes: null,
             metadataOnly: false,
             conventions: store.conventions
@@ -34,7 +34,7 @@ describe("CRUD tests", function () {
         await store.getRequestExecutor().execute(documentsCommand);
 
         const { result } = documentsCommand;
-        const userJson = result.results[0];
+        const userJson = result.Results[0];
 
         assert.ok(Object.keys(userJson).includes("lastName"));
 

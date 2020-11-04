@@ -1,7 +1,7 @@
 import { Size } from "../../Utility/SizeUtil";
 
 export interface CollectionDetails {
-    name: string;
-    countOfDocuments: number;
-    size: Size;
+    Name: string;
+    CountOfDocuments: number;
+    Size: Size;
 }

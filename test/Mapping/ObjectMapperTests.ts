@@ -140,7 +140,7 @@ describe("ObjectMapper", function () {
 
             const result: any = mapper.fromObjectLiteral({
                 name: "Merry"
-            }, typeInfo, new Map([[Person.name, Person]]));
+            }, typeInfo, false, new Map([[Person.name, Person]]));
 
             assert.ok(result);
             assert.strictEqual(result.constructor.name, Person.name);
@@ -172,7 +172,7 @@ describe("ObjectMapper", function () {
             };
 
             const result: any = mapper.fromObjectLiteral(
-                testObject, typeInfo, new Map([[Movie.name, Movie]]));
+                testObject, typeInfo, false, new Map([[Movie.name, Movie]]));
 
             assert.ok(result);
             assert.ok(result.hasOwnProperty("movies"));
@@ -215,7 +215,7 @@ describe("ObjectMapper", function () {
             ]);
 
             const result: any = mapper.fromObjectLiteral(
-                testObject, typeInfo, types);
+                testObject, typeInfo, false, types);
 
             assert.ok(result);
             assert.ok(result.me);
@@ -274,7 +274,7 @@ describe("ObjectMapper", function () {
             const typeDescriptorInstance = new AnimalTypeDescriptor();
             const types = new Map([[typeDescriptorInstance.name, typeDescriptorInstance]]);
             const result: any = mapper.fromObjectLiteral(
-                data, typeInfo, types);
+                data, typeInfo, false, types);
             assert.ok(result);
             assert.ok(result.animals);
             assert.ok(result.animals.length);
@@ -323,7 +323,7 @@ describe("ObjectMapper", function () {
             };
 
             const result: any = mapper.fromObjectLiteral(
-                data, typeInfo, new Map([[Person.name, Person]]));
+                data, typeInfo, false, new Map([[Person.name, Person]]));
 
             assert.ok(result);
             assert.ok(result.characters);
@@ -395,7 +395,7 @@ describe("ObjectMapper", function () {
                     { name: "Test", lastActedAt: null }
                 ]
             };
-            const result: any = mapper.fromObjectLiteral(testObj, typeInfo, new Map([[Person.name, Person]]));
+            const result: any = mapper.fromObjectLiteral(testObj, typeInfo, false, new Map([[Person.name, Person]]));
             assert.notStrictEqual(testObj, result);
             assert.strictEqual(result.me.name, "Ash");
             assert.strictEqual(result.characters.length, 1);
@@ -418,7 +418,7 @@ describe("ObjectMapper", function () {
                 ]
             };
 
-            const result: any = mapper.fromObjectLiteral(testObj, typeInfo, new Map([[Tree.name, Tree]]));
+            const result: any = mapper.fromObjectLiteral(testObj, typeInfo, false, new Map([[Tree.name, Tree]]));
             assert.ok(result);
             assert.ok(TypeUtil.isSet(result.treeSpecies));
 
@@ -452,7 +452,7 @@ describe("ObjectMapper", function () {
                 ]
             };
 
-            const result: any = mapper.fromObjectLiteral(testObj, typeInfo, new Map([[Order.name, Order]]));
+            const result: any = mapper.fromObjectLiteral(testObj, typeInfo, false, new Map([[Order.name, Order]]));
             assert.ok(TypeUtil.isMap(result.orders));
             const ordersMap = result.orders as Map<string, any>;
             assert.strictEqual(ordersMap.size, 1);

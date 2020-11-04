@@ -41,7 +41,7 @@ class UpdatePeriodicBackupCommand extends RavenCommand<UpdatePeriodicBackupOpera
     }
 
     createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/databases/" + node.database + "/admin/periodic-backup";
+        const uri = node.Url + "/databases/" + node.Database + "/admin/periodic-backup";
 
         const body = this._serializer.serialize(this._configuration);
 

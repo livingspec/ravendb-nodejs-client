@@ -14,7 +14,7 @@ export class JsonOperation {
         const docChanges: DocumentsChanges[] = changes ? [] : null;
 
         if (!documentInfo.newDocument && documentInfo.document) {
-            return JsonOperation._compareJson("", documentInfo.id, documentInfo.document, newObj, changes, docChanges);
+            return JsonOperation._compareJson("", documentInfo.Id, documentInfo.document, newObj, changes, docChanges);
         }
 
         if (!changes) {
@@ -22,7 +22,7 @@ export class JsonOperation {
         }
 
         JsonOperation._newChange(null, null, null, null, docChanges, "DocumentAdded");
-        changes[documentInfo.id] = docChanges;
+        changes[documentInfo.Id] = docChanges;
         return true;
     }
 

@@ -42,9 +42,9 @@ describe("SecuredSubscriptionsBasicTest", function () {
         const id = await store.subscriptions.create(User);
 
         const subscription = store.subscriptions.getSubscriptionWorker<User>({
-            subscriptionName: id,
-            documentType: User,
-            maxErroneousPeriod: 3000
+            SubscriptionName: id,
+            DocumentType: User,
+            MaxErroneousPeriod: 3000
         });
 
         const keys = new AsyncQueue<string>();
@@ -89,9 +89,9 @@ describe("SecuredSubscriptionsBasicTest", function () {
         const id = await store.subscriptions.create(User);
 
         const subscription = store.subscriptions.getSubscriptionWorker<User>({
-            subscriptionName: id,
-            documentType: User,
-            maxErroneousPeriod: 3000
+            SubscriptionName: id,
+            DocumentType: User,
+            MaxErroneousPeriod: 3000
         });
 
         try {

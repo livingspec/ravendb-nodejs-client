@@ -21,7 +21,7 @@ export class GetRevisionsBinEntryCommand extends RavenCommand<IRavenArrayResult>
     }
 
     public createRequest(node: ServerNode): HttpRequestParameters {
-        let uri = node.url + "/databases/" + node.database + "/revisions/bin?etag=" + this._etag;
+        let uri = node.Url + "/databases/" + node.Database + "/revisions/bin?etag=" + this._etag;
 
         if (TypeUtil.isNullOrUndefined(this._pageSize)) {
             uri += "&pageSize=" + this._pageSize;

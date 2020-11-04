@@ -63,7 +63,7 @@ export class PatchByQueryCommand extends RavenCommand<OperationIdResult> {
     }
 
     public createRequest(node: ServerNode): HttpRequestParameters {
-        let path = node.url + "/databases/" + node.database + "/queries?allowStale="
+        let path = node.Url + "/databases/" + node.Database + "/queries?allowStale="
             + !!this._options.allowStale;
         if (!TypeUtil.isNullOrUndefined(this._options.maxOpsPerSecond)) {
             path += "&maxOpsPerSec=" + this._options.maxOpsPerSecond;

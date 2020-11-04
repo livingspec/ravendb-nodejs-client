@@ -46,8 +46,8 @@ describe("SpatialQueriesTest", function () {
             await session.saveChanges();
 
             const indexDefinition = new IndexDefinition();
-            indexDefinition.name = "FindByLatLng";
-            indexDefinition.maps = new Set([`from doc in docs 
+            indexDefinition.Name = "FindByLatLng";
+            indexDefinition.Maps = new Set([`from doc in docs 
                 select new { 
                     coordinates = CreateSpatialField(doc.latitude, doc.longitude) 
                 }`]);
@@ -55,7 +55,7 @@ describe("SpatialQueriesTest", function () {
             await store.maintenance.send(new PutIndexesOperation(indexDefinition));
 
             await session.query({
-                indexName: indexDefinition.name,
+                indexName: indexDefinition.Name,
                 documentType: DummyGeoDoc
             })
                 .waitForNonStaleResults()
@@ -90,8 +90,8 @@ describe("SpatialQueriesTest", function () {
             await session.saveChanges();
 
             const indexDefinition = new IndexDefinition();
-            indexDefinition.name = "FindByLatLng";
-            indexDefinition.maps = new Set([
+            indexDefinition.Name = "FindByLatLng";
+            indexDefinition.Maps = new Set([
                 "from doc in docs select new { coordinates = CreateSpatialField(doc.latitude, doc.longitude) }"
             ]);
 

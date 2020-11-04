@@ -30,7 +30,7 @@ export class GetCollectionStatisticsCommand extends RavenCommand<CollectionStati
     }
 
     public createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/databases/" + node.database + "/collections/stats";
+        const uri = node.Url + "/databases/" + node.Database + "/collections/stats";
         return { uri };
     }
 
@@ -45,12 +45,7 @@ export class GetCollectionStatisticsCommand extends RavenCommand<CollectionStati
 
         let body: string = null;
         this.result = await this._defaultPipeline(_ => body = _)
-            .collectBody()
-            .objectKeysTransform({
-                defaultTransform: "camel",
-                ignorePaths: [/^collections\./i]
-            })
-            .process(bodyStream);
+            .collectBody().process(bodyStream);
         return body;
     }
 }

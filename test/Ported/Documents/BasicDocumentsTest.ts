@@ -41,7 +41,7 @@ describe("Basic documents test", function () {
     });
 
     class Animal {
-        public id: string;
+        public Id: string;
         public name: string;
     }
 
@@ -63,13 +63,13 @@ describe("Basic documents test", function () {
 
         await session.saveChanges();
 
-        const cat = await session.load(dog.id, Cat);
+        const cat = await session.load(dog.Id, Cat);
         assert.strictEqual(cat.constructor, Cat);
     });
 
     it("get", async () => {
         const dummy = new User();
-        delete dummy.id;
+        delete dummy.Id;
 
         {
             const session = store.openSession();
@@ -83,7 +83,7 @@ describe("Basic documents test", function () {
 
         const requestExecutor = store.getRequestExecutor();
         let getDocumentsCommand = new GetDocumentsCommand({
-            ids: ["users/1", "users/2"],
+            Ids: ["users/1", "users/2"],
             includes: null,
             metadataOnly: false,
             conventions: store.conventions
@@ -91,10 +91,10 @@ describe("Basic documents test", function () {
 
         await requestExecutor.execute(getDocumentsCommand);
         let docs = getDocumentsCommand.result;
-        assert.strictEqual(docs.results.length, 2);
+        assert.strictEqual(docs.Results.length, 2);
 
-        let doc1 = docs.results[0];
-        let doc2 = docs.results[1];
+        let doc1 = docs.Results[0];
+        let doc2 = docs.Results[1];
         assert.ok(doc1);
 
         let doc1Properties = Object.keys(doc1);
@@ -118,7 +118,7 @@ describe("Basic documents test", function () {
             assert.strictEqual(user2.name, "Arek");
 
             getDocumentsCommand = new GetDocumentsCommand({
-                ids: ["users/1", "users/2"],
+                Ids: ["users/1", "users/2"],
                 metadataOnly: true,
                 conventions: store.conventions
             });
@@ -126,9 +126,9 @@ describe("Basic documents test", function () {
             await requestExecutor.execute(getDocumentsCommand);
 
             docs = getDocumentsCommand.result;
-            assert.strictEqual(docs.results.length, 2);
+            assert.strictEqual(docs.Results.length, 2);
 
-            [doc1, doc2] = docs.results;
+            [doc1, doc2] = docs.Results;
             assert.ok(doc1);
             doc1Properties = Object.keys(doc1);
             assert.ok(doc1Properties.includes("@metadata"));

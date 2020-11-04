@@ -39,7 +39,7 @@ class ConfigureRefreshCommand extends RavenCommand<ConfigureRefreshOperationResu
     }
 
     createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/databases/" + node.database + "/admin/refresh/config";
+        const uri = node.Url + "/databases/" + node.Database + "/admin/refresh/config";
 
         const body = this._serializer.serialize(this._configuration);
 

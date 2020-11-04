@@ -28,45 +28,45 @@ export interface ConflictSolver {
 }
 
 export interface DatabaseRecord {
-    databaseName: string;
-    disabled?: boolean;
-    encrypted?: boolean;
-    etagForBackup?: number;
-    deletionInProgress?: { [key: string]: DeletionInProgressStatus };
-    databaseStatus?: DatabaseStateStatus;
-    topology?: DatabaseTopology;
-    conflictSolverConfig?: ConflictSolver;
-    sorters?: { [key: string]: SorterDefinition };
-    indexes?: { [key: string]: IndexDefinition };
-    indexesHistory?: { [key: string]: IndexHistoryEntry[] };
-    autoIndexes?: { [key: string]: AutoIndexDefinition };
-    settings?: { [key: string]: string };
-    revisions?: RevisionsConfiguration;
-    revisionsForConflicts?: RevisionsCollectionConfiguration;
-    expiration?: ExpirationConfiguration;
-    refresh?: RefreshConfiguration;
-    periodicBackups?: PeriodicBackupConfiguration[];
-    externalReplications?: ExternalReplication[];
-    sinkPullReplications?: PullReplicationAsSink[];
-    hubPullReplications?: PullReplicationDefinition[];
-    ravenConnectionStrings?: { [key: string]: RavenConnectionString };
-    sqlConnectionStrings?: { [key: string]: SqlConnectionString };
-    ravenEtls?: RavenEtlConfiguration[];
-    sqlEtls?: SqlEtlConfiguration[];
-    client?: ClientConfiguration;
-    studio?: StudioConfiguration;
-    truncatedClusterTransactionIndex?: number;
-    unusedDatabaseIds?: string[];
+    DatabaseName: string;
+    Disabled?: boolean;
+    Encrypted?: boolean;
+    EtagForBackup?: number;
+    DeletionInProgress?: { [key: string]: DeletionInProgressStatus };
+    DatabaseStatus?: DatabaseStateStatus;
+    Topology?: DatabaseTopology;
+    ConflictSolverConfig?: ConflictSolver;
+    Sorters?: { [key: string]: SorterDefinition };
+    Indexes?: { [key: string]: IndexDefinition };
+    IndexesHistory?: { [key: string]: IndexHistoryEntry[] };
+    AutoIndexes?: { [key: string]: AutoIndexDefinition };
+    Settings?: { [key: string]: string };
+    Revisions?: RevisionsConfiguration;
+    RevisionsForConflicts?: RevisionsCollectionConfiguration;
+    Expiration?: ExpirationConfiguration;
+    Refresh?: RefreshConfiguration;
+    PeriodicBackups?: PeriodicBackupConfiguration[];
+    ExternalReplications?: ExternalReplication[];
+    SinkPullReplications?: PullReplicationAsSink[];
+    HubPullReplications?: PullReplicationDefinition[];
+    RavenConnectionStrings?: { [key: string]: RavenConnectionString };
+    SqlConnectionStrings?: { [key: string]: SqlConnectionString };
+    RavenEtls?: RavenEtlConfiguration[];
+    SqlEtls?: SqlEtlConfiguration[];
+    Client?: ClientConfiguration;
+    Studio?: StudioConfiguration;
+    TruncatedClusterTransactionIndex?: number;
+    UnusedDatabaseIds?: string[];
 }
 
 export interface IndexHistoryEntry {
-    definition: IndexDefinition;
-    source: string;
-    createdAt: Date;
+    Definition: IndexDefinition;
+    Source: string;
+    CreatedAt: Date;
 }
 
 export interface DatabaseRecordWithEtag extends DatabaseRecord {
-    etag: number;
+    Etag: number;
 }
 
 export type DatabaseStateStatus =

@@ -94,7 +94,7 @@ import { PullReplicationDefinition } from "../../../../src/Documents/Operations/
                     .isEqualTo(hub.database);
                 assertThat(sinkResult.destinationUrl)
                     .isEqualTo(hub.urls[0]);
-                assertThat(sinkResult.taskConnectionStatus)
+                assertThat(sinkResult.TaskConnectionStatus)
                     .isEqualTo("Active");
 
                 const hubResult = await hub.maintenance.send(new GetPullReplicationHubTasksInfoOperation(hubTask.taskId));
@@ -104,9 +104,9 @@ import { PullReplicationDefinition } from "../../../../src/Documents/Operations/
                     .isEqualTo(sink.database);
                 assertThat(ongoing.destinationUrl)
                     .isEqualTo(sink.urls[0]);
-                assertThat(ongoing.taskConnectionStatus)
+                assertThat(ongoing.TaskConnectionStatus)
                     .isEqualTo("Active");
-                assertThat(ongoing.taskType)
+                assertThat(ongoing.TaskType)
                     .isEqualTo("PullReplicationAsHub");
             } finally {
                 hub.dispose();

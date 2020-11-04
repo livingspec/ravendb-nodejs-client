@@ -41,7 +41,7 @@ export class EnableIndexCommand extends RavenCommand<void> {
     }
 
     public createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/databases/" + node.database
+        const uri = node.Url + "/databases/" + node.Database
             + "/admin/indexes/enable?name=" + encodeURIComponent(this._indexName);
         return {
             method: "POST",

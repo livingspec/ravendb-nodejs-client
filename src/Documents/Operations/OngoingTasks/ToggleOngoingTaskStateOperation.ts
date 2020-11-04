@@ -56,8 +56,8 @@ class ToggleTaskStateCommand extends RavenCommand<ModifyOngoingTaskResult> imple
     }
 
     createRequest(node: ServerNode): HttpRequestParameters {
-        let uri = node.url + "/databases/"
-            + node.database + "/admin/tasks/state?key="
+        let uri = node.Url + "/databases/"
+            + node.Database + "/admin/tasks/state?key="
             + this._taskId + "&type=" + this._type
             + "&disable=" + (this._disable ? "true" : "false");
 

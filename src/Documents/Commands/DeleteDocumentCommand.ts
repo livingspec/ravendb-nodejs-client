@@ -24,7 +24,7 @@ export class DeleteDocumentCommand extends RavenCommand<void> {
     public createRequest(node: ServerNode): HttpRequestParameters {
         RavenCommand.ensureIsNotNullOrEmpty(this._id, "id");
 
-        const uri = node.url + "/databases/" + node.database + "/docs?id=" + encodeURIComponent(this._id);
+        const uri = node.Url + "/databases/" + node.Database + "/docs?id=" + encodeURIComponent(this._id);
 
         const request = {
             method: "DELETE",

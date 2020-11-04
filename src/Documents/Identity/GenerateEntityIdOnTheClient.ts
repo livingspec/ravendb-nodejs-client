@@ -1,3 +1,4 @@
+import * as BluebirdPromise from "bluebird";
 import { DocumentConventions } from "../Conventions/DocumentConventions";
 import { DocumentType } from "../DocumentAbstractions";
 import { throwError } from "../../Exceptions";
@@ -69,7 +70,7 @@ export class GenerateEntityIdOnTheClient {
     }
 
     public generateDocumentKeyForStorage(entity: object): Promise<string> {
-        return Promise.resolve()
+        return BluebirdPromise.resolve()
             .then(() => this.getOrGenerateDocumentId(entity))
             .then(id => {
                 this.trySetIdentity(entity, id);

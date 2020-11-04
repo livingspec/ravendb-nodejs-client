@@ -1,19 +1,15 @@
 import * as stream from "readable-stream";
 import * as StringBuilder from "string-builder";
-import { InMemoryDocumentSessionOperations } from "../InMemoryDocumentSessionOperations";
-import { QueryStreamCommand } from "../../Commands/QueryStreamCommand";
-import { IndexQuery } from "../../Queries/IndexQuery";
-import { throwError } from "../../../Exceptions";
-import { StartingWithOptions } from "../IDocumentSession";
-import { StreamCommand } from "../../Commands/StreamCommand";
-import { TypeUtil } from "../../../Utility/TypeUtil";
-import { StreamResultResponse } from "../../Commands/StreamResultResponse";
-import { streamValues } from "stream-json/streamers/StreamValues";
-import { ignore } from "stream-json/filters/Ignore";
-import { RavenCommandResponsePipeline } from "../../../Http/RavenCommandResponsePipeline";
-import { getDocumentResultsAsObjects } from "../../../Mapping/Json/Streams/Pipelines";
-import { TransformKeysJsonStream } from "../../../Mapping/Json/Streams/TransformKeysJsonStream";
-import { getTransformJsonKeysProfile } from "../../../Mapping/Json/Streams/TransformJsonKeysProfiles";
+import {InMemoryDocumentSessionOperations} from "../InMemoryDocumentSessionOperations";
+import {QueryStreamCommand} from "../../Commands/QueryStreamCommand";
+import {IndexQuery} from "../../Queries/IndexQuery";
+import {throwError} from "../../../Exceptions";
+import {StartingWithOptions} from "../IDocumentSession";
+import {StreamCommand} from "../../Commands/StreamCommand";
+import {TypeUtil} from "../../../Utility/TypeUtil";
+import {StreamResultResponse} from "../../Commands/StreamResultResponse";
+import {RavenCommandResponsePipeline} from "../../../Http/RavenCommandResponsePipeline";
+import {getDocumentResultsAsObjects} from "../../../Mapping/Json/Streams/Pipelines";
 
 export class StreamOperation {
     private readonly _session: InMemoryDocumentSessionOperations;
@@ -89,28 +85,17 @@ export class StreamOperation {
             throwError("InvalidArgumentException", "The index does not exists, failed to stream results.");
         }
 
-        const result = getDocumentResultsAsObjects(this._session.conventions).stream(response.stream);
-        
-        if (this._isQueryStream) {
-            RavenCommandResponsePipeline.create()
-                .parseJsonAsync([
-                    ignore({ filter: /^Results|Includes$/ }),
-                    new TransformKeysJsonStream(getTransformJsonKeysProfile("CommandResponsePayload")),
-                    streamValues()
-                ])
-                .stream(response.stream)
-                .on("error", err => result.emit("error", err))
-                .on("data", data => {
-                    const statsResult =
-                        this._session.conventions.objectMapper
-                            .fromObjectLiteral(data["value"], {
-                                nestedTypes: {
-                                    indexTimestamp: "date"
-                                }
-                            });
-                    result.emit("stats", statsResult);
-                });
-        }
+        const result = getDocumentResultsAsObjects(this._session.conventions, this._isQueryStream).stream(response.stream);
+        response.stream.on("accumulateStats", data => {
+            const statsResult =
+                this._session.conventions.objectMapper
+                    .fromObjectLiteral(data as object, {
+                        nestedTypes: {
+                            IndexTimestamp: "date"
+                        }
+                    });
+            result.emit("stats", statsResult);
+        });
 
         result.on("newListener", (event, listener) => {
             if (event === "data") {

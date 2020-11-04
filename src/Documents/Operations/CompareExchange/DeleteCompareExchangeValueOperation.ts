@@ -59,7 +59,7 @@ export class RemoveCompareExchangeCommand<T> extends RavenCommand<CompareExchang
     }
 
     public createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/databases/" + node.database + "/cmpxchg?key=" + encodeURIComponent(this._key) 
+        const uri = node.Url + "/databases/" + node.Database + "/cmpxchg?key=" + encodeURIComponent(this._key)
             + "&index=" + this._index;
         return {
             method: "DELETE",
@@ -71,8 +71,7 @@ export class RemoveCompareExchangeCommand<T> extends RavenCommand<CompareExchang
         let body: string = null;
         const resObj = await this._pipeline<CompareExchangeResultResponse>()
             .collectBody(_ => body = _)
-            .parseJsonAsync()
-            .jsonKeysTransform("CompareExchangeValue", this._conventions)
+            .parseJsonSync()
             .process(bodyStream);
         this.result = CompareExchangeResult.parseFromObject(resObj, this._conventions, this._clazz);
         return body;

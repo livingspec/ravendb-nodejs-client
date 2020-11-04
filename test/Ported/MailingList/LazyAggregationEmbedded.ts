@@ -14,7 +14,7 @@ class TaskIndex extends AbstractIndexCreationTask {
 }
 
 class Task {
-    public id: string;
+    public Id: string;
     public assigneeId: string;
 }
 
@@ -33,15 +33,15 @@ describe("lazy aggregation embedded", function () {
         const session = store.openSession();
         const task1 = new Task();
         task1.assigneeId = "users/1";
-        task1.id = "tasks/1";
+        task1.Id = "tasks/1";
 
         const task2 = new Task();
         task2.assigneeId = "users/1";
-        task2.id = "tasks/2";
+        task2.Id = "tasks/2";
 
         const task3 = new Task();
         task3.assigneeId = "users/2";
-        task3.id = "tasks/3";
+        task3.Id = "tasks/3";
         await session.store(task1);
         await session.store(task2);
         await session.store(task3);
@@ -58,9 +58,9 @@ describe("lazy aggregation embedded", function () {
 
         const lazyOp = query.executeLazy();
         const facetValue = await lazyOp.getValue();
-        const userStats = facetValue["assigneeId"].values
+        const userStats = facetValue["assigneeId"].Values
             .reduce((result, next) => {
-                result[next.range] = next.count;
+                result[next.Range] = next.Count;
                 return result;
             }, {});
 

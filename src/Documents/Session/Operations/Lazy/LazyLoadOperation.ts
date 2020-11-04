@@ -102,7 +102,7 @@ export class LazyLoadOperation<T extends object> implements ILazyOperation {
     }
 
     public async handleResponseAsync(response: GetResponse): Promise<void> {
-        if (response.forceRetry) {
+        if (response.ForceRetry) {
             this.result = null;
             this.requiresRetry = true;
             return;
@@ -110,7 +110,7 @@ export class LazyLoadOperation<T extends object> implements ILazyOperation {
 
         const multiLoadResult: GetDocumentsResult =
             await GetDocumentsCommand.parseDocumentsResultResponseAsync(
-                stringToReadable(response.result), this._session.conventions);
+                stringToReadable(response.Result), this._session.conventions);
 
         this._handleResponse(multiLoadResult);
     }

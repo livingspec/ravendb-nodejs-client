@@ -12,8 +12,8 @@ interface ServerNodeDto {
 }
 
 interface TopologyDto {
-    etag: number;
-    nodes?: ServerNodeDto[];
+    Etag: number;
+    Nodes?: ServerNodeDto[];
 }
 
 export class GetDatabaseTopologyCommand extends RavenCommand<Topology> {
@@ -28,12 +28,12 @@ export class GetDatabaseTopologyCommand extends RavenCommand<Topology> {
     }
 
     public createRequest(node: ServerNode): HttpRequestParameters {
-        let uri = `${node.url}/topology?name=${node.database}`;
+        let uri = `${node.Url}/topology?name=${node.Database}`;
 
-        if (node.url.toLowerCase().indexOf(".fiddler") !== -1) {
+        if (node.Url.toLowerCase().indexOf(".fiddler") !== -1) {
             // we want to keep the '.fiddler' stuff there so we'll keep tracking request
             // so we are going to ask the server to respect it
-            uri += "&localUrl=" + encodeURIComponent(node.url);
+            uri += "&localUrl=" + encodeURIComponent(node.Url);
         }
 
         if (this._debugTag) {
@@ -56,13 +56,12 @@ export class GetDatabaseTopologyCommand extends RavenCommand<Topology> {
         return this._pipeline<TopologyDto>()
             .collectBody(_ => body = _)
             .parseJsonSync()
-            .objectKeysTransform("camel")
             .process(bodyStream)
             .then(rawTpl => {
-                const nodes = rawTpl.nodes
-                    ? rawTpl.nodes.map(x => Object.assign(new ServerNode(), x))
+                const nodes = rawTpl.Nodes
+                    ? rawTpl.Nodes.map(x => Object.assign(new ServerNode(), x))
                     : null;
-                this.result = new Topology(rawTpl.etag, nodes);
+                this.result = new Topology(rawTpl.Etag, nodes);
                 return body;
             });
     }

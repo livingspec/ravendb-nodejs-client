@@ -21,7 +21,7 @@ export class CreateSubscriptionCommand extends RavenCommand<CreateSubscriptionRe
     }
 
     public createRequest(node: ServerNode): HttpRequestParameters {
-        let uri = node.url + "/databases/" + node.database + "/subscriptions";
+        let uri = node.Url + "/databases/" + node.Database + "/subscriptions";
 
         if (this._id) {
             uri += "?id=" + this._urlEncode(this._id);

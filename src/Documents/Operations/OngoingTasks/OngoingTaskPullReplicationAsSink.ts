@@ -2,7 +2,7 @@ import { OngoingTask } from "./OngoingTask";
 
 
 export interface OngoingTaskPullReplicationAsSink extends OngoingTask {
-    taskType: "PullReplicationAsSink";
+    TaskType: "PullReplicationAsSink";
 
     hubDefinitionName: string;
     destinationUrl: string;

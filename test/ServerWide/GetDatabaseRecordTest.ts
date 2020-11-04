@@ -25,7 +25,7 @@ describe("GetDatabaseRecordTest", function () {
             new GetDatabaseRecordOperation(store.database));
 
         assert.ok(databaseRecord);
-        assert.strictEqual(databaseRecord.databaseName, store.database);
+        assert.strictEqual(databaseRecord.DatabaseName, store.database);
     });
 
     it("can map types in database record", async () => {
@@ -33,7 +33,7 @@ describe("GetDatabaseRecordTest", function () {
 
         const databaseRecord = await store.maintenance.server.send(new GetDatabaseRecordOperation(store.database));
 
-        const history = databaseRecord.indexesHistory;
+        const history = databaseRecord.IndexesHistory;
         assertThat(history)
             .isNotNull();
         const indexes = Object.keys(history);
@@ -43,7 +43,7 @@ describe("GetDatabaseRecordTest", function () {
         for (const index of indexes) {
             const historyItems = history[index];
             for (const item of historyItems) {
-                assertThat(item.createdAt instanceof Date)
+                assertThat(item.CreatedAt instanceof Date)
                     .isTrue();
             }
         }

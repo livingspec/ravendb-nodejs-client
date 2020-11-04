@@ -1,7 +1,6 @@
 
 export interface NodeId {
-    nodeTag: string;
-    nodeUrl: string;
-    responsibleNode: string;
-
+    NodeTag: string;
+    NodeUrl: string;
+    ResponsibleNode: string;
 }

@@ -100,8 +100,7 @@ export abstract class RavenCommand<TResult> {
         bodyCallback?: (body: string) => void): RavenCommandResponsePipeline<TResult> {
         return this._pipeline<TResult>()
             .parseJsonSync()
-            .collectBody(bodyCallback)
-            .objectKeysTransform("camel");
+            .collectBody(bodyCallback);
     }
 
     public async setResponseAsync(bodyStream: stream.Stream, fromCache: boolean): Promise<string> {
@@ -243,7 +242,7 @@ export abstract class RavenCommand<TResult> {
         conventions: DocumentConventions, 
         typeInfo?: TypeInfo, 
         knownTypes?: Map<string, ObjectTypeDescriptor>) {
-        return conventions.objectMapper.fromObjectLiteral<TResponse>(raw, typeInfo, knownTypes);
+        return conventions.objectMapper.fromObjectLiteral<TResponse>(raw, typeInfo, true, knownTypes);
     }
 
     protected async _parseResponseDefaultAsync(bodyStream: stream.Stream): Promise<string> {

@@ -40,7 +40,7 @@ describe("FacetPagingTest", function () {
         {
             const session = store.openSession();
             const facetSetup = new FacetSetup();
-            facetSetup.id = "facets/CameraFacets";
+            facetSetup.Id = "facets/CameraFacets";
             facetSetup.facets = facets;
             await session.store(facetSetup);
             await session.saveChanges();
@@ -64,21 +64,21 @@ describe("FacetPagingTest", function () {
                     .splice(2)
                     .map(x => x.manufacturer.toLocaleLowerCase());
 
-            assert.strictEqual(facetResults["manufacturer"].values.length, 3);
+            assert.strictEqual(facetResults["manufacturer"].Values.length, 3);
 
-            assert.strictEqual(facetResults["manufacturer"].values[0].range, camerasByHits[0]);
-            assert.strictEqual(facetResults["manufacturer"].values[1].range, camerasByHits[1]);
-            assert.strictEqual(facetResults["manufacturer"].values[2].range, camerasByHits[2]);
+            assert.strictEqual(facetResults["manufacturer"].Values[0].Range, camerasByHits[0]);
+            assert.strictEqual(facetResults["manufacturer"].Values[1].Range, camerasByHits[1]);
+            assert.strictEqual(facetResults["manufacturer"].Values[2].Range, camerasByHits[2]);
 
-            for (const f of facetResults["manufacturer"].values) {
+            for (const f of facetResults["manufacturer"].Values) {
                 const inMemoryCount
-                    = data.filter(x => x.manufacturer.toLocaleLowerCase() === f.range.toLocaleLowerCase()).length;
+                    = data.filter(x => x.manufacturer.toLocaleLowerCase() === f.Range.toLocaleLowerCase()).length;
 
-                assert.strictEqual(f.count, inMemoryCount);
+                assert.strictEqual(f.Count, inMemoryCount);
 
-                assert.strictEqual(facetResults["manufacturer"].remainingTermsCount, 0);
-                assert.strictEqual(facetResults["manufacturer"].remainingTerms.length, 0);
-                assert.strictEqual(facetResults["manufacturer"].remainingHits, 0);
+                assert.strictEqual(facetResults["manufacturer"].RemainingTermsCount, 0);
+                assert.strictEqual(facetResults["manufacturer"].RemainingTerms.length, 0);
+                assert.strictEqual(facetResults["manufacturer"].RemainingHits, 0);
             }
         }
     });
@@ -101,7 +101,7 @@ describe("FacetPagingTest", function () {
         {
             const session = store.openSession();
             const facetSetup = new FacetSetup();
-            facetSetup.id = "facets/CameraFacets";
+            facetSetup.Id = "facets/CameraFacets";
             facetSetup.facets = facets;
             await session.store(facetSetup);
             await session.saveChanges();
@@ -126,19 +126,19 @@ describe("FacetPagingTest", function () {
                     .slice(0, 2)
                     .map(x => x.manufacturer.toLocaleLowerCase());
 
-            assert.strictEqual(facetResults["manufacturer"].values.length, 2);
+            assert.strictEqual(facetResults["manufacturer"].Values.length, 2);
 
-            assert.strictEqual(facetResults["manufacturer"].values[0].range, camerasByHits[0]);
-            assert.strictEqual(facetResults["manufacturer"].values[1].range, camerasByHits[1]);
+            assert.strictEqual(facetResults["manufacturer"].Values[0].Range, camerasByHits[0]);
+            assert.strictEqual(facetResults["manufacturer"].Values[1].Range, camerasByHits[1]);
 
-            for (const f of facetResults["manufacturer"].values) {
+            for (const f of facetResults["manufacturer"].Values) {
                 const inMemoryCount
-                    = data.filter(x => x.manufacturer.toLocaleLowerCase() === f.range.toLocaleLowerCase()).length;
+                    = data.filter(x => x.manufacturer.toLocaleLowerCase() === f.Range.toLocaleLowerCase()).length;
 
-                assert.strictEqual(f.count, inMemoryCount);
+                assert.strictEqual(f.Count, inMemoryCount);
 
-                assert.strictEqual(facetResults["manufacturer"].remainingTermsCount, 1);
-                assert.strictEqual(facetResults["manufacturer"].remainingTerms.length, 1);
+                assert.strictEqual(facetResults["manufacturer"].RemainingTermsCount, 1);
+                assert.strictEqual(facetResults["manufacturer"].RemainingTerms.length, 1);
 
                 const counts =
                     orderBy(Object.keys(cameraCounts).map(k => ({ manufacturer: k, count: cameraCounts[k] })),
@@ -146,7 +146,7 @@ describe("FacetPagingTest", function () {
                         ["desc", "asc"])
                         .map(x => x.count);
 
-                assert.strictEqual(counts[counts.length - 1], facetResults["manufacturer"].remainingHits);
+                assert.strictEqual(counts[counts.length - 1], facetResults["manufacturer"].RemainingHits);
             }
         }
     });
@@ -156,8 +156,8 @@ describe("FacetPagingTest", function () {
             const s = store.openSession();
 
             const indexDefinition = new IndexDefinition();
-            indexDefinition.name = "CameraCost";
-            indexDefinition.maps =
+            indexDefinition.Name = "CameraCost";
+            indexDefinition.Maps =
                 new Set(["from camera in docs " +
                 "select new { " +
                 "camera.manufacturer, camera.model, " +

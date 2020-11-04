@@ -38,13 +38,13 @@ describe("SubscriptionsBasicTest", function () {
         await store.subscriptions.disable(subscription);
 
         let subscriptions = await store.subscriptions.getSubscriptions(0, 10);
-        assertThat(subscriptions[0].disabled)
+        assertThat(subscriptions[0].Disabled)
             .isTrue();
 
         await store.subscriptions.enable(subscription);
 
         subscriptions = await store.subscriptions.getSubscriptions(0, 10);
-        assertThat(subscriptions[0].disabled)
+        assertThat(subscriptions[0].Disabled)
             .isFalse();
     });
 
@@ -58,7 +58,7 @@ describe("SubscriptionsBasicTest", function () {
 
         // test getSubscriptionState as well
         const subscriptionState = await store.subscriptions.getSubscriptionState(id1);
-        assert.ok(!subscriptionState.changeVectorForNextBatchStartingPoint);
+        assert.ok(!subscriptionState.ChangeVectorForNextBatchStartingPoint);
 
         await store.subscriptions.delete(id1);
         await store.subscriptions.delete(id2);
@@ -69,8 +69,8 @@ describe("SubscriptionsBasicTest", function () {
 
     it("should throw when opening no existing subscription", async function() {
         const subscription = store.subscriptions.getSubscriptionWorker<any>({
-            subscriptionName: "1",
-            maxErroneousPeriod: 3000
+            SubscriptionName: "1",
+            MaxErroneousPeriod: 3000
         });
 
         subscription.on("batch", (batch, cb) => cb()); // this triggers subscription to run
@@ -89,8 +89,8 @@ describe("SubscriptionsBasicTest", function () {
         const id = await store.subscriptions.create(User);
 
         const subscription = store.subscriptions.getSubscriptionWorker<any>({
-            subscriptionName: id,
-            maxErroneousPeriod: 3000
+            SubscriptionName: id,
+            MaxErroneousPeriod: 3000
         });
 
         try {
@@ -107,8 +107,8 @@ describe("SubscriptionsBasicTest", function () {
 
             {
                 const secondSubscription = store.subscriptions.getSubscriptionWorker({
-                    subscriptionName: id,
-                    strategy: "OpenIfFree"
+                    SubscriptionName: id,
+                    Strategy: "OpenIfFree"
                 });
 
                 secondSubscription.on("batch", () => {
@@ -157,10 +157,10 @@ describe("SubscriptionsBasicTest", function () {
         const id = await store.subscriptions.create(User);
 
         const subscription = store.subscriptions.getSubscriptionWorker<User>({
-            subscriptionName: id,
-            documentType: User,
-            maxErroneousPeriod: 0,
-            timeToWaitBeforeConnectionRetry: 0
+            SubscriptionName: id,
+            DocumentType: User,
+            MaxErroneousPeriod: 0,
+            TimeToWaitBeforeConnectionRetry: 0
         });
 
         const keys = [] as string[];
@@ -200,10 +200,10 @@ describe("SubscriptionsBasicTest", function () {
         const id = await store.subscriptions.create(User);
 
         const subscription = store.subscriptions.getSubscriptionWorker<User>({
-            subscriptionName: id,
-            documentType: User,
-            maxErroneousPeriod: 0,
-            timeToWaitBeforeConnectionRetry: 0
+            SubscriptionName: id,
+            DocumentType: User,
+            MaxErroneousPeriod: 0,
+            TimeToWaitBeforeConnectionRetry: 0
         });
 
         const names = new AsyncQueue<string>();
@@ -268,9 +268,9 @@ describe("SubscriptionsBasicTest", function () {
 
         const id = await store.subscriptions.create(Company);
         const options = {
-            subscriptionName: id,
-            maxDocsPerBatch: 25,
-            maxErroneousPeriod: 3000
+            SubscriptionName: id,
+            MaxDocsPerBatch: 25,
+            MaxErroneousPeriod: 3000
         } as SubscriptionWorkerOptions<Company>;
 
         const subscriptionWorker = store.subscriptions.getSubscriptionWorker(options);
@@ -312,9 +312,9 @@ describe("SubscriptionsBasicTest", function () {
         const id = await store.subscriptions.create(User);
 
         const options = {
-            subscriptionName: id,
-            maxDocsPerBatch: 31,
-            maxErroneousPeriod: 3000
+            SubscriptionName: id,
+            MaxDocsPerBatch: 31,
+            MaxErroneousPeriod: 3000
         } as SubscriptionWorkerOptions<User>;
 
         const subscription = store.subscriptions.getSubscriptionWorker(options);
@@ -355,17 +355,17 @@ describe("SubscriptionsBasicTest", function () {
 
         assertThat(subscriptionTask)
             .isNotNull();
-        assertThat(subscriptionTask.taskType)
+        assertThat(subscriptionTask.TaskType)
             .isEqualTo("Subscription");
-        assertThat(subscriptionTask.responsibleNode)
+        assertThat(subscriptionTask.ResponsibleNode)
             .isNotNull();
 
-        await store.maintenance.send(new ToggleOngoingTaskStateOperation(subscriptionTask.taskId, "Subscription", true));
+        await store.maintenance.send(new ToggleOngoingTaskStateOperation(subscriptionTask.TaskId, "Subscription", true));
 
         subscriptionTask = await store.maintenance.send(new GetOngoingTaskInfoOperation(id, "Subscription")) as OngoingTaskSubscription;
         assertThat(subscriptionTask)
             .isNotNull();
-        assertThat(subscriptionTask.disabled)
+        assertThat(subscriptionTask.Disabled)
             .isTrue();
     });
 
@@ -384,13 +384,13 @@ describe("SubscriptionsBasicTest", function () {
             let allCounter = 0;
 
             const filteredOptions = {
-                query: "from Users where age < 0"
+                Query: "from Users where age < 0"
             } as SubscriptionCreationOptions;
 
             const filteredUsersId = await store.subscriptions.create(filteredOptions);
 
             const filteredUsersSubscription = store.subscriptions.getSubscriptionWorker({
-                subscriptionName: filteredUsersId
+                SubscriptionName: filteredUsersId
             });
 
             try {
@@ -443,9 +443,9 @@ describe("SubscriptionsBasicTest", function () {
             const id = await store.subscriptions.create(User);
 
             const options1 = {
-                subscriptionName: id,
-                strategy: "OpenIfFree",
-                maxErroneousPeriod: 3000
+                SubscriptionName: id,
+                Strategy: "OpenIfFree",
+                MaxErroneousPeriod: 3000
             } as SubscriptionWorkerOptions<User>;
 
             subscriptionWorker = store.subscriptions.getSubscriptionWorker(options1);
@@ -466,9 +466,9 @@ describe("SubscriptionsBasicTest", function () {
             mre.leave();
 
             const options2 = {
-                subscriptionName: id,
-                strategy: "OpenIfFree",
-                maxErroneousPeriod: 3000
+                SubscriptionName: id,
+                Strategy: "OpenIfFree",
+                MaxErroneousPeriod: 3000
             } as SubscriptionWorkerOptions<User>;
 
             throwingSubscriptionWorker = store.subscriptions.getSubscriptionWorker(options2);
@@ -487,8 +487,8 @@ describe("SubscriptionsBasicTest", function () {
             await store.subscriptions.dropConnection(id);
 
             notThrowingSubscriptionWorker = store.subscriptions.getSubscriptionWorker({
-                subscriptionName: id,
-                maxErroneousPeriod: 3000
+                SubscriptionName: id,
+                MaxErroneousPeriod: 3000
             });
 
             notThrowingSubscriptionWorker.on("batch", (batch, callback) => {
@@ -522,9 +522,9 @@ describe("SubscriptionsBasicTest", function () {
         const id = await store.subscriptions.create(User);
 
         const subscription = store.subscriptions.getSubscriptionWorker<User>({
-            subscriptionName: id,
-            documentType: User,
-            maxErroneousPeriod: 3000
+            SubscriptionName: id,
+            DocumentType: User,
+            MaxErroneousPeriod: 3000
         });
 
         const docs = new AsyncQueue<User>();
@@ -556,8 +556,8 @@ describe("SubscriptionsBasicTest", function () {
         const id = await store.subscriptions.create(User);
 
         const subscription = store.subscriptions.getSubscriptionWorker({
-            subscriptionName: id,
-            maxErroneousPeriod: 3000
+            SubscriptionName: id,
+            MaxErroneousPeriod: 3000
         });
 
         await putUserDoc(store);
@@ -575,17 +575,17 @@ describe("SubscriptionsBasicTest", function () {
         });
 
         const subscriptionConfig = (await store.subscriptions.getSubscriptions(0, 1))[0];
-        assert.ok(!subscriptionConfig.changeVectorForNextBatchStartingPoint);
+        assert.ok(!subscriptionConfig.ChangeVectorForNextBatchStartingPoint);
     });
 
     it("can set to ignore subscriber errors", async function() {
         const id = await store.subscriptions.create(User);
 
         const options1 = {
-            ignoreSubscriberErrors: true,
-            subscriptionName: id,
+            IgnoreSubscriberErrors: true,
+            SubscriptionName: id,
             documentType: User,
-            maxErroneousPeriod: 3000
+            MaxErroneousPeriod: 3000
         } as SubscriptionWorkerOptions<User>;
 
         const subscription = store.subscriptions.getSubscriptionWorker(options1);
@@ -618,10 +618,10 @@ describe("SubscriptionsBasicTest", function () {
         const id = await store.subscriptions.create(User);
 
         const options1 = {
-            subscriptionName: id,
-            timeToWaitBeforeConnectionRetry: 1000,
+            SubscriptionName: id,
+            TimeToWaitBeforeConnectionRetry: 1000,
             documentType: User,
-            maxErroneousPeriod: 3000
+            MaxErroneousPeriod: 3000
         } as SubscriptionWorkerOptions<User>;
 
         const subscription = store.subscriptions.getSubscriptionWorker(options1);
@@ -671,9 +671,9 @@ describe("SubscriptionsBasicTest", function () {
     it("RavenDB-3453 should deserialize the whole documents after typed subscription", async function() {
         const id = await store.subscriptions.create(User);
         const subscription = store.subscriptions.getSubscriptionWorker<User>({
-            documentType: User,
-            subscriptionName: id,
-            maxErroneousPeriod: 3000
+            DocumentType: User,
+            SubscriptionName: id,
+            MaxErroneousPeriod: 3000
         });
 
         try {
@@ -704,17 +704,17 @@ describe("SubscriptionsBasicTest", function () {
             let user: User;
             user = await users.poll(_reasonableWaitTime);
             assert.ok(user);
-            assert.strictEqual(user.id, "users/1");
+            assert.strictEqual(user.Id, "users/1");
             assert.strictEqual(user.age, 31);
 
             user = await users.poll(_reasonableWaitTime);
             assert.ok(user);
-            assert.strictEqual(user.id, "users/12");
+            assert.strictEqual(user.Id, "users/12");
             assert.strictEqual(user.age, 27);
 
             user = await users.poll(_reasonableWaitTime);
             assert.ok(user);
-            assert.strictEqual(user.id, "users/3");
+            assert.strictEqual(user.Id, "users/3");
             assert.strictEqual(user.age, 25);
         } finally {
             subscription.dispose();
@@ -737,8 +737,8 @@ describe("SubscriptionsBasicTest", function () {
             }
 
             subscription1 = store.subscriptions.getSubscriptionWorker<User>({
-                subscriptionName: id1,
-                documentType: User
+                SubscriptionName: id1,
+                DocumentType: User
             });
             const items1 = new AsyncQueue<User>();
             subscription1.on("batch", (batch, callback) => {
@@ -747,8 +747,8 @@ describe("SubscriptionsBasicTest", function () {
             });
 
             subscription2 = store.subscriptions.getSubscriptionWorker<User>({
-                subscriptionName: id2,
-                documentType: User
+                SubscriptionName: id2,
+                DocumentType: User
             });
             const items2 = new AsyncQueue<User>();
             subscription2.on("batch", (batch, callback) => {
@@ -758,19 +758,19 @@ describe("SubscriptionsBasicTest", function () {
 
             let user = await items1.poll(_reasonableWaitTime);
             assert.ok(user);
-            assert.strictEqual(user.id, "users/1");
+            assert.strictEqual(user.Id, "users/1");
 
             user = await items1.poll(_reasonableWaitTime);
             assert.ok(user);
-            assert.strictEqual(user.id, "users/2");
+            assert.strictEqual(user.Id, "users/2");
 
             user = await items2.poll(_reasonableWaitTime);
             assert.ok(user);
-            assert.strictEqual(user.id, "users/1");
+            assert.strictEqual(user.Id, "users/1");
 
             user = await items2.poll(_reasonableWaitTime);
             assert.ok(user);
-            assert.strictEqual(user.id, "users/2");
+            assert.strictEqual(user.Id, "users/2");
 
             subscription1.dispose();
 
@@ -783,11 +783,11 @@ describe("SubscriptionsBasicTest", function () {
 
             user = await items2.poll(_reasonableWaitTime);
             assert.ok(user);
-            assert.strictEqual(user.id, "users/3");
+            assert.strictEqual(user.Id, "users/3");
 
             user = await items2.poll(_reasonableWaitTime);
             assert.ok(user);
-            assert.strictEqual(user.id, "users/4");
+            assert.strictEqual(user.Id, "users/4");
         } finally {
             if (subscription1) {
                 subscription1.dispose();
@@ -798,53 +798,6 @@ describe("SubscriptionsBasicTest", function () {
         }
     });
 
-    it("test subscription with PascalCasing", async function() {
-        const store2 = new DocumentStore(store.urls, store.database);
-        try {
-            store2.conventions.findCollectionNameForObjectLiteral = () => "test";
-            store2.conventions.entityFieldNameConvention = "camel";
-            store2.conventions.remoteEntityFieldNameConvention = "pascal";
-            store2.initialize();
-
-            {
-                const session = store2.openSession();
-                const user1 = { age: 31, name: "John" };
-                await session.store(user1);
-                const user2 = { age: 18, name: "Marika" };
-                await session.store(user2);
-                const user3 = { age: 26, name: "Meluzyna" };
-                await session.store(user3);
-
-                await session.saveChanges();
-            }
-            
-            const id = await store2.subscriptions.create({
-                query: "from test"
-            });
-
-            const subscription = store2.subscriptions.getSubscriptionWorker({
-                subscriptionName: id,
-            });
-
-            let batch;
-            await new Promise((resolve, reject) => {
-                subscription.on("error", reject);
-                subscription.on("connectionRetry", reject);
-                subscription.on("batch", (_batch, callback) => {
-                    batch = _batch;
-                    callback();
-                    resolve();
-                });
-            });
-
-            assert.ok(batch);
-            assert.strictEqual(batch.items.length, 3);
-            assert.strictEqual(batch.items[0].rawResult.age, 31);
-            assert.strictEqual(batch.items[0].rawResult.name, "John");
-        } finally {
-            store2.dispose();
-        }
-    });
 });
 
 // describe("Manual subscription tests", () => {

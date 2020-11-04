@@ -63,8 +63,8 @@ describe("QueryTest", function () {
 
         const stats = await store.maintenance.send(new GetCollectionStatisticsOperation());
 
-        assert.strictEqual(stats.countOfDocuments, 2);
-        assert.strictEqual(stats.collections["Users"], 2);
+        assert.strictEqual(stats.CountOfDocuments, 2);
+        assert.strictEqual(stats.Collections["Users"], 2);
     });
 
     it("query with where clause", async () => {
@@ -168,13 +168,13 @@ describe("QueryTest", function () {
         it("query with select", async () => {
             const session = store.openSession();
             const results = await session.query(User)
-                .selectFields<User>(["age", "id"], User)
+                .selectFields<User>(["age", "Id"], User)
                 .all();
 
             for (const entry of results) {
                 assert.strictEqual(typeof entry, "object");
                 assert.ok(entry.age > 0);
-                assert.ok(entry.id);
+                assert.ok(entry.Id);
             }
         });
 
@@ -236,14 +236,14 @@ describe("QueryTest", function () {
         });
 
         class UserProjection {
-            public id: string;
+            public Id: string;
             public name: string;
         }
 
         it("query with projection", async () => {
             const session = store.openSession();
             const query = session.query(User)
-                .selectFields<UserProjection>(["id", "name"], UserProjection);
+                .selectFields<UserProjection>(["Id", "name"], UserProjection);
 
             const results = await query.all();
             assert.strictEqual(results.length, 3);
@@ -251,7 +251,7 @@ describe("QueryTest", function () {
 
             for (const entry of results) {
                 assert.ok(entry);
-                assert.ok(entry.id);
+                assert.ok(entry.Id);
                 assert.ok(entry.name);
             }
         });
@@ -259,7 +259,7 @@ describe("QueryTest", function () {
         it("query with projection 2", async () => {
             const session = store.openSession();
             const results = await session.query(User)
-                .selectFields<UserProjection>(["lastName", "id"], UserProjection)
+                .selectFields<UserProjection>(["lastName", "Id"], UserProjection)
                 .all();
 
             assert.strictEqual(results.length, 3);
@@ -267,7 +267,7 @@ describe("QueryTest", function () {
 
             for (const entry of results) {
                 assert.ok(entry);
-                assert.ok(entry.id);
+                assert.ok(entry.Id);
                 assert.ok(!entry.name);
             }
         });
@@ -302,8 +302,8 @@ describe("QueryTest", function () {
             assert.strictEqual(users.length, 3);
 
             for (const user of users) {
-                assert.ok(user.id);
-                assert.ok(!session.advanced.isLoaded(user.id));
+                assert.ok(user.Id);
+                assert.ok(!session.advanced.isLoaded(user.Id));
             }
         });
 

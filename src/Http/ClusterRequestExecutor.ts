@@ -133,7 +133,7 @@ export class ClusterRequestExecutor extends RequestExecutor {
                 })
                     .then(() => {
                         const results = command.result;
-                        const members = results.topology.members;
+                        const members = results.Topology.Members;
                         const nodes = Object.keys(members)
                             .reduce((reduceResult, clusterTag) => {
                                 const url = members[clusterTag];
@@ -141,7 +141,7 @@ export class ClusterRequestExecutor extends RequestExecutor {
                                 return [...reduceResult, serverNode];
                             }, []);
 
-                        const newTopology = new Topology(results.etag, nodes);
+                        const newTopology = new Topology(results.Etag, nodes);
                         if (!this._nodeSelector) {
                             this._nodeSelector = new NodeSelector(newTopology);
 

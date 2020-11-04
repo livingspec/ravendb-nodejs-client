@@ -32,7 +32,7 @@ class GetPullReplicationTasksInfoCommand extends RavenCommand<PullReplicationDef
     }
 
     createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/databases/" + node.database + "/tasks/pull-replication/hub?key=" + this._taskId;
+        const uri = node.Url + "/databases/" + node.Database + "/tasks/pull-replication/hub?key=" + this._taskId;
 
         return {
             method: "GET",

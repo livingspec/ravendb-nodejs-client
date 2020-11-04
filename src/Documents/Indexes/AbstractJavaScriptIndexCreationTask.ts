@@ -10,27 +10,27 @@ export class AbstractJavaScriptIndexCreationTask extends AbstractIndexCreationTa
     }
 
     public get maps() {
-        return this._definition.maps;
+        return this._definition.Maps;
     }
 
     public set maps(value) {
-        this._definition.maps = value;
+        this._definition.Maps = value;
     }
 
     public get fields() {
-        return this._definition.fields;
+        return this._definition.Fields;
     }
 
     public set fields(value) {
-        this._definition.fields = value;
+        this._definition.Fields = value;
     }
 
     public get reduce() {
-        return this._definition.reduce;
+        return this._definition.Reduce;
     }
 
     public set reduce(value) {
-        this._definition.reduce = value;
+        this._definition.Reduce = value;
     }
 
     public get isMapReduce(): boolean {
@@ -41,56 +41,56 @@ export class AbstractJavaScriptIndexCreationTask extends AbstractIndexCreationTa
      * @return If not null than each reduce result will be created as a document in the specified collection name.
      */
     public get outputReduceToCollection() {
-        return this._definition.outputReduceToCollection;
+        return this._definition.OutputReduceToCollection;
     }
 
     /**
      * @param value If not null than each reduce result will be created as a document in the specified collection name.
      */
     public set outputReduceToCollection(value) {
-        this._definition.outputReduceToCollection = value;
+        this._definition.OutputReduceToCollection = value;
     }
 
     /**
      * @return Defines a collection name for reference documents created based on provided pattern
      */
     public get patternReferencesCollectionName() {
-        return this._definition.patternReferencesCollectionName;
+        return this._definition.PatternReferencesCollectionName;
     }
 
     /**
      * @param value Defines a collection name for reference documents created based on provided pattern
      */
     public set patternReferencesCollectionName(value: string) {
-        this._definition.patternReferencesCollectionName = value;
+        this._definition.PatternReferencesCollectionName = value;
     }
 
     /**
      * @return Defines a collection name for reference documents created based on provided pattern
      */
     public get patternForOutputReduceToCollectionReferences() {
-        return this._definition.patternForOutputReduceToCollectionReferences;
+        return this._definition.PatternForOutputReduceToCollectionReferences;
     }
 
     /**
      * @param value Defines a collection name for reference documents created based on provided pattern
      */
     public set patternForOutputReduceToCollectionReferences(value: string) {
-        this._definition.patternForOutputReduceToCollectionReferences = value;
+        this._definition.PatternForOutputReduceToCollectionReferences = value;
     }
 
     public createIndexDefinition(): IndexDefinition {
         this._definition.type = this.isMapReduce ? "JavaScriptMapReduce" : "JavaScriptMap";
-        this._definition.name = this.getIndexName();
+        this._definition.Name = this.getIndexName();
 
         if (this.additionalSources) {
-            this._definition.additionalSources = this.additionalSources;
+            this._definition.AdditionalSources = this.additionalSources;
         } else {
-            this._definition.additionalSources = {};
+            this._definition.AdditionalSources = {};
         }
-        this._definition.configuration = this.configuration;
-        this._definition.lockMode = this.lockMode;
-        this._definition.priority = this.priority;
+        this._definition.Configuration = this.configuration;
+        this._definition.LockMode = this.lockMode;
+        this._definition.Priority = this.priority;
 
         return this._definition;
     }

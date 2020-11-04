@@ -47,17 +47,17 @@ import { OngoingTaskRavenEtlDetails } from "../../../../../src/Documents/Operati
                     .isNotNull();
 
                 const etlConfiguration = Object.assign(new RavenEtlConfiguration(), {
-                    connectionStringName: "toDst",
-                    disabled: false,
-                    name: "etlToDst"
+                    ConnectionStringName: "toDst",
+                    Disabled: false,
+                    Name: "etlToDst"
                 } as Partial<RavenEtlConfiguration>);
 
                 const transformation: Transformation = {
-                    applyToAllDocuments: true,
-                    name: "Script #1"
+                    ApplyToAllDocuments: true,
+                    Name: "Script #1"
                 };
 
-                etlConfiguration.transforms = [ transformation ];
+                etlConfiguration.Transforms = [ transformation ];
 
                 const operation = new AddEtlOperation(etlConfiguration);
 
@@ -80,15 +80,15 @@ import { OngoingTaskRavenEtlDetails } from "../../../../../src/Documents/Operati
                 assertThat(ongoingTask)
                     .isNotNull();
 
-                assertThat(ongoingTask.taskId)
+                assertThat(ongoingTask.TaskId)
                     .isEqualTo(etlResult.taskId);
-                assertThat(ongoingTask.taskType)
+                assertThat(ongoingTask.TaskType)
                     .isEqualTo("RavenEtl");
-                assertThat(ongoingTask.responsibleNode)
+                assertThat(ongoingTask.ResponsibleNode)
                     .isNotNull();
-                assertThat(ongoingTask.taskState)
+                assertThat(ongoingTask.TaskState)
                     .isEqualTo("Enabled");
-                assertThat(ongoingTask.taskName)
+                assertThat(ongoingTask.TaskName)
                     .isEqualTo("etlToDst");
 
                 const deleteResult = await src.maintenance.send(
@@ -121,19 +121,19 @@ import { OngoingTaskRavenEtlDetails } from "../../../../../src/Documents/Operati
                     .isNotNull();
 
                 const etlConfiguration = Object.assign(new RavenEtlConfiguration(), {
-                    connectionStringName: "toDst",
-                    disabled: false,
-                    name: "etlToDst"
+                    ConnectionStringName: "toDst",
+                    Disabled: false,
+                    Name: "etlToDst"
                 } as Partial<RavenEtlConfiguration>);
 
                 const transformation: Transformation = {
-                    applyToAllDocuments: false,
-                    collections: ["Users"],
-                    name: "Script #1",
-                    script: "loadToUsers(this);"
+                    ApplyToAllDocuments: false,
+                    Collections: ["Users"],
+                    Name: "Script #1",
+                    Script: "loadToUsers(this);"
                 };
 
-                etlConfiguration.transforms = [ transformation ];
+                etlConfiguration.Transforms = [ transformation ];
 
                 const operation = new AddEtlOperation(etlConfiguration);
 
@@ -176,19 +176,19 @@ import { OngoingTaskRavenEtlDetails } from "../../../../../src/Documents/Operati
                     .isNotNull();
 
                 const etlConfiguration = Object.assign(new RavenEtlConfiguration(), {
-                    connectionStringName: "toDst",
-                    disabled: false,
-                    name: "etlToDst"
+                    ConnectionStringName: "toDst",
+                    Disabled: false,
+                    Name: "etlToDst"
                 } as Partial<RavenEtlConfiguration>);
 
                 const transformation: Transformation = {
-                    applyToAllDocuments: false,
-                    collections: ["Users"],
-                    name: "Script #1",
-                    script: "loadToUsers(this);"
+                    ApplyToAllDocuments: false,
+                    Collections: ["Users"],
+                    Name: "Script #1",
+                    Script: "loadToUsers(this);"
                 };
 
-                etlConfiguration.transforms = [ transformation ];
+                etlConfiguration.Transforms = [ transformation ];
 
                 const operation = new AddEtlOperation(etlConfiguration);
 
@@ -199,8 +199,8 @@ import { OngoingTaskRavenEtlDetails } from "../../../../../src/Documents/Operati
 
                 // now change ETL configuration
 
-                transformation.collections = ["Cars"];
-                transformation.script = "loadToCars(this);";
+                transformation.Collections = ["Cars"];
+                transformation.Script = "loadToCars(this);";
 
                 const updateResult = await src.maintenance.send(new UpdateEtlOperation(etlResult.taskId, etlConfiguration));
 
@@ -247,15 +247,15 @@ import { OngoingTaskRavenEtlDetails } from "../../../../../src/Documents/Operati
                     .isNotNull();
 
                 const transformation = {
-                    applyToAllDocuments: true,
-                    name: "Script Q&A"
+                    ApplyToAllDocuments: true,
+                    Name: "Script Q&A"
                 } as Transformation;
 
                 const etlConfiguration = Object.assign(new RavenEtlConfiguration(), {
-                    connectionStringName: "toDst",
-                    disabled: false,
-                    name: "etlToDst",
-                    transforms: [ transformation ]
+                    ConnectionStringName: "toDst",
+                    Disabled: false,
+                    Name: "etlToDst",
+                    Transforms: [ transformation ]
                 } as Partial<RavenEtlConfiguration>);
 
                 const operation = new AddEtlOperation(etlConfiguration);
@@ -294,9 +294,9 @@ import { OngoingTaskRavenEtlDetails } from "../../../../../src/Documents/Operati
 
 function createConnectionString(src: IDocumentStore, dst: IDocumentStore) {
     const toDstLink = new RavenConnectionString();
-    toDstLink.database = dst.database;
-    toDstLink.topologyDiscoveryUrls = [ ...dst.urls ];
-    toDstLink.name = "toDst";
+    toDstLink.Database = dst.database;
+    toDstLink.TopologyDiscoveryUrls = [ ...dst.urls ];
+    toDstLink.Name = "toDst";
 
     return src.maintenance.send(new PutConnectionStringOperation(toDstLink));
 }

@@ -31,25 +31,25 @@ describe("RavenDB_15134", function () {
         }
 
         let vals = await store.operations.send(new GetCountersOperation(docId, ["likes", "downloads", "dislikes"]));
-        assertThat(vals.counters)
+        assertThat(vals.Counters)
             .hasSize(3);
 
-        assertThat(vals.counters[0].totalValue)
+        assertThat(vals.Counters[0].TotalValue)
             .isEqualTo(1);
-        assertThat(vals.counters[1])
+        assertThat(vals.Counters[1])
             .isNull();
-        assertThat(vals.counters[2].totalValue)
+        assertThat(vals.Counters[2].TotalValue)
             .isEqualTo(2);
 
         vals = await store.operations.send(new GetCountersOperation(docId, ["likes", "downloads", "dislikes"], true));
-        assertThat(vals.counters)
+        assertThat(vals.Counters)
             .hasSize(3);
 
-        assertThat(vals.counters[0].counterValues)
+        assertThat(vals.Counters[0].CounterValues)
             .hasSize(1);
-        assertThat(vals.counters[1])
+        assertThat(vals.Counters[1])
             .isNull();
-        assertThat(vals.counters[2].counterValues)
+        assertThat(vals.Counters[2].CounterValues)
             .hasSize(1);
     });
 

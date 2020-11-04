@@ -44,7 +44,7 @@ class SetLogsConfigurationCommand extends RavenCommand<void> {
     }
 
     createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/admin/logs/configuration";
+        const uri = node.Url + "/admin/logs/configuration";
 
         const body = this._serializer.serialize(this._parameters);
 

@@ -31,7 +31,7 @@ class StartTransactionsRecordingCommand extends RavenCommand<void> {
     }
 
     createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/databases/" + node.database + "/admin/transactions/start-recording";
+        const uri = node.Url + "/databases/" + node.Database + "/admin/transactions/start-recording";
 
         const body = this._serializer.serialize({
             File: this._filePath

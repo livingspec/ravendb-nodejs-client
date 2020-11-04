@@ -9,13 +9,13 @@ export class Address {
 }
 
 export class Category {
-    public id: string;
+    public Id: string;
     public name: string;
     public description: string;
 }
 
 export class Company {
-    public id: string;
+    public Id: string;
     public externalId: string;
     public name: string;
     public contact: Contact;
@@ -30,7 +30,7 @@ export class Contact {
 }
 
 export class Employee {
-    public id: string;
+    public Id: string;
     public lastName: string;
     public firstName: string;
     public title: string;
@@ -45,7 +45,7 @@ export class Employee {
 }
 
 export class Order {
-    public id: string;
+    public Id: string;
     public company: string;
     public employee: string;
     public orderedAt: Date;
@@ -66,7 +66,7 @@ export class OrderLine {
 }
 
 export class Product {
-    public id: string;
+    public Id: string;
     public name: string;
     public supplier: string;
     public category: string;
@@ -79,19 +79,19 @@ export class Product {
 }
 
 export class Region {
-    public id: string;
+    public Id: string;
     public name: string;
     public territories: Territory[];
 }
 
 export class Shipper {
-    public id: string;
+    public Id: string;
     public name: string;
     public phone: string;
 }
 
 export class Supplier {
-    public id: string;
+    public Id: string;
     public contact: Contact;
     public name: string;
     public address: Address;

@@ -79,7 +79,7 @@ describe("Indexes from client", function () {
         await (store.getRequestExecutor().execute(command));
 
         const statistics: DatabaseStatistics = command.result;
-        const firstIndexingTime = statistics.indexes[0].lastIndexingTime;
+        const firstIndexingTime = statistics.Indexes[0].LastIndexingTime;
 
         const indexName = new UsersIndex().getIndexName();
 
@@ -92,7 +92,7 @@ describe("Indexes from client", function () {
         await (store.getRequestExecutor().execute(command2));
 
         const statistics2: DatabaseStatistics = command2.result;
-        const secondIndexingTime = statistics2.indexes[0].lastIndexingTime;
+        const secondIndexingTime = statistics2.Indexes[0].LastIndexingTime;
 
         assert.ok(firstIndexingTime.valueOf() < secondIndexingTime.valueOf());
     });
@@ -117,7 +117,7 @@ describe("Indexes from client", function () {
 
         const statistics = command.result;
 
-        assert.strictEqual(statistics.indexes.length, 0);
+        assert.strictEqual(statistics.Indexes.length, 0);
     });
 
     it("can stop and start", async () => {
@@ -125,35 +125,35 @@ describe("Indexes from client", function () {
 
         let status = await store.maintenance.send(new GetIndexingStatusOperation());
 
-        assert.strictEqual(status.status, "Running");
-        assert.strictEqual(1, status.indexes.length);
+        assert.strictEqual(status.Status, "Running");
+        assert.strictEqual(1, status.Indexes.length);
 
-        assert.strictEqual(status.indexes[0].status, "Running");
+        assert.strictEqual(status.Indexes[0].Status, "Running");
 
         await store.maintenance.send(new StopIndexingOperation());
 
         status = await store.maintenance.send(new GetIndexingStatusOperation());
 
-        assert.strictEqual(status.status, "Paused");
-        assert.strictEqual(1, status.indexes.length);
+        assert.strictEqual(status.Status, "Paused");
+        assert.strictEqual(1, status.Indexes.length);
 
-        assert.strictEqual(status.indexes[0].status, "Paused");
+        assert.strictEqual(status.Indexes[0].Status, "Paused");
 
         await store.maintenance.send(new StartIndexingOperation());
         status = await store.maintenance.send(new GetIndexingStatusOperation());
 
-        assert.strictEqual(status.status, "Running");
-        assert.strictEqual(1, status.indexes.length);
+        assert.strictEqual(status.Status, "Running");
+        assert.strictEqual(1, status.Indexes.length);
 
-        assert.strictEqual(status.indexes[0].status, "Running");
+        assert.strictEqual(status.Indexes[0].Status, "Running");
 
-        await store.maintenance.send(new StopIndexOperation(status.indexes[0].name));
+        await store.maintenance.send(new StopIndexOperation(status.Indexes[0].Name));
         status = await store.maintenance.send(new GetIndexingStatusOperation());
 
-        assert.strictEqual(status.status, "Running");
-        assert.strictEqual(1, status.indexes.length);
+        assert.strictEqual(status.Status, "Running");
+        assert.strictEqual(1, status.Indexes.length);
 
-        assert.strictEqual(status.indexes[0].status, "Paused");
+        assert.strictEqual(status.Indexes[0].Status, "Paused");
     });
 
     it("can set lock mode and priority", async () => {
@@ -183,20 +183,20 @@ describe("Indexes from client", function () {
         assert.strictEqual(indexes.length, 1);
 
         const index = indexes[0];
-        let stats = await store.maintenance.send(new GetIndexStatisticsOperation(index.name));
-        assert.strictEqual(stats.lockMode, "Unlock");
-        assert.strictEqual(stats.priority, "Normal");
+        let stats = await store.maintenance.send(new GetIndexStatisticsOperation(index.Name));
+        assert.strictEqual(stats.LockMode, "Unlock");
+        assert.strictEqual(stats.Priority, "Normal");
 
         await store
             .maintenance
-            .send(new SetIndexesLockOperation(index.name, "LockedIgnore"));
+            .send(new SetIndexesLockOperation(index.Name, "LockedIgnore"));
         await store
             .maintenance
-            .send(new SetIndexesPriorityOperation(index.name, "Low"));
+            .send(new SetIndexesPriorityOperation(index.Name, "Low"));
 
-        stats = await store.maintenance.send(new GetIndexStatisticsOperation(index.name));
-        assert.strictEqual(stats.lockMode, "LockedIgnore");
-        assert.strictEqual(stats.priority, "Low");
+        stats = await store.maintenance.send(new GetIndexStatisticsOperation(index.Name));
+        assert.strictEqual(stats.LockMode, "LockedIgnore");
+        assert.strictEqual(stats.Priority, "Low");
     });
 
     it("can get terms", async () => {
@@ -223,7 +223,7 @@ describe("Indexes from client", function () {
                 .whereEquals("name", "Arek")
                 .all();
 
-            indexName = statsRef.indexName;
+            indexName = statsRef.IndexName;
         }
 
         const terms = await store
@@ -259,7 +259,7 @@ describe("Indexes from client", function () {
                 .whereEquals("name", "Arek")
                 .all();
 
-            indexName = statsRef.indexName;
+            indexName = statsRef.IndexName;
         }
 
         const indexNames = await store
@@ -303,18 +303,18 @@ describe("Indexes from client", function () {
 
         const explanations = command.result;
         assert.strictEqual(explanations.length, 1);
-        assert.ok(explanations[0].index);
-        assert.ok(explanations[0].reason);
+        assert.ok(explanations[0].Index);
+        assert.ok(explanations[0].Reason);
     });
 
     it("can get more like this", async () => {
         {
             const session = store.openSession();
-            const post1 = Object.assign(new Post(), { id: "posts/1", title: "doduck", desc: "prototype" });
-            const post2 = Object.assign(new Post(), { id: "posts/2", title: "doduck", desc: "prototype your idea" });
-            const post3 = Object.assign(new Post(), { id: "posts/3", title: "doduck", desc: "love programming" });
-            const post4 = Object.assign(new Post(), { id: "posts/4", title: "We do", desc: "prototype" });
-            const post5 = Object.assign(new Post(), { id: "posts/5", title: "We love", desc: "challenge" });
+            const post1 = Object.assign(new Post(), { Id: "posts/1", title: "doduck", desc: "prototype" });
+            const post2 = Object.assign(new Post(), { Id: "posts/2", title: "doduck", desc: "prototype your idea" });
+            const post3 = Object.assign(new Post(), { Id: "posts/3", title: "doduck", desc: "love programming" });
+            const post4 = Object.assign(new Post(), { Id: "posts/4", title: "We do", desc: "prototype" });
+            const post5 = Object.assign(new Post(), { Id: "posts/5", title: "We love", desc: "challenge" });
 
             await session.store(post1);
             await session.store(post2);
@@ -330,8 +330,8 @@ describe("Indexes from client", function () {
 
         {
             const options = {
-                minimumDocumentFrequency: 1,
-                minimumTermFrequency: 0
+                MinimumDocumentFrequency: 1,
+                MinimumTermFrequency: 0
             } as MoreLikeThisOptions;
 
             const session = store.openSession();

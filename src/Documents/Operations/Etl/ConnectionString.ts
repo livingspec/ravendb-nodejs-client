@@ -4,20 +4,20 @@ export type ConnectionStringType =
     "Sql";
 
 export abstract class ConnectionString {
-    public name: string;
-    public abstract type: ConnectionStringType;
+    public Name: string;
+    public abstract Type: ConnectionStringType;
 }
 
 export class RavenConnectionString extends ConnectionString {
-    public database: string;
-    public topologyDiscoveryUrls: string[];
-    public type: ConnectionStringType = "Raven";
+    public Database: string;
+    public TopologyDiscoveryUrls: string[];
+    public Type: ConnectionStringType = "Raven";
 }
 
 export class SqlConnectionString extends ConnectionString {
-    public connectionString: string;
-    public factoryName: string;
-    public type: ConnectionStringType = "Sql";
+    public ConnectionString: string;
+    public FactoryName: string;
+    public Type: ConnectionStringType = "Sql";
 }
 
 export type EtlType =

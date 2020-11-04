@@ -31,32 +31,32 @@ describe("GetStatisticsCommand()", function () {
         const stats = getStatsCmd.result;
         assert.ok(stats);
 
-        assert.ok(stats.lastDocEtag);
-        assert.ok(stats.lastDocEtag > 0);
+        assert.ok(stats.LastDocEtag);
+        assert.ok(stats.LastDocEtag > 0);
 
-        assert.ok(stats.countOfIndexes >= 3);
+        assert.ok(stats.CountOfIndexes >= 3);
 
-        assert.strictEqual(stats.countOfDocuments, 1059);
-        assert.ok(stats.countOfRevisionDocuments > 0);
-        assert.strictEqual(stats.countOfDocumentsConflicts, 0);
-        assert.strictEqual(stats.countOfUniqueAttachments, 17);
+        assert.strictEqual(stats.CountOfDocuments, 1059);
+        assert.ok(stats.CountOfRevisionDocuments > 0);
+        assert.strictEqual(stats.CountOfDocumentsConflicts, 0);
+        assert.strictEqual(stats.CountOfUniqueAttachments, 17);
 
-        assert.ok(stats.databaseChangeVector);
-        assert.ok(stats.databaseId);
-        assert.ok(stats.pager);
-        assert.ok(stats.lastIndexingTime);
-        assert.ok(stats.indexes);
-        assert.ok(stats.sizeOnDisk.humaneSize);
-        assert.ok(stats.sizeOnDisk.sizeInBytes);
+        assert.ok(stats.DatabaseChangeVector);
+        assert.ok(stats.DatabaseId);
+        assert.ok(stats.Pager);
+        assert.ok(stats.LastIndexingTime);
+        assert.ok(stats.Indexes);
+        assert.ok(stats.SizeOnDisk.HumaneSize);
+        assert.ok(stats.SizeOnDisk.SizeInBytes);
 
-        for (const idx of stats.indexes) {
-            assert.ok(idx.name);
-            assert.ok(idx.isStale === false, `Index ${idx.name} is stale`);
-            assert.ok(idx.state);
-            assert.ok(idx.lockMode);
-            assert.ok(idx.priority);
-            assert.ok(idx.type);
-            assert.ok(idx.lastIndexingTime);
+        for (const idx of stats.Indexes) {
+            assert.ok(idx.Name);
+            assert.ok(idx.IsStale === false, `Index ${idx.Name} is stale`);
+            assert.ok(idx.State);
+            assert.ok(idx.LockMode);
+            assert.ok(idx.Priority);
+            assert.ok(idx.Type);
+            assert.ok(idx.LastIndexingTime);
         }
     });
 });

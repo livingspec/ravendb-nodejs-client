@@ -51,7 +51,7 @@ export class DocumentSessionAttachments
                 this._throwEntityNotInSessionOrMissingId(idOrEntity);
             }
 
-            docId = document.id;
+            docId = document.Id;
         } else {
             docId = idOrEntity;
         }

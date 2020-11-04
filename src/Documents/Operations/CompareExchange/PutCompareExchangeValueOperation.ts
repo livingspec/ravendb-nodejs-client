@@ -70,7 +70,7 @@ export class PutCompareExchangeValueCommand<T> extends RavenCommand<CompareExcha
     }
 
     public createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/databases/" + node.database + "/cmpxchg?key=" + encodeURIComponent(this._key) + "&index=" + this._index;
+        const uri = node.Url + "/databases/" + node.Database + "/cmpxchg?key=" + encodeURIComponent(this._key) + "&index=" + this._index;
 
         const tuple = {};
         tuple["Object"] = TypeUtil.isPrimitive(this._value)
@@ -90,8 +90,7 @@ export class PutCompareExchangeValueCommand<T> extends RavenCommand<CompareExcha
 
         const resObj = await this._pipeline<CompareExchangeResultResponse>()
             .collectBody(_ => body = _)
-            .parseJsonAsync()
-            .jsonKeysTransform("CompareExchangeValue", this._conventions)
+            .parseJsonSync()
             .process(bodyStream);
 
         const type = !TypeUtil.isPrimitive(this._value)

@@ -57,7 +57,7 @@ export class PutClientConfigurationCommand extends RavenCommand<void> implements
     }
 
     public createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = `${node.url}/databases/${node.database}/admin/configuration/client`;
+        const uri = `${node.Url}/databases/${node.Database}/admin/configuration/client`;
         return {
             method: "PUT",
             uri,

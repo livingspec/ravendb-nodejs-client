@@ -21,7 +21,7 @@ export class GetIndexingStatusOperation implements IMaintenanceOperation<Indexin
 export class GetIndexingStatusCommand extends RavenCommand<IndexingStatus> {
 
     public createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/databases/" + node.database + "/indexes/status";
+        const uri = node.Url + "/databases/" + node.Database + "/indexes/status";
         return { uri };
     }
 

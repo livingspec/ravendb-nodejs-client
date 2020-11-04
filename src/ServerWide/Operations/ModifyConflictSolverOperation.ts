@@ -58,7 +58,7 @@ class ModifyConflictSolverCommand extends RavenCommand<ModifySolverResult> imple
     }
 
     createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/admin/replication/conflicts/solver?name=" + encodeURIComponent(this._database);
+        const uri = node.Url + "/admin/replication/conflicts/solver?name=" + encodeURIComponent(this._database);
 
         const body = this._serializer.serialize({
             ResolveToLatest: this._resolveToLatest,

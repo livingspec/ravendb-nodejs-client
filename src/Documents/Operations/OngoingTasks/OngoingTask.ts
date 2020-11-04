@@ -8,26 +8,26 @@ import { SqlEtlConfiguration } from "../Etl/Sql/SqlEtlConfiguration";
 import { RetentionPolicy } from "../Backups/RetentionPolicy";
 
 export interface OngoingTask {
-    taskId: number;
-    taskType: OngoingTaskType;
-    responsibleNode: NodeId;
-    taskState: OngoingTaskState;
-    taskConnectionStatus: OngoingTaskConnectionStatus;
-    taskName: string;
-    error: string;
-    mentorNode: string;
+    TaskId: number;
+    TaskType: OngoingTaskType;
+    ResponsibleNode: NodeId;
+    TaskState: OngoingTaskState;
+    TaskConnectionStatus: OngoingTaskConnectionStatus;
+    TaskName: string;
+    Error: string;
+    MentorNode: string;
 }
 
 export interface OngoingTaskBackup extends OngoingTask {
-    taskType: "Backup",
-    backupType: BackupType;
-    backupDestinations: string[];
-    lastFullBackup: Date;
-    lastIncrementalBackup: Date;
-    onGoingBackup: RunningBackup;
-    nextBackup: NextBackup;
-    retentionPolicy: RetentionPolicy;
-    isEncrypted: boolean;
+    TaskType: "Backup",
+    BackupType: BackupType;
+    BackupDestinations: string[];
+    LastFullBackup: Date;
+    LastIncrementalBackup: Date;
+    OnGoingBackup: RunningBackup;
+    NextBackup: NextBackup;
+    RetentionPolicy: RetentionPolicy;
+    IsEncrypted: boolean;
 }
 
 export type OngoingTaskConnectionStatus =
@@ -38,23 +38,23 @@ export type OngoingTaskConnectionStatus =
     | "NotOnThisNode";
 
 export interface OngoingTaskRavenEtlDetails extends OngoingTask {
-    taskType: "RavenEtl",
-    destinationUrl: string;
-    configuration: RavenEtlConfiguration;
+    TaskType: "RavenEtl",
+    DestinationUrl: string;
+    Configuration: RavenEtlConfiguration;
 }
 
 export interface OngoingTaskReplication extends OngoingTask {
-    taskType: "Replication",
-    destinationUrl: string;
-    topologyDiscoveryUrls: string[];
-    destinationDatabase: string;
-    connectionStringName: string;
-    delayReplicationFor: string;
+    TaskType: "Replication",
+    DestinationUrl: string;
+    TopologyDiscoveryUrls: string[];
+    DestinationDatabase: string;
+    ConnectionStringName: string;
+    DelayReplicationFor: string;
 }
 
 export interface OngoingTaskSqlEtlDetails extends OngoingTask {
-    taskType: "SqlEtl",
-    configuration: SqlEtlConfiguration;
+    TaskType: "SqlEtl",
+    Configuration: SqlEtlConfiguration;
 }
 
 export type OngoingTaskState =
@@ -63,12 +63,12 @@ export type OngoingTaskState =
     | "PartiallyEnabled";
 
 export interface OngoingTaskSubscription extends OngoingTask {
-    taskType: "Subscription",
-    query: string;
-    subscriptionName: string;
-    subscriptionId: number;
-    changeVectorForNextBatchStartingPoint: string;
-    lastBatchAckTime: Date;
-    disabled: boolean;
-    lastClientConnectionTime: Date;
+    TaskType: "Subscription",
+    Query: string;
+    SubscriptionName: string;
+    SubscriptionId: number;
+    ChangeVectorForNextBatchStartingPoint: string;
+    LastBatchAckTime: Date;
+    Disabled: boolean;
+    LastClientConnectionTime: Date;
 }

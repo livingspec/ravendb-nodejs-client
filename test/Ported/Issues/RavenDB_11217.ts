@@ -26,7 +26,7 @@ describe("RavenDB_11217Test", function () {
 
             const product = Object.assign(new Product(), {
                 name: "Product1",
-                supplier: supplier.id
+                supplier: supplier.Id
             });
 
             await session.store(product);
@@ -66,7 +66,7 @@ describe("RavenDB_11217Test", function () {
             assertThat(product1.name)
                 .isEqualTo("Product1");
 
-            assertThat(session.advanced.isLoaded(product1.id))
+            assertThat(session.advanced.isLoaded(product1.Id))
                 .isFalse();
             assertThat(session.advanced.isLoaded(product1.supplier))
                 .isFalse();
@@ -78,7 +78,7 @@ describe("RavenDB_11217Test", function () {
                 .isEqualTo("Supplier1");
             assertThat(session.advanced.numberOfRequests)
                 .isEqualTo(2);
-            assertThat(session.advanced.isLoaded(supplier.id))
+            assertThat(session.advanced.isLoaded(supplier.Id))
                 .isFalse();
 
             const product2 = await session.load<Product>("products/1-A", {
@@ -103,7 +103,7 @@ describe("RavenDB_11217Test", function () {
                 .isNotNull();
             assertThat(product1.name)
                 .isEqualTo("Product1");
-            assertThat(session.advanced.isLoaded(product1.id))
+            assertThat(session.advanced.isLoaded(product1.Id))
                 .isFalse();
             assertThat(session.advanced.isLoaded(product1.supplier))
                 .isFalse();
@@ -116,7 +116,7 @@ describe("RavenDB_11217Test", function () {
                 .isEqualTo("Supplier1");
             assertThat(session.advanced.numberOfRequests)
                 .isEqualTo(2);
-            assertThat(session.advanced.isLoaded(supplier.id))
+            assertThat(session.advanced.isLoaded(supplier.Id))
                 .isFalse();
 
             const product2 = (await session.advanced.loadStartingWith<Product>("products/", { documentType: Product }))[0];
@@ -142,7 +142,7 @@ describe("RavenDB_11217Test", function () {
             const product1 = products[0];
             assertThat(product1)
                 .isNotNull();
-            assertThat(session.advanced.isLoaded(product1.id))
+            assertThat(session.advanced.isLoaded(product1.Id))
                 .isFalse();
             assertThat(session.advanced.isLoaded(product1.supplier))
                 .isFalse();
@@ -154,7 +154,7 @@ describe("RavenDB_11217Test", function () {
                 .isEqualTo("Supplier1");
             assertThat(session.advanced.numberOfRequests)
                 .isEqualTo(2);
-            assertThat(session.advanced.isLoaded(supplier.id))
+            assertThat(session.advanced.isLoaded(supplier.Id))
                 .isFalse();
 
             products = await session
@@ -180,7 +180,7 @@ describe("RavenDB_11217Test", function () {
         {
             const session = store.openSession(noTrackingOptions);
             const product1 = await session.load<Product>("products/1-A", Product);
-            const counters = await session.countersFor(product1.id);
+            const counters = await session.countersFor(product1.Id);
 
             counters.get("c1");
 
@@ -216,7 +216,7 @@ describe("RavenDB_11217Test", function () {
                 .whereEquals("name", "HR")
                 .all();
 
-            assertThat(stats.durationInMs)
+            assertThat(stats.DurationInMs)
                 .isGreaterThan(-0.01);
 
             await session.query<Product>(Product)
@@ -224,7 +224,7 @@ describe("RavenDB_11217Test", function () {
                 .whereEquals("name", "HR")
                 .all();
 
-            assertThat(stats.durationInMs)
+            assertThat(stats.DurationInMs)
                 .isEqualTo(-1); // from cache
         }
 
@@ -241,7 +241,7 @@ describe("RavenDB_11217Test", function () {
                 .whereEquals("name", "HR")
                 .all();
 
-            assertThat(stats.durationInMs)
+            assertThat(stats.DurationInMs)
                 .isGreaterThan(-0.01);
 
             await session.query(Product)
@@ -249,7 +249,7 @@ describe("RavenDB_11217Test", function () {
                 .whereEquals("name", "HR")
                 .all();
 
-            assertThat(stats.durationInMs)
+            assertThat(stats.DurationInMs)
                 .isGreaterThan(-1);
         }
     })

@@ -41,8 +41,8 @@ describe("RDBC-259", function () {
                 await session.store(config);
                 await session.saveChanges();
 
-                assert.strictEqual(config.id, "configs/1-A");
-                configId = config.id;
+                assert.strictEqual(config.Id, "configs/1-A");
+                configId = config.Id;
             }
 
             {
@@ -67,9 +67,9 @@ describe("RDBC-259", function () {
 
                 await session.saveChanges();
 
-                assert.strictEqual(extension.id, "extensions/1-A");
-                assert.strictEqual(config.id, "configs/1-A");
-                extensionId = extension.id;
+                assert.strictEqual(extension.Id, "extensions/1-A");
+                assert.strictEqual(config.Id, "configs/1-A");
+                extensionId = extension.Id;
             }
 
             {
@@ -77,12 +77,12 @@ describe("RDBC-259", function () {
                 const config: any = await session.load(configId);
                 const extension: any = await session.load(extensionId);
 
-                assert.strictEqual(config.id, "configs/1-A");
+                assert.strictEqual(config.Id, "configs/1-A");
                 assert.strictEqual(config.type, "config");
                 assert.strictEqual(config.properties["A"], 2);
                 assert.strictEqual(config.properties["B"], 2);
 
-                assert.strictEqual(extension.id, "extensions/1-A");
+                assert.strictEqual(extension.Id, "extensions/1-A");
                 assert.strictEqual(extension.type, "extension");
                 assert.strictEqual(extension.config["A"], 2);
                 assert.strictEqual(extension.config["B"], 2);

@@ -527,7 +527,7 @@ const fileStream = fs.createReadStream("../photo.png"));
 session.advanced.attachments.store(doc, "photo.png", fileStream, "image/png");
 
 // OR using document ID
-session.advanced.attachments.store(doc.id, "photo.png", fileStream, "image/png");
+session.advanced.attachments.store(doc.Id, "photo.png", fileStream, "image/png");
 
 await session.saveChanges();
 ```
@@ -744,11 +744,11 @@ await session.saveChanges();
 ```javascript
 // create a subscription
 const subscriptionName = await store.subscriptions.create({
-    query: "from users where age >= 30"
+    Query: "from users where age >= 30"
 });
 
 // get subscription worker for your subscription
-const subscription = store.subscriptions.getSubscriptionWorker({ subscriptionName });
+const subscription = store.subscriptions.getSubscriptionWorker({ SubscriptionName:subscriptionName });
 
 subscription.on("error", err => {
     // handle errors

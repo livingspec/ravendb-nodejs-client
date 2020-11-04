@@ -1,18 +1,18 @@
 
 export class Transformation {
-    name: string;
-    disabled?: boolean;
-    collections?: string[];
-    applyToAllDocuments?: boolean;
-    script?: string;
+    Name: string;
+    Disabled?: boolean;
+    Collections?: string[];
+    ApplyToAllDocuments?: boolean;
+    Script?: string;
 }
 
 export function serializeTransformation(transformation: Transformation) {
     return {
-        Name: transformation.name,
-        Disabled: transformation.disabled,
-        Collections: transformation.collections,
-        ApplyToAllDocuments: transformation.applyToAllDocuments,
-        Script: transformation.script
+        Name: transformation.Name,
+        Disabled: transformation.Disabled,
+        Collections: transformation.Collections,
+        ApplyToAllDocuments: transformation.ApplyToAllDocuments,
+        Script: transformation.Script
     }
 }

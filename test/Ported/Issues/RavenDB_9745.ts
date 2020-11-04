@@ -72,11 +72,11 @@ describe("RavenDB-9745", function () {
             assertThat(companies)
                 .hasSize(2);
 
-            let exp = explanations.explanations[companies[0].id];
+            let exp = explanations.explanations[companies[0].Id];
             assertThat(exp)
                 .isNotNull();
 
-            exp = explanations.explanations[companies[1].id];
+            exp = explanations.explanations[companies[1].Id];
             assertThat(exp)
                 .isNotNull();
         }

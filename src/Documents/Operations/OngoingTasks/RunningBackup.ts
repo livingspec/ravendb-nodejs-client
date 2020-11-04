@@ -1,6 +1,6 @@
 
 export interface RunningBackup {
-    startTime: Date;
-    isFull: boolean;
-    runningBackupTaskId: number;
+    StartTime: Date;
+    IsFull: boolean;
+    RunningBackupTaskId: number;
 }

@@ -14,7 +14,7 @@ import { IRaftCommand } from "../../../Http/IRaftCommand";
 import { RaftIdGenerator } from "../../../Utility/RaftIdGenerator";
 
 export interface PutIndexResult {
-    index: string;
+    Index: string;
 }
 
 export class PutIndexesOperation implements IMaintenanceOperation<PutIndexResult[]> {
@@ -62,7 +62,7 @@ export class PutIndexesCommand extends RavenCommand<PutIndexResult[]> implements
                 this._allJavaScriptIndexes = false;
             }
 
-            if (!next.name) {
+            if (!next.Name) {
                 throwError("InvalidArgumentException", "Index name cannot be null.");
             }
 
@@ -85,7 +85,7 @@ export class PutIndexesCommand extends RavenCommand<PutIndexResult[]> implements
     }
 
     public createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/databases/" + node.database 
+        const uri = node.Url + "/databases/" + node.Database
             + (this._allJavaScriptIndexes ? "/indexes" : "/admin/indexes");
 
         const body = this._serializer
@@ -108,7 +108,7 @@ export class PutIndexesCommand extends RavenCommand<PutIndexResult[]> implements
         await this._defaultPipeline(x => body = x)
             .process(bodyStream)
             .then(results => {
-                this.result = results["results"];
+                this.result = results["Results"];
             });
         return body;
     }

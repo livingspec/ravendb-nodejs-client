@@ -4,7 +4,7 @@ import { SetupDocumentBase } from "../../SetupDocumentBase";
 import { ObjectUtil } from "../../../Utility/ObjectUtil";
 
 export class FacetSetup extends SetupDocumentBase {
-    public id: string;
+    public Id: string;
     public facets: Facet[] = [];
     public rangeFacets: RangeFacet[] = [];
 

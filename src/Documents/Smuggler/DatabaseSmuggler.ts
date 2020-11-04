@@ -206,7 +206,7 @@ class ExportCommand extends RavenCommand<void> {
     }
 
     createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/databases/" + node.database + "/smuggler/export?operationId=" + this._operationId;
+        const uri = node.Url + "/databases/" + node.Database + "/smuggler/export?operationId=" + this._operationId;
 
         const body = this._serializer.serialize(this._options);
 
@@ -265,7 +265,7 @@ class ImportCommand extends RavenCommand<void> {
     }
 
     createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/databases/" + node.database + "/smuggler/import?operationId=" + this._operationId;
+        const uri = node.Url + "/databases/" + node.Database + "/smuggler/import?operationId=" + this._operationId;
 
         const multipart = new LengthUnawareFormData();
         multipart.append("importOptions", this._serializer.serialize(this._options));

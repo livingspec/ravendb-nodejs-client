@@ -44,7 +44,7 @@ export class GetIndexStatisticsCommand extends RavenCommand<IndexStats> {
     }
 
     public createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/databases/" + node.database
+        const uri = node.Url + "/databases/" + node.Database
             + "/indexes/stats?name=" + encodeURIComponent(this._indexName);
         return { uri };
     }
@@ -58,8 +58,8 @@ export class GetIndexStatisticsCommand extends RavenCommand<IndexStats> {
         await this._defaultPipeline(_ => body = _)
             .process(bodyStream)
             .then(results => {
-                for (const r of results["results"]) {
-                    r.collections = Object.keys(r.collections)
+                for (const r of results["Results"]) {
+                    r.Collections = Object.keys(r.Collections)
                         .reduce((result, next) => [ ...result, [ next, result[next] ]], []);
                 }
                 const responseObj = this._reviveResultTypes(
@@ -67,12 +67,12 @@ export class GetIndexStatisticsCommand extends RavenCommand<IndexStats> {
                     this._conventions,
                     {
                         nestedTypes: {
-                            "results[].collections": "Map",
-                            "results[].collections$MAP": "CollectionStats"
+                            "Results[].Collections": "Map",
+                            "Results[].Collections$MAP": "CollectionStats"
                         }
                     }, new Map([[CollectionStats.name, CollectionStats]]));
 
-                const indexStatsResults = responseObj["results"];
+                const indexStatsResults = responseObj["Results"];
                 if (!indexStatsResults.length) {
                     this._throwInvalidResponse();
                 }

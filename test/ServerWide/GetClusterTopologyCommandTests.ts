@@ -23,17 +23,17 @@ describe("GetClusterTopologyCommand", function () {
         const result = command.result;
 
         assert.ok(result);
-        assert.ok(result.leader);
-        assert.ok(result.nodeTag);
-        assert.ok(result.status instanceof Map);
+        assert.ok(result.Leader);
+        assert.ok(result.NodeTag);
+        assert.ok(result.Status instanceof Map);
 
-        const topology = result.topology;
+        const topology = result.Topology;
         assert.ok(topology);
         assert.strictEqual(topology.constructor.name, "ClusterTopology");
-        assert.ok(topology.topologyId);
-        assert.strictEqual(Object.keys(topology.members).length, 1);
-        assert.strictEqual(Object.keys(topology.watchers).length, 0);
-        assert.strictEqual(Object.keys(topology.promotables).length, 0);
+        assert.ok(topology.TopologyId);
+        assert.strictEqual(Object.keys(topology.Members).length, 1);
+        assert.strictEqual(Object.keys(topology.Watchers).length, 0);
+        assert.strictEqual(Object.keys(topology.Promotables).length, 0);
         assert.strictEqual(Object.keys(topology.getAllNodes()).length, 1);
     });
 });

@@ -12,7 +12,7 @@ export class QueryHighlightings {
     }
     public update(queryResult: QueryResult): void {
         for (const fieldHighlightings of this._highlightings) {
-            fieldHighlightings.update(queryResult.highlightings);
+            fieldHighlightings.update(queryResult.Highlightings);
         }
     }
 }

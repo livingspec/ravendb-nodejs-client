@@ -24,7 +24,7 @@ describe("ClusterOperationTest", function () {
             const numberOfNodes = 3;
 
             await cluster.createDatabase({
-                databaseName: database
+                DatabaseName: database
             }, numberOfNodes, cluster.getInitialLeader().url);
 
             const store = new DocumentStore(cluster.getInitialLeader().url, database);
@@ -37,7 +37,7 @@ describe("ClusterOperationTest", function () {
                     .isEqualTo(1);
 
                 const preferred = await re.getPreferredNode();
-                const tag = preferred.currentNode.clusterTag;
+                const tag = preferred.currentNode.ClusterTag;
 
                 await cluster.executeJsScript(tag, "server.ServerStore.InitializationCompleted.Reset(true);" +
                     " server.ServerStore.Initialized = false; " +
@@ -52,7 +52,7 @@ describe("ClusterOperationTest", function () {
                     .isLessThan(10_000);
 
                 const newPreferred = await re.getPreferredNode();
-                assertThat(newPreferred.currentNode.clusterTag)
+                assertThat(newPreferred.currentNode.ClusterTag)
                     .isNotEqualTo(tag);
                 assertThat(result)
                     .isEqualTo(2);
@@ -72,7 +72,7 @@ describe("ClusterOperationTest", function () {
             const numberOfNodes = 3;
 
             await cluster.createDatabase({
-                databaseName: database
+                DatabaseName: database
             }, numberOfNodes, cluster.getInitialLeader().url);
 
             const store = new DocumentStore(cluster.getInitialLeader().url, database);
@@ -121,7 +121,7 @@ describe("ClusterOperationTest", function () {
         const db = "Test";
 
         const topology = {
-            dynamicNodesDistribution: true
+            DynamicNodesDistribution: true
         } as DatabaseTopology;
 
         const customSettings = {
@@ -134,8 +134,8 @@ describe("ClusterOperationTest", function () {
         const cluster = await testContext.createRaftCluster(3, customSettings);
         try {
             const databaseRecord: DatabaseRecord = {
-                databaseName: db,
-                topology
+                DatabaseName: db,
+                Topology: topology
             };
 
             await cluster.createDatabase(databaseRecord, 2, cluster.getInitialLeader().url);
@@ -293,7 +293,7 @@ async function waitForTopologyStabilization(context: ClusterTestContext, s: stri
             let members = 0;
 
             topo.nodes.forEach(n => {
-                switch (n.serverRole) {
+                switch (n.ServerRole) {
                     case "Rehab":
                         rehab++;
                         break;
@@ -317,10 +317,10 @@ async function waitForTopologyStabilization(context: ClusterTestContext, s: stri
 
 async function reverseOrderSuccessfully(store: IDocumentStore, db: string) {
     let record = await store.maintenance.server.send(new GetDatabaseRecordOperation(db));
-    record.topology.members.reverse();
+    record.Topology.Members.reverse();
 
-    const copy = [ ...record.topology.members ];
+    const copy = [ ...record.Topology.Members ];
 
-    await store.maintenance.server.send(new ReorderDatabaseMembersOperation(db, record.topology.members))
+    await store.maintenance.server.send(new ReorderDatabaseMembersOperation(db, record.Topology.Members))
     record = await store.maintenance.server.send(new GetDatabaseRecordOperation(db));
 }

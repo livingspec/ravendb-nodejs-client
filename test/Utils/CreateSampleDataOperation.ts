@@ -26,7 +26,7 @@ export class CreateSampleDataCommand extends RavenCommand<void> {
     }
 
     public createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = `${node.url}/databases/${node.database}/studio/sample-data`;
+        const uri = `${node.Url}/databases/${node.Database}/studio/sample-data`;
         return {
             method: "POST",
             uri

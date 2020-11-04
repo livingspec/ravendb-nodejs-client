@@ -37,50 +37,50 @@ describe("ConnectionStringsTest", function () {
         const putResult = await store.maintenance.send(new PutConnectionStringOperation(ravenConnectionString1));
         await store.maintenance.send(new PutConnectionStringOperation(sqlConnectionString1));
 
-        assertThat(putResult.raftCommandIndex)
+        assertThat(putResult.RaftCommandIndex)
             .isGreaterThan(0);
 
         const connectionStrings = await store.maintenance.send(new GetConnectionStringsOperation());
-        assertThat(connectionStrings.ravenConnectionStrings)
+        assertThat(connectionStrings.RavenConnectionStrings)
             .hasSize(1);
-        assertThat(connectionStrings.ravenConnectionStrings["r1"] instanceof RavenConnectionString)
+        assertThat(connectionStrings.RavenConnectionStrings["r1"] instanceof RavenConnectionString)
             .isTrue();
 
-        assertThat(connectionStrings.sqlConnectionStrings)
+        assertThat(connectionStrings.SqlConnectionStrings)
             .hasSize(1);
-        assertThat(connectionStrings.sqlConnectionStrings["s1"] instanceof SqlConnectionString)
+        assertThat(connectionStrings.SqlConnectionStrings["s1"] instanceof SqlConnectionString)
             .isTrue();
 
         const ravenOnly = await store.maintenance.send(
             new GetConnectionStringsOperation("r1", "Raven"));
 
-        assertThat(ravenOnly.ravenConnectionStrings)
+        assertThat(ravenOnly.RavenConnectionStrings)
             .hasSize(1);
-        assertThat(ravenOnly.ravenConnectionStrings["r1"] instanceof RavenConnectionString)
+        assertThat(ravenOnly.RavenConnectionStrings["r1"] instanceof RavenConnectionString)
             .isTrue();
-        assertThat(ravenOnly.sqlConnectionStrings)
+        assertThat(ravenOnly.SqlConnectionStrings)
             .hasSize(0);
 
         const sqlOnly = await store.maintenance.send(
             new GetConnectionStringsOperation("s1", "Sql"));
 
-        assertThat(sqlOnly.ravenConnectionStrings)
+        assertThat(sqlOnly.RavenConnectionStrings)
             .hasSize(0);
-        assertThat(sqlOnly.sqlConnectionStrings["s1"] instanceof SqlConnectionString)
+        assertThat(sqlOnly.SqlConnectionStrings["s1"] instanceof SqlConnectionString)
             .isTrue();
-        assertThat(sqlOnly.sqlConnectionStrings)
+        assertThat(sqlOnly.SqlConnectionStrings)
             .hasSize(1);
 
-        const removeResult = await store.maintenance.send(new RemoveConnectionStringOperation(Object.values(sqlOnly.sqlConnectionStrings)[0]));
-        assertThat(removeResult.raftCommandIndex)
+        const removeResult = await store.maintenance.send(new RemoveConnectionStringOperation(Object.values(sqlOnly.SqlConnectionStrings)[0]));
+        assertThat(removeResult.RaftCommandIndex)
             .isGreaterThan(0);
 
         const afterDelete = await store.maintenance.send(
             new GetConnectionStringsOperation("s1", "Sql"));
 
-        assertThat(afterDelete.ravenConnectionStrings)
+        assertThat(afterDelete.RavenConnectionStrings)
             .hasSize(0);
-        assertThat(afterDelete.sqlConnectionStrings)
+        assertThat(afterDelete.SqlConnectionStrings)
             .hasSize(0);
     });
 

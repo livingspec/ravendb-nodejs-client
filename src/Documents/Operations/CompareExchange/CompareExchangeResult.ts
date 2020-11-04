@@ -4,10 +4,10 @@ import { TypeUtil } from "../../../Utility/TypeUtil";
 import { ClassConstructor } from "../../../Types";
 
 export interface CompareExchangeResultResponse {
-    index: number;
-    successful: boolean;
-    value: {
-        object: object
+    Index: number;
+    Successful: boolean;
+    Value: {
+        Object: object
     };
 }
 
@@ -18,15 +18,15 @@ export class CompareExchangeResult<T> {
     public successful: boolean;
 
     public static parseFromObject<T>(
-        { index, value, successful }: CompareExchangeResultResponse,
+        { Index, Value, Successful }: CompareExchangeResultResponse,
         conventions: DocumentConventions,
         clazz?: ClassConstructor<T>): CompareExchangeResult<T> {
-        if (!index) {
+        if (!Index) {
             throwError("InvalidOperationException", "Response is invalid. Index is missing");
         }
 
-        const val = value.object || null;
-        return CompareExchangeResult._create(val, index, successful, conventions, clazz);
+        const val = Value.Object || null;
+        return CompareExchangeResult._create(val, Index, Successful, conventions, clazz);
     }
 
     public static parseFromString<T>(

@@ -9,7 +9,7 @@ import { IRaftCommand } from "../../../Http/IRaftCommand";
 import { RaftIdGenerator } from "../../../Utility/RaftIdGenerator";
 
 export interface PutConnectionStringResult {
-    raftCommandIndex: number;
+    RaftCommandIndex: number;
 }
 
 export class PutConnectionStringOperation<T extends ConnectionString>
@@ -45,7 +45,7 @@ export class PutConnectionStringCommand<T extends ConnectionString>
     }
 
     public createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/databases/" + node.database + "/admin/connection-strings";
+        const uri = node.Url + "/databases/" + node.Database + "/admin/connection-strings";
 
         const headers = this._headers()
             .typeAppJson()

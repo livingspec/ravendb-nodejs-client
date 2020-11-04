@@ -10,7 +10,7 @@ export class GetNextOperationIdCommand extends RavenCommand<number> {
     }
 
     public createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = `${node.url}/databases/${node.database}/operations/next-operation-id`;
+        const uri = `${node.Url}/databases/${node.Database}/operations/next-operation-id`;
         return { uri };
     }
 
@@ -18,7 +18,7 @@ export class GetNextOperationIdCommand extends RavenCommand<number> {
         let body: string = null;
         await this._defaultPipeline(_ => body = _).process(bodyStream)
             .then(results => {
-                const id = results["id"];
+                const id = results["Id"];
                 if (typeof id !== "undefined") {
                     this.result = id;
                 }

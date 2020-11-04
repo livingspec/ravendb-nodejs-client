@@ -57,12 +57,12 @@ describe.skip("CustomSerializationTest", function () {
         // verify if value was properly serialized
         {
             const command = new GetDocumentsCommand({
-                id: "products/1-A",
+                Id: "products/1-A",
                 conventions: store.conventions
             });
             await store.getRequestExecutor().execute(command);
 
-            const productJson = command.result.results[0];
+            const productJson = command.result.Results[0];
             assert.strictEqual(productJson.price, "9999 USD");
         }
 

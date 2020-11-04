@@ -12,40 +12,40 @@ export type FacetAggregation =
     | "Sum";
 
 export interface IFacetValue {
-    range: string;
-    count: number;
-    sum: number;
-    max: number;
-    min: number;
-    average: number;
+    Range: string;
+    Count: number;
+    Sum: number;
+    Max: number;
+    Min: number;
+    Average: number;
 }
 
 export class FacetValue implements IFacetValue {
 
-    public range: string;
-    public count: number;
-    public sum: number;
-    public max: number;
-    public min: number;
-    public average: number;
+    public Range: string;
+    public Count: number;
+    public Sum: number;
+    public Max: number;
+    public Min: number;
+    public Average: number;
 
     public toString() {
         return FacetValue.toString(this);
     }
 
     public static toString(facetVal: IFacetValue) {
-        let msg = facetVal.range + " - Count: " + facetVal.count + ", ";
-        if (facetVal.sum) {
-            msg += "Sum: " + facetVal.sum + ",";
+        let msg = facetVal.Range + " - Count: " + facetVal.Count + ", ";
+        if (facetVal.Sum) {
+            msg += "Sum: " + facetVal.Sum + ",";
         }
-        if (facetVal.max) {
-            msg += "Max: " + facetVal.max + ",";
+        if (facetVal.Max) {
+            msg += "Max: " + facetVal.Max + ",";
         }
-        if (facetVal.min) {
-            msg += "Min: " + facetVal.min + ",";
+        if (facetVal.Min) {
+            msg += "Min: " + facetVal.Min + ",";
         }
-        if (facetVal.average) {
-            msg += "Average: " + facetVal.average + ",";
+        if (facetVal.Average) {
+            msg += "Average: " + facetVal.Average + ",";
         }
 
         return msg.replace(/;$/, "");
@@ -54,25 +54,25 @@ export class FacetValue implements IFacetValue {
 
 export class FacetResult {
 
-    public name: string;
+    public Name: string;
 
     /**
      * The facet terms and hits up to a limit of MaxResults items (as specified in the facet setup document), sorted
      * in TermSortMode order (as indicated in the facet setup document).
      */
-    public values: FacetValue[] = [];
+    public Values: FacetValue[] = [];
 
     /**
      * A list of remaining terms in term sort order for terms that are outside of the MaxResults count.
      */
-    public remainingTerms: string[] = [];
+    public RemainingTerms: string[] = [];
 
     /**
      * The number of remaining terms outside of those covered by the Values terms.
      */
-    public remainingTermsCount: number;
+    public RemainingTermsCount: number;
 
-    public remainingHits: number;
+    public RemainingHits: number;
 }
 
 export interface IFacetOptions {

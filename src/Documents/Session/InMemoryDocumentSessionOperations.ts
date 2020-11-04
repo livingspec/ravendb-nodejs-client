@@ -405,7 +405,7 @@ export abstract class InMemoryDocumentSessionOperations
         }
 
         const value = this.documentsByEntity.get(instance);
-        return value ? value.id : null;
+        return value ? value.Id : null;
     }
 
     public incrementRequestCount(): void {
@@ -490,7 +490,7 @@ export abstract class InMemoryDocumentSessionOperations
         let id: string;
         if (TypeUtil.isObject(idOrDocumentInfo)) {
             const info = idOrDocumentInfo as DocumentInfo;
-            return this.trackEntity(entityType, info.id, info.document, info.metadata, this.noTracking) as T;
+            return this.trackEntity(entityType, info.Id, info.document, info.metadata, this.noTracking) as T;
         } else {
             id = idOrDocumentInfo as string;
         }
@@ -545,11 +545,11 @@ export abstract class InMemoryDocumentSessionOperations
 
         if (!noTracking) {
             const newDocumentInfo: DocumentInfo = new DocumentInfo();
-            newDocumentInfo.id = id;
+            newDocumentInfo.Id = id;
             newDocumentInfo.document = document;
             newDocumentInfo.metadata = metadata;
             newDocumentInfo.entity = entity;
-            newDocumentInfo.changeVector = changeVector;
+            newDocumentInfo.ChangeVector = changeVector;
 
             this.documentsById.add(newDocumentInfo);
             this.documentsByEntity.put(entity, newDocumentInfo);
@@ -564,7 +564,7 @@ export abstract class InMemoryDocumentSessionOperations
             return;
         }
         
-        const existing = this.documentsById.getValue(info.id);
+        const existing = this.documentsById.getValue(info.Id);
         if (existing) {
             if (existing.entity === info.entity) {
                 return;
@@ -572,25 +572,25 @@ export abstract class InMemoryDocumentSessionOperations
 
             throwError(
                 "InvalidOperationException", 
-                "The document " + info.id + " is already in the session with a different entity instance.");
+                "The document " + info.Id + " is already in the session with a different entity instance.");
         }
         
         const existingEntity = this.documentsByEntity.get(info.entity);
         if (existingEntity) {
-            if (StringUtil.equalsIgnoreCase(existingEntity.id, info.id)) {
+            if (StringUtil.equalsIgnoreCase(existingEntity.Id, info.Id)) {
                 return;
             }
             
             throwError(
                 "InvalidOperationException", 
                 "Attempted to load an entity with id " 
-                + info.id 
-                + ", but the entity instance already exists in the session with id: " + existing.id);
+                + info.Id
+                + ", but the entity instance already exists in the session with id: " + existing.Id);
         }
         
         this.documentsByEntity.put(info.entity, info);
         this.documentsById.add(info);
-        this.includedDocumentsById.delete(info.id);
+        this.includedDocumentsById.delete(info.Id);
      }
 
     private _deserializeFromTransformer(clazz: ObjectTypeDescriptor, id: string, document: object, trackEntity: boolean): object {
@@ -618,7 +618,7 @@ export abstract class InMemoryDocumentSessionOperations
                 continue;
             }
 
-            this.includedDocumentsById.set(newDocumentInfo.id, newDocumentInfo);
+            this.includedDocumentsById.set(newDocumentInfo.Id, newDocumentInfo);
         }
     }
 
@@ -976,8 +976,8 @@ export abstract class InMemoryDocumentSessionOperations
 
         const value = this.documentsByEntity.get(entity);
         if (value) {
-            value.changeVector = changeVector || value.changeVector;
-            value.concurrencyCheckMode = forceConcurrencyCheck;
+            value.ChangeVector = changeVector || value.ChangeVector;
+            value.ConcurrencyCheckMode = forceConcurrencyCheck;
             return;
         }
 
@@ -1048,10 +1048,10 @@ export abstract class InMemoryDocumentSessionOperations
         }
 
         const documentInfo = new DocumentInfo();
-        documentInfo.id = id;
+        documentInfo.Id = id;
         documentInfo.metadata = metadata;
-        documentInfo.changeVector = changeVector;
-        documentInfo.concurrencyCheckMode = forceConcurrencyCheck;
+        documentInfo.ChangeVector = changeVector;
+        documentInfo.ConcurrencyCheckMode = forceConcurrencyCheck;
         documentInfo.entity = entity;
         documentInfo.newDocument = true;
         documentInfo.document = null;
@@ -1137,7 +1137,7 @@ export abstract class InMemoryDocumentSessionOperations
     }
 
     protected _updateSessionAfterSaveChanges(result: BatchCommandResult): void {
-        const returnedTransactionIndex = result.transactionIndex;
+        const returnedTransactionIndex = result.TransactionIndex;
         this._documentStore.setLastTransactionIndex(this.databaseName, returnedTransactionIndex);
         this.sessionInfo.lastClusterTransactionIndex = returnedTransactionIndex;
     }
@@ -1249,19 +1249,19 @@ export abstract class InMemoryDocumentSessionOperations
                     change.change = "DocumentDeleted";
 
                     docChanges.push(change);
-                    changes[documentInfo.id] = docChanges;
+                    changes[documentInfo.Id] = docChanges;
                 } else {
                     const command: ICommandData =
-                        result.deferredCommandsMap.get(IdTypeAndName.keyFor(documentInfo.id, "ClientAnyCommand", null));
+                        result.deferredCommandsMap.get(IdTypeAndName.keyFor(documentInfo.Id, "ClientAnyCommand", null));
                     if (command) {
                         InMemoryDocumentSessionOperations._throwInvalidDeletedDocumentWithDeferredCommand(command);
                     }
 
                     let changeVector = null;
-                    documentInfo = this.documentsById.getValue(documentInfo.id);
+                    documentInfo = this.documentsById.getValue(documentInfo.Id);
 
                     if (documentInfo) {
-                        changeVector = documentInfo.changeVector;
+                        changeVector = documentInfo.ChangeVector;
 
                         if (documentInfo.entity) {
                             result.onSuccess.removeDocumentByEntity(documentInfo.entity);
@@ -1273,9 +1273,9 @@ export abstract class InMemoryDocumentSessionOperations
 
                     changeVector = this.useOptimisticConcurrency ? changeVector : null;
                     const beforeDeleteEventArgs =
-                        new SessionBeforeDeleteEventArgs(this, documentInfo.id, documentInfo.entity);
+                        new SessionBeforeDeleteEventArgs(this, documentInfo.Id, documentInfo.entity);
                     this.emit("beforeDelete", beforeDeleteEventArgs);
-                    result.sessionCommands.push(new DeleteCommandData(documentInfo.id, changeVector));
+                    result.sessionCommands.push(new DeleteCommandData(documentInfo.Id, changeVector));
                 }
 
                 if (!changes) {
@@ -1293,11 +1293,11 @@ export abstract class InMemoryDocumentSessionOperations
             for (const entry of this.documentsByEntity) {
                 const  { key: entityKey, value: entityValue } = entry;
 
-                if (entityValue.ignoreChanges) {
+                if (entityValue.IgnoreChanges) {
                     continue;
                 }
 
-                if (this.isDeleted(entityValue.id)) {
+                if (this.isDeleted(entityValue.Id)) {
                     continue;
                 }
 
@@ -1309,12 +1309,12 @@ export abstract class InMemoryDocumentSessionOperations
                 }
 
                 const command = result.deferredCommandsMap.get(
-                    IdTypeAndName.keyFor(entityValue.id, "ClientModifyDocumentCommand", null));
+                    IdTypeAndName.keyFor(entityValue.Id, "ClientModifyDocumentCommand", null));
                 if (command) {
                     InMemoryDocumentSessionOperations._throwInvalidModifiedDocumentWithDeferredCommand(command);
                 }
 
-                const beforeStoreEventArgs = new SessionBeforeStoreEventArgs(this, entityValue.id, entityKey);
+                const beforeStoreEventArgs = new SessionBeforeStoreEventArgs(this, entityValue.Id, entityKey);
 
                 if (this.emit("beforeStore", beforeStoreEventArgs)) { //TODO: && entity.executeOnBeforeStore
                     if (beforeStoreEventArgs.isMetadataAccessed()) {
@@ -1328,38 +1328,38 @@ export abstract class InMemoryDocumentSessionOperations
 
                 result.entities.push(entityKey);
 
-                if (entityValue.id) {
-                    result.onSuccess.removeDocumentById(entityValue.id);
+                if (entityValue.Id) {
+                    result.onSuccess.removeDocumentById(entityValue.Id);
                 }
                 result.onSuccess.updateEntityDocumentInfo(entityValue, document);
 
                 let changeVector: string;
                 if (this.useOptimisticConcurrency) {
-                    if (entityValue.concurrencyCheckMode !== "Disabled") {
+                    if (entityValue.ConcurrencyCheckMode !== "Disabled") {
                         // if the user didn't provide a change vector, we'll test for an empty one
-                        changeVector = entityValue.changeVector || "";
+                        changeVector = entityValue.ChangeVector || "";
                     } else {
                         changeVector = null;
                     }
-                } else if (entityValue.concurrencyCheckMode === "Forced") {
-                    changeVector = entityValue.changeVector;
+                } else if (entityValue.ConcurrencyCheckMode === "Forced") {
+                    changeVector = entityValue.ChangeVector;
                 } else {
                     changeVector = null;
                 }
 
                 let forceRevisionCreationStrategy: ForceRevisionStrategy = "None";
 
-                if (entityValue.id) {
+                if (entityValue.Id) {
                     // Check if user wants to Force a Revision
-                    const creationStrategy = this.idsForCreatingForcedRevisions.get(entityValue.id);
+                    const creationStrategy = this.idsForCreatingForcedRevisions.get(entityValue.Id);
                     if (creationStrategy) {
-                        this.idsForCreatingForcedRevisions.delete(entityValue.id);
+                        this.idsForCreatingForcedRevisions.delete(entityValue.Id);
                         forceRevisionCreationStrategy = creationStrategy;
                     }
                 }
 
                 result.sessionCommands.push(
-                    new PutCommandDataWithJson(entityValue.id, changeVector, document, forceRevisionCreationStrategy));
+                    new PutCommandDataWithJson(entityValue.Id, changeVector, document, forceRevisionCreationStrategy));
             }
         } finally {
             putsContext.dispose();
@@ -1436,13 +1436,13 @@ export abstract class InMemoryDocumentSessionOperations
         }
 
         this.deletedEntities.add(entity);
-        this.includedDocumentsById.delete(value.id);
+        this.includedDocumentsById.delete(value.Id);
         
         if (this._countersByDocId) {
-            this._countersByDocId.delete(value.id);
+            this._countersByDocId.delete(value.Id);
         }
 
-        this._knownMissingIds.add(value.id);
+        this._knownMissingIds.add(value.Id);
     }
 
     /**
@@ -1470,7 +1470,7 @@ export abstract class InMemoryDocumentSessionOperations
             }
 
             this.documentsById.remove(id);
-            changeVector = documentInfo.changeVector;
+            changeVector = documentInfo.ChangeVector;
         }
 
         this._knownMissingIds.add(id);
@@ -1524,10 +1524,10 @@ export abstract class InMemoryDocumentSessionOperations
 
     protected _refreshInternal<T extends object>(
         entity: T, cmd: RavenCommand<GetDocumentsResult>, documentInfo: DocumentInfo): void {
-        const document = cmd.result.results[0];
+        const document = cmd.result.Results[0];
         if (!document) {
             throwError("InvalidOperationException",
-                "Document '" + documentInfo.id + "' no longer exists and was probably deleted");
+                "Document '" + documentInfo.Id + "' no longer exists and was probably deleted");
         }
 
         const value = document[CONSTANTS.Documents.Metadata.KEY];
@@ -1535,7 +1535,7 @@ export abstract class InMemoryDocumentSessionOperations
 
         if (documentInfo.metadata) {
             const changeVector = value[CONSTANTS.Documents.Metadata.CHANGE_VECTOR];
-            documentInfo.changeVector = changeVector;
+            documentInfo.ChangeVector = changeVector;
         }
 
         if (documentInfo.entity && !this.noTracking) {
@@ -1543,12 +1543,12 @@ export abstract class InMemoryDocumentSessionOperations
         }
 
         const entityType = this.conventions.getTypeDescriptorByEntity(entity);
-        documentInfo.entity = this.entityToJson.convertToEntity(entityType, documentInfo.id, document, !this.noTracking);
+        documentInfo.entity = this.entityToJson.convertToEntity(entityType, documentInfo.Id, document, !this.noTracking);
         documentInfo.document = document;
 
         Object.assign(entity, documentInfo.entity);
 
-        const documentInfoById = this.documentsById.getValue(documentInfo.id);
+        const documentInfoById = this.documentsById.getValue(documentInfo.Id);
 
         if (documentInfoById) {
             documentInfoById.entity = entity;
@@ -1577,9 +1577,9 @@ export abstract class InMemoryDocumentSessionOperations
         const documentInfo = this.documentsByEntity.get(entity);
         if (documentInfo) {
             this.documentsByEntity.evict(entity);
-            this.documentsById.remove(documentInfo.id);
+            this.documentsById.remove(documentInfo.Id);
             if (this._countersByDocId) {
-                this._countersByDocId.delete(documentInfo.id);
+                this._countersByDocId.delete(documentInfo.Id);
             }
         }
 
@@ -1686,7 +1686,7 @@ export abstract class InMemoryDocumentSessionOperations
      * it still takes part in the session, but is ignored for SaveChanges.
      */
     public ignoreChangesFor(entity: object): void {
-        this._getDocumentInfo(entity).ignoreChanges = true;
+        this._getDocumentInfo(entity).IgnoreChanges = true;
     }
 
     public whatChanged(): { [id: string]: DocumentsChanges[] } {

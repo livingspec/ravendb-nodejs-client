@@ -54,7 +54,7 @@ describe("GetDocumentCommand streaming", function () {
             await session.saveChanges();
 
             const getDocs = new GetDocumentsCommand({
-                ids: ["users/1", "users/2"],
+                Ids: ["users/1", "users/2"],
                 includes: ["Pet"],
                 conventions: store.conventions
             });
@@ -63,12 +63,12 @@ describe("GetDocumentCommand streaming", function () {
             const users = getDocs.result;
 
             assert.ok(users);
-            assert.ok(users.results && users.results.length);
-            assert.ok(users.includes);
-            assert.strictEqual(users.results.length, 2);
-            assert.strictEqual(Object.keys(users.includes).length, 2);
-            assert.strictEqual(user3.Name, users.includes["users/3"].Name);
-            assert.strictEqual(user2.Age, users.results[1].Age);
+            assert.ok(users.Results && users.Results.length);
+            assert.ok(users.Includes);
+            assert.strictEqual(users.Results.length, 2);
+            assert.strictEqual(Object.keys(users.Includes).length, 2);
+            assert.strictEqual(user3.Name, users.Includes["users/3"].Name);
+            assert.strictEqual(user2.Age, users.Results[1].Age);
         } finally {
             if (customStore) {
                 customStore.dispose();

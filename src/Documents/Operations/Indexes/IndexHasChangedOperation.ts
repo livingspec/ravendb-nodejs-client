@@ -44,7 +44,7 @@ export class IndexHasChangedCommand extends RavenCommand<boolean> {
     }
 
     public createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/databases/" + node.database + "/indexes/has-changed";
+        const uri = node.Url + "/databases/" + node.Database + "/indexes/has-changed";
 
         const body = this._serializer.serialize(this._definition);
 
@@ -67,7 +67,7 @@ export class IndexHasChangedCommand extends RavenCommand<boolean> {
         await this._defaultPipeline(_ => body = _)
             .process(bodyStream)
             .then(results => {
-                this.result = results["changed"];
+                this.result = results["Changed"];
             });
         return body;
     }

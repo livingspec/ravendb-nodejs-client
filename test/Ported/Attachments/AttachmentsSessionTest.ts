@@ -62,15 +62,15 @@ describe("Attachments Session", function () {
             assert.strictEqual(attachments.length, 3);
 
             const orderedNames = [...attachments];
-            orderedNames.sort((a, b) => a.name > b.name ? 1 : -1);
+            orderedNames.sort((a, b) => a.Name > b.Name ? 1 : -1);
 
             for (let i = 0; i < attachmentsInfo.length; i++) {
-                const { name, contentType } = orderedNames[i];
+                const { Name, ContentType } = orderedNames[i];
                 const attachment = attachments[i];
-                assert.strictEqual(name, attachment.name);
-                assert.strictEqual(contentType, attachment.contentType);
-                assert.strictEqual(typeof attachment.size, "number");
-                assert.ok(attachment.hash);
+                assert.strictEqual(Name, attachment.Name);
+                assert.strictEqual(ContentType, attachment.ContentType);
+                assert.strictEqual(typeof attachment.Size, "number");
+                assert.ok(attachment.Hash);
             }
         }
     });
@@ -157,7 +157,7 @@ describe("Attachments Session", function () {
             // test get attachment by its name
             {
                 const attachmentResult = await session.advanced.attachments.get("users/1", "file2");
-                assert.strictEqual(attachmentResult.details.name, "file2");
+                assert.strictEqual(attachmentResult.details.Name, "file2");
             }
 
             session.advanced.attachments.delete("users/1", "file2");
@@ -175,10 +175,10 @@ describe("Attachments Session", function () {
             assert.strictEqual(attachments.length, 2);
 
             const result = await session.advanced.attachments.get("users/1", "file1");
-            assert.strictEqual(result.details.name, "file1");
-            assert.ok(result.details.hash);
-            assert.ok(result.details.changeVector);
-            assert.ok(result.details.size);
+            assert.strictEqual(result.details.Name, "file1");
+            assert.ok(result.details.Hash);
+            assert.ok(result.details.ChangeVector);
+            assert.ok(result.details.Size);
             assert.ok(result.data);
 
             assert.strictEqual(result.data.listenerCount("data"), 0);
@@ -306,9 +306,9 @@ describe("Attachments Session", function () {
             assert.strictEqual(attachments.length, 1);
 
             const attachment = attachments[0];
-            assert.strictEqual(attachment.contentType, "image/png");
-            assert.strictEqual(attachment.name, names[0]);
-            assert.strictEqual(attachment.size, 3);
+            assert.strictEqual(attachment.ContentType, "image/png");
+            assert.strictEqual(attachment.Name, names[0]);
+            assert.strictEqual(attachment.Size, 3);
         }
     });
 

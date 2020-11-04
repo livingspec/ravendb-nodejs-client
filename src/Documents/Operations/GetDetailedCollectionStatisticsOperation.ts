@@ -23,7 +23,7 @@ class GetDetailedCollectionStatisticsCommand extends RavenCommand<DetailedCollec
     }
 
     createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/databases/" + node.database + "/collections/stats/detailed";
+        const uri = node.Url + "/databases/" + node.Database + "/collections/stats/detailed";
 
         return {
             method: "GET",

@@ -43,7 +43,7 @@ _describe(
                         resolveToLatest: false,
                         resolveByCollection: {}
                     };
-                    r.conflictSolverConfig = conflictSolver;
+                    r.ConflictSolverConfig = conflictSolver;
                 };
             });
 
@@ -68,7 +68,7 @@ _describe(
                             user.name = "Arek";
                             await session.store(user);
                             await session.saveChanges();
-                            id = user.id;
+                            id = user.Id;
                         }
 
                         const replicatedUser =
@@ -247,11 +247,11 @@ _describe(
                             assertThat(ongoingTask)
                                 .isNotNull();
 
-                            assertThat(ongoingTask.destinationDatabase)
+                            assertThat(ongoingTask.DestinationDatabase)
                                 .isEqualTo(destination.database);
-                            assertThat(ongoingTask.delayReplicationFor)
+                            assertThat(ongoingTask.DelayReplicationFor)
                                 .isEqualTo("00:00:00");
-                            assertThat(ongoingTask.taskState)
+                            assertThat(ongoingTask.TaskState)
                                 .isEqualTo("Enabled");
                         } finally {
                             destination.dispose();

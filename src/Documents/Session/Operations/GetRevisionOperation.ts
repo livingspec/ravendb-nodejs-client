@@ -72,8 +72,8 @@ export class GetRevisionOperation {
 
         const entity = this._session.entityToJson.convertToEntity(documentType, id, document, !this._session.noTracking) as any as TEntity;
         const documentInfo = new DocumentInfo();
-        documentInfo.id = id;
-        documentInfo.changeVector = changeVector;
+        documentInfo.Id = id;
+        documentInfo.ChangeVector = changeVector;
         documentInfo.document = document;
         documentInfo.metadata = metadata;
         documentInfo.entity = entity;
@@ -82,20 +82,20 @@ export class GetRevisionOperation {
     }
 
     public getRevisionsFor<TEntity extends object>(documentType: DocumentType<TEntity>): TEntity[] {
-        const resultsCount = this._result.results.length;
+        const resultsCount = this._result.Results.length;
         const results = [] as TEntity[];
 
-        for (const document of this._result.results) {
+        for (const document of this._result.Results) {
             results.push(this._getRevision<TEntity>(documentType, document));
         }
         return results;
     }
 
     public getRevisionsMetadataFor(): MetadataAsDictionary[] {
-        const resultsCount = this._result.results.length;
+        const resultsCount = this._result.Results.length;
         const results = [] as MetadataAsDictionary[];
 
-        for (const document of this._result.results) {
+        for (const document of this._result.Results) {
             const metadata = document[CONSTANTS.Documents.Metadata.KEY];
             results.push(metadata);
         }
@@ -108,7 +108,7 @@ export class GetRevisionOperation {
             return null;
         }
 
-        const document = this._result.results[0];
+        const document = this._result.Results[0];
         return this._getRevision(documentType, document);
     }
 
@@ -122,7 +122,7 @@ export class GetRevisionOperation {
                 continue;
             }
 
-            results[changeVector] = this._getRevision(documentType, this._result.results[i]);
+            results[changeVector] = this._getRevision(documentType, this._result.Results[i]);
         }
 
         return results;

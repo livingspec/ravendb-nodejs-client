@@ -63,8 +63,8 @@ describe("RavenDB_14084", function () {
             .hasSize(2);
 
         const configuration = indexDefinitions
-            .find(x => x.name === "Companies/ByUnknown/WithIndexMissingFieldsAsNull")
-            .configuration;
+            .find(x => x.Name === "Companies/ByUnknown/WithIndexMissingFieldsAsNull")
+            .Configuration;
 
         assertThat(configuration)
             .hasSize(1)
@@ -77,8 +77,8 @@ describe("RavenDB_14084", function () {
 class Companies_ByUnknown extends AbstractIndexCreationTask {
     createIndexDefinition(): IndexDefinition {
         const indexDefinition = new IndexDefinition();
-        indexDefinition.name = "Companies/ByUnknown";
-        indexDefinition.maps = new Set(["from c in docs.Companies select new { Unknown = c.Unknown };"]);
+        indexDefinition.Name = "Companies/ByUnknown";
+        indexDefinition.Maps = new Set(["from c in docs.Companies select new { Unknown = c.Unknown };"]);
 
         return indexDefinition;
     }
@@ -88,9 +88,9 @@ class Companies_ByUnknown extends AbstractIndexCreationTask {
 class Companies_ByUnknown_WithIndexMissingFieldsAsNull extends AbstractIndexCreationTask {
     createIndexDefinition(): IndexDefinition {
         const indexDefinition = new IndexDefinition();
-        indexDefinition.name = "Companies/ByUnknown/WithIndexMissingFieldsAsNull";
-        indexDefinition.maps = new Set(["from c in docs.Companies select new { Unknown = c.Unknown };"]);
-        indexDefinition.configuration = {
+        indexDefinition.Name = "Companies/ByUnknown/WithIndexMissingFieldsAsNull";
+        indexDefinition.Maps = new Set(["from c in docs.Companies select new { Unknown = c.Unknown };"]);
+        indexDefinition.Configuration = {
             "Indexing.IndexMissingFieldsAsNull": "true"
         };
 

@@ -74,13 +74,13 @@ export class LoadStartingWithOperation {
             return;
         }
 
-        for (const document of result.results) {
+        for (const document of result.Results) {
             if (!document) {
                 continue;
             }
             const newDocumentInfo = DocumentInfo.getNewDocumentInfo(document);
             this._session.documentsById.add(newDocumentInfo);
-            this._returnedIds.push(newDocumentInfo.id);
+            this._returnedIds.push(newDocumentInfo.Id);
         }
     }
 
@@ -93,11 +93,11 @@ export class LoadStartingWithOperation {
                     "InvalidOperationException", "Cannot execute getDocuments before operation execution.");
             }
 
-            if (!this._results || !this._results.results || !this._results.results.length) {
+            if (!this._results || !this._results.Results || !this._results.Results.length) {
                 return [];
             }
             
-            return this._results.results
+            return this._results.Results
                 .map(doc => {
                     const newDocumentInfo = DocumentInfo.getNewDocumentInfo(doc);
                     return this._session.trackEntity(entityType, newDocumentInfo);

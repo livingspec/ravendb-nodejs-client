@@ -7,23 +7,23 @@ export class QueryResult extends GenericQueryResult<object[], object> {
      */
     public createSnapshot(): QueryResult {
         const queryResult = new QueryResult();
-        queryResult.results = this.results;
-        queryResult.includes = this.includes;
-        queryResult.indexName = this.indexName;
-        queryResult.indexTimestamp = this.indexTimestamp;
-        queryResult.includedPaths = this.includedPaths;
-        queryResult.isStale = this.isStale;
-        queryResult.skippedResults = this.skippedResults;
-        queryResult.totalResults = this.totalResults;
-        queryResult.highlightings = this.highlightings;
-        queryResult.explanations = this.explanations;
-        queryResult.timingsInMs = this.timingsInMs;
-        queryResult.nodeTag = this.nodeTag;
-        queryResult.counterIncludes = this.counterIncludes;
-        queryResult.includedCounterNames = this.includedCounterNames;
-        queryResult.lastQueryTime = this.lastQueryTime;
-        queryResult.durationInMs = this.durationInMs;
-        queryResult.resultEtag = this.resultEtag;
+        queryResult.Results = this.Results;
+        queryResult.Includes = this.Includes;
+        queryResult.IndexName = this.IndexName;
+        queryResult.IndexTimestamp = this.IndexTimestamp;
+        queryResult.IncludedPaths = this.IncludedPaths;
+        queryResult.IsStale = this.IsStale;
+        queryResult.SkippedResults = this.SkippedResults;
+        queryResult.TotalResults = this.TotalResults;
+        queryResult.Highlightings = this.Highlightings;
+        queryResult.Explanations = this.Explanations;
+        queryResult.TimingsInMs = this.TimingsInMs;
+        queryResult.NodeTag = this.NodeTag;
+        queryResult.CounterIncludes = this.CounterIncludes;
+        queryResult.IncludedCounterNames = this.IncludedCounterNames;
+        queryResult.LastQueryTime = this.LastQueryTime;
+        queryResult.DurationInMs = this.DurationInMs;
+        queryResult.ResultEtag = this.ResultEtag;
         return queryResult;
     }
 }

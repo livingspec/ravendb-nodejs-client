@@ -40,7 +40,7 @@ class StartBackupCommand extends RavenCommand<StartBackupOperationResult> {
     }
 
     createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/databases/" + node.database
+        const uri = node.Url + "/databases/" + node.Database
             + "/admin/backup/database?isFullBackup=" + (this._isFullBackup ? "true" : "false")
             + "&taskId=" + this._taskId;
 

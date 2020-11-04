@@ -56,7 +56,7 @@ export class DocumentSubscriptions implements IDisposable {
         let options: SubscriptionCreationOptions = null;
         if (TypeUtil.isDocumentType(optionsOrDocumentType)) {
             options = {
-                documentType: optionsOrDocumentType as DocumentType<any>
+                DocumentType: optionsOrDocumentType as DocumentType<any>
             };
             return this.create(this._ensureCriteria(options, false), database);
         } else {
@@ -67,7 +67,7 @@ export class DocumentSubscriptions implements IDisposable {
             throwError("InvalidArgumentException", "Cannot create a subscription if options are null");
         }
 
-        if (!options.query) {
+        if (!options.Query) {
             throwError("InvalidArgumentException", "Cannot create a subscription if the script is null");
         }
 
@@ -76,7 +76,7 @@ export class DocumentSubscriptions implements IDisposable {
         const command = new CreateSubscriptionCommand(this._store.conventions, options);
         await requestExecutor.execute(command);
 
-        return command.result.name;
+        return command.result.Name;
     }
 
     /**
@@ -107,10 +107,10 @@ export class DocumentSubscriptions implements IDisposable {
             criteria = {} as SubscriptionCreationOptions;
         }
 
-        const objectDescriptor = this._store.conventions.getJsTypeByDocumentType(criteria.documentType);
+        const objectDescriptor = this._store.conventions.getJsTypeByDocumentType(criteria.DocumentType);
         const collectionName = this._store.conventions.getCollectionNameForType(objectDescriptor);
 
-        if (!criteria.query) {
+        if (!criteria.Query) {
             const builder = new StringBuilder("from '");
             StringUtil.escapeString(builder, collectionName);
             builder.append("'");
@@ -121,28 +121,28 @@ export class DocumentSubscriptions implements IDisposable {
 
             builder.append(" as doc");
 
-            criteria.query = builder.toString();
+            criteria.Query = builder.toString();
         }
-        if (criteria.includes) {
+        if (criteria.Includes) {
             const builder = new SubscriptionIncludeBuilder(this._store.conventions);
-            criteria.includes(builder);
+            criteria.Includes(builder);
 
             if (builder.documentsToInclude && builder.documentsToInclude.size) {
-                criteria.query += os.EOL + "include ";
+                criteria.Query += os.EOL + "include ";
 
                 let first = true;
                 for (const inc of builder.documentsToInclude) {
                     const include = "doc." + inc;
                     if (!first) {
-                        criteria.query += ",";
+                        criteria.Query += ",";
                     }
                     first = false;
 
                     let escapedInclude: string;
                     if (IncludesUtil.requiresQuotes(include, x => escapedInclude = x)) {
-                        criteria.query += "'" + escapedInclude + "'";
+                        criteria.Query += "'" + escapedInclude + "'";
                     } else {
-                        criteria.query += include;
+                        criteria.Query += include;
                     }
                 }
             }
@@ -209,7 +209,7 @@ export class DocumentSubscriptions implements IDisposable {
 
         if (TypeUtil.isString(optionsOrSubscriptionName)) {
             return this.getSubscriptionWorker({
-                subscriptionName: optionsOrSubscriptionName
+                SubscriptionName: optionsOrSubscriptionName
             }, database);
         }
 
@@ -263,7 +263,7 @@ export class DocumentSubscriptions implements IDisposable {
 
         if (TypeUtil.isString(optionsOrSubscriptionName)) {
             return this.getSubscriptionWorkerForRevisions({
-                subscriptionName: optionsOrSubscriptionName,
+                SubscriptionName: optionsOrSubscriptionName,
             } as SubscriptionWorkerOptions<T>, database);
         }
 

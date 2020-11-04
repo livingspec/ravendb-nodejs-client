@@ -2,27 +2,27 @@ import { QueryTimings } from "../Queries/Timings/QueryTimings";
 
 export abstract class QueryResultBase<TResult, TInclude> {
 
-    public results: TResult;
+    public Results: TResult;
 
-    public includes: TInclude;
+    public Includes: TInclude;
 
-    public includedPaths: string[];
+    public IncludedPaths: string[];
 
-    public isStale: boolean;
+    public IsStale: boolean;
 
-    public indexTimestamp: Date;
+    public IndexTimestamp: Date;
 
-    public indexName: string;
+    public IndexName: string;
 
-    public resultEtag: number;
+    public ResultEtag: number;
 
-    public lastQueryTime: Date;
+    public LastQueryTime: Date;
 
-    public counterIncludes: object;
+    public CounterIncludes: object;
 
-    public includedCounterNames: { [key: string]: string[] };
+    public IncludedCounterNames: { [key: string]: string[] };
 
-    public nodeTag: string;
+    public NodeTag: string;
 
-    public timings: QueryTimings;
+    public Timings: QueryTimings;
 }

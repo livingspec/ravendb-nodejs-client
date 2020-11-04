@@ -33,8 +33,8 @@ import { OngoingTaskSqlEtlDetails } from "../../../../../src/Documents/Operation
             .isNotNull();
 
         const transformation = {
-            applyToAllDocuments: true,
-            name: "Script #1"
+            ApplyToAllDocuments: true,
+            Name: "Script #1"
         } as Transformation;
 
         const table1 = {
@@ -44,11 +44,11 @@ import { OngoingTaskSqlEtlDetails } from "../../../../../src/Documents/Operation
         } as SqlEtlTable;
 
         const etlConfiguration = Object.assign(new SqlEtlConfiguration(), {
-            connectionStringName: "toDst",
-            disabled: false,
-            name: "etlToDst",
-            transforms: [ transformation ],
-            sqlTables: [ table1 ]
+            ConnectionStringName: "toDst",
+            Disabled: false,
+            Name: "etlToDst",
+            Transforms: [ transformation ],
+            SqlTables: [ table1 ]
         } as Partial<SqlEtlConfiguration>);
 
         const operation = new AddEtlOperation(etlConfiguration);
@@ -68,27 +68,27 @@ import { OngoingTaskSqlEtlDetails } from "../../../../../src/Documents/Operation
         assertThat(ongoingTask)
             .isNotNull();
 
-        assertThat(ongoingTask.taskId)
+        assertThat(ongoingTask.TaskId)
             .isEqualTo(etlResult.taskId);
-        assertThat(ongoingTask.taskType)
+        assertThat(ongoingTask.TaskType)
             .isEqualTo("SqlEtl");
-        assertThat(ongoingTask.responsibleNode)
+        assertThat(ongoingTask.ResponsibleNode)
             .isNotNull();
-        assertThat(ongoingTask.taskState)
+        assertThat(ongoingTask.TaskState)
             .isEqualTo("Enabled");
-        assertThat(ongoingTask.taskName)
+        assertThat(ongoingTask.TaskName)
             .isEqualTo("etlToDst");
 
-        const configuration = ongoingTask.configuration;
-        const transforms = configuration.transforms;
+        const configuration = ongoingTask.Configuration;
+        const transforms = configuration.Transforms;
         assertThat(transforms)
             .hasSize(1);
-        assertThat(transforms[0].applyToAllDocuments)
+        assertThat(transforms[0].ApplyToAllDocuments)
             .isTrue();
 
-        assertThat(configuration.sqlTables)
+        assertThat(configuration.SqlTables)
             .hasSize(1);
-        assertThat(configuration.sqlTables[0].tableName)
+        assertThat(configuration.SqlTables[0].tableName)
             .isEqualTo("Users");
     });
 
@@ -100,10 +100,10 @@ import { OngoingTaskSqlEtlDetails } from "../../../../../src/Documents/Operation
             .isNotNull();
 
         const transformation = {
-            applyToAllDocuments: false,
-            collections: [ "Users" ],
-            name: "Script #1",
-            script: "loadToUsers(this);"
+            ApplyToAllDocuments: false,
+            Collections: [ "Users" ],
+            Name: "Script #1",
+            Script: "loadToUsers(this);"
         } as Transformation;
 
         const table1 = {
@@ -113,11 +113,11 @@ import { OngoingTaskSqlEtlDetails } from "../../../../../src/Documents/Operation
         } as SqlEtlTable;
 
         const etlConfiguration = Object.assign(new SqlEtlConfiguration(), {
-            connectionStringName: "toDst",
-            disabled: false,
-            name: "etlToDst",
-            transforms: [ transformation ],
-            sqlTables: [ table1 ]
+            ConnectionStringName: "toDst",
+            Disabled: false,
+            Name: "etlToDst",
+            Transforms: [ transformation ],
+            SqlTables: [ table1 ]
         } as Partial<SqlEtlConfiguration>);
 
         const operation = new AddEtlOperation(etlConfiguration);
@@ -139,10 +139,10 @@ import { OngoingTaskSqlEtlDetails } from "../../../../../src/Documents/Operation
             .isNotNull();
 
         const transformation = {
-            applyToAllDocuments: false,
-            collections: [ "Users" ],
-            name: "Script #1",
-            script: "loadToUsers(this);"
+            ApplyToAllDocuments: false,
+            Collections: [ "Users" ],
+            Name: "Script #1",
+            Script: "loadToUsers(this);"
         } as Transformation;
 
         const table1 = {
@@ -152,11 +152,11 @@ import { OngoingTaskSqlEtlDetails } from "../../../../../src/Documents/Operation
         } as SqlEtlTable;
 
         const etlConfiguration = Object.assign(new SqlEtlConfiguration(), {
-            connectionStringName: "toDst",
-            disabled: false,
-            name: "etlToDst",
-            transforms: [ transformation ],
-            sqlTables: [ table1 ]
+            ConnectionStringName: "toDst",
+            Disabled: false,
+            Name: "etlToDst",
+            Transforms: [ transformation ],
+            SqlTables: [ table1 ]
         } as Partial<SqlEtlConfiguration>);
 
         const operation = new AddEtlOperation(etlConfiguration);
@@ -164,8 +164,8 @@ import { OngoingTaskSqlEtlDetails } from "../../../../../src/Documents/Operation
 
         // now change ETL configuration
 
-        transformation.collections = [ "Cars" ];
-        transformation.script = "loadToCars(this)";
+        transformation.Collections = [ "Cars" ];
+        transformation.Script = "loadToCars(this)";
 
         const updateResult = await store.maintenance.send(new UpdateEtlOperation(etlResult.taskId, etlConfiguration));
         assertThat(updateResult)
@@ -185,8 +185,8 @@ import { OngoingTaskSqlEtlDetails } from "../../../../../src/Documents/Operation
             .isNotNull();
 
         const transformation = {
-            applyToAllDocuments: true,
-            name: "Script Q&A",
+            ApplyToAllDocuments: true,
+            Name: "Script Q&A",
         } as Transformation;
 
         const table1 = {
@@ -196,11 +196,11 @@ import { OngoingTaskSqlEtlDetails } from "../../../../../src/Documents/Operation
         } as SqlEtlTable;
 
         const etlConfiguration = Object.assign(new SqlEtlConfiguration(), {
-            connectionStringName: "toDst",
-            disabled: false,
-            name: "etlToDst",
-            transforms: [ transformation ],
-            sqlTables: [ table1 ]
+            ConnectionStringName: "toDst",
+            Disabled: false,
+            Name: "etlToDst",
+            Transforms: [ transformation ],
+            SqlTables: [ table1 ]
         } as Partial<SqlEtlConfiguration>);
 
         const operation = new AddEtlOperation(etlConfiguration);
@@ -223,9 +223,9 @@ import { OngoingTaskSqlEtlDetails } from "../../../../../src/Documents/Operation
 
 function createConnectionString(src: IDocumentStore) {
     const toDstLink = Object.assign(new SqlConnectionString(), {
-        name: "toDst",
-        factoryName: "MySql.Data.MySqlClient",
-        connectionString: "hostname=localhost;user=root;password="
+        Name: "toDst",
+        FactoryName: "MySql.Data.MySqlClient",
+        ConnectionString: "hostname=localhost;user=root;password="
     } as Partial<SqlConnectionString>);
 
     return src.maintenance.send(new PutConnectionStringOperation(toDstLink));

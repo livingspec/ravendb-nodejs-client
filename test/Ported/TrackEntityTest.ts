@@ -34,11 +34,11 @@ describe("TrackEntityTest", function () {
             const session = store.openSession();
             const user1 = new User();
             user1.name = "John";
-            user1.id = "users/1";
+            user1.Id = "users/1";
 
             const user2 = new User();
             user2.name = "Jonathan";
-            user2.id = "users/2";
+            user2.Id = "users/2";
 
             await session.store(user1);
             await session.store(user2);
@@ -62,7 +62,7 @@ describe("TrackEntityTest", function () {
     it("storingDocumentWithTheSameIdInTheSameSessionShouldThrow", async () => {
         const session = store.openSession();
         const user = new User();
-        user.id = "users/1";
+        user.Id = "users/1";
         user.name = "User1";
 
         await session.store(user);
@@ -70,7 +70,7 @@ describe("TrackEntityTest", function () {
 
         const newUser = new User();
         newUser.name = "User2";
-        newUser.id = "users/1";
+        newUser.Id = "users/1";
 
         try {
             await session.store(newUser);

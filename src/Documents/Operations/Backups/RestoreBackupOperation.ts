@@ -43,7 +43,7 @@ class RestoreBackupCommand extends RavenCommand<OperationIdResult> {
     }
 
     createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/admin/restore/database";
+        const uri = node.Url + "/admin/restore/database";
 
         const body = this._serializer.serialize(this._restoreConfiguration);
 

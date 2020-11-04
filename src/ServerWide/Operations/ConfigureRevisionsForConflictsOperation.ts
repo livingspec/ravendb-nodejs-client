@@ -55,7 +55,7 @@ class ConfigureRevisionsForConflictsCommand extends RavenCommand<ConfigureRevisi
     }
 
     createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/databases/" + this._databaseName + "/admin/revisions/conflicts/config";
+        const uri = node.Url + "/databases/" + this._databaseName + "/admin/revisions/conflicts/config";
 
         const body = this._serializer.serialize(this._configuration);
 

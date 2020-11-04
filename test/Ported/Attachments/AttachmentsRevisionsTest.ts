@@ -162,26 +162,26 @@ describe("AttachmentsRevisions", function () {
         let result = await store.operations.send(
             new PutAttachmentOperation("users/1", names[0], profileStream, "image/png"));
 
-        assert.ok(result.changeVector.includes("A:3"));
-        assert.strictEqual(result.name, names[0]);
-        assert.strictEqual(result.documentId, "users/1");
-        assert.strictEqual(result.contentType, "image/png");
+        assert.ok(result.ChangeVector.includes("A:3"));
+        assert.strictEqual(result.Name, names[0]);
+        assert.strictEqual(result.DocumentId, "users/1");
+        assert.strictEqual(result.ContentType, "image/png");
 
         const backgroundStream = Buffer.from([10, 20, 30, 40, 50]);
         result = await store.operations.send(
             new PutAttachmentOperation("users/1", names[1], backgroundStream, "ImGgE/jPeG"));
-        assert.ok(result.changeVector.includes("A:7"));
-        assert.strictEqual(result.name, names[1]);
-        assert.strictEqual(result.documentId, "users/1");
-        assert.strictEqual(result.contentType, "ImGgE/jPeG");
+        assert.ok(result.ChangeVector.includes("A:7"));
+        assert.strictEqual(result.Name, names[1]);
+        assert.strictEqual(result.DocumentId, "users/1");
+        assert.strictEqual(result.ContentType, "ImGgE/jPeG");
 
         const fileStream = Buffer.from([1, 2, 3, 4, 5]);
         result = await store.operations.send(
             new PutAttachmentOperation("users/1", names[2], fileStream, null));
-        assert.ok(result.changeVector.includes("A:12"));
-        assert.strictEqual(result.name, names[2]);
-        assert.strictEqual(result.documentId, "users/1");
-        assert.ok(!result.contentType);
+        assert.ok(result.ChangeVector.includes("A:12"));
+        assert.strictEqual(result.Name, names[2]);
+        assert.strictEqual(result.DocumentId, "users/1");
+        assert.ok(!result.ContentType);
 
         return names;
     };
@@ -193,11 +193,11 @@ describe("AttachmentsRevisions", function () {
                                    expectedCountOfUniqueAttachments = 3) => {
         const statistics = await store.maintenance.send(new GetStatisticsOperation());
 
-        assert.strictEqual(statistics.countOfAttachments, expectedCountOfAttachments);
-        assert.strictEqual(statistics.countOfUniqueAttachments, expectedCountOfUniqueAttachments);
-        assert.strictEqual(statistics.countOfRevisionDocuments, 4);
-        assert.strictEqual(statistics.countOfDocuments, expectedCountOfDocuments);
-        assert.strictEqual(statistics.countOfIndexes, 0);
+        assert.strictEqual(statistics.CountOfAttachments, expectedCountOfAttachments);
+        assert.strictEqual(statistics.CountOfUniqueAttachments, expectedCountOfUniqueAttachments);
+        assert.strictEqual(statistics.CountOfRevisionDocuments, 4);
+        assert.strictEqual(statistics.CountOfDocuments, expectedCountOfDocuments);
+        assert.strictEqual(statistics.CountOfIndexes, 0);
 
         {
             const session = store.openSession();
@@ -246,7 +246,7 @@ describe("AttachmentsRevisions", function () {
                 const name = orderedNames[i];
                 const attachment = attachments[i];
 
-                assert.strictEqual(attachment.name, name);
+                assert.strictEqual(attachment.Name, name);
             }
         };
 });

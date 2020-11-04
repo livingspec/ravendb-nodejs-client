@@ -34,7 +34,7 @@ class GetPeriodicBackupStatusCommand extends RavenCommand<GetPeriodicBackupStatu
     }
 
     createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/periodic-backup/status?name=" + node.database + "&taskId=" + this._taskId;
+        const uri = node.Url + "/periodic-backup/status?name=" + node.Database + "&taskId=" + this._taskId;
 
         return {
             method: "GET",
@@ -60,15 +60,15 @@ class GetPeriodicBackupStatusCommand extends RavenCommand<GetPeriodicBackupStatu
                     this._conventions,
                     {
                         nestedTypes: {
-                            "status.lastFullBackup": "date",
-                            "status.lastIncrementalBackup": "date",
-                            "status.lastFullBackupInternal": "date",
-                            "status.lastIncrementalBackupInternal": "date",
-                            "status.localBackup.lastIncrementalBackup": "date",
-                            "status.localBackup.lastFullBackup": "date",
-                            "status.nextBackup.dateTime": "date",
-                            "status.onGoingBackup.startTime": "date",
-                            "status.error.at": "date"
+                            "Status.LastFullBackup": "date",
+                            "Status.LastIncrementalBackup": "date",
+                            "Status.LastFullBackupInternal": "date",
+                            "Status.LastIncrementalBackupInternal": "date",
+                            "Status.LocalBackup.LastIncrementalBackup": "date",
+                            "Status.LocalBackup.LastFullBackup": "date",
+                            "Status.NextBackup.DateTime": "date",
+                            "Status.OnGoingBackup.StartTime": "date",
+                            "Status.Error.At": "date"
                         }
                     });
             });

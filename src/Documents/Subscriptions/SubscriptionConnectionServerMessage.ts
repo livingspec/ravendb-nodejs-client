@@ -1,17 +1,17 @@
 
 export interface SubscriptionConnectionServerMessage {
-    type: MessageType;
-    status: ConnectionStatus;
-    data: any;
-    includes: any;
-    exception: string;
-    message: string;
+    Type: MessageType;
+    Status: ConnectionStatus;
+    Data: any;
+    Includes: any;
+    Exception: string;
+    Message: string;
 }
 
 export interface SubscriptionRedirectData {
-    currentTag: string;
-    redirectedTag: string;
-    reasons: Record<string, string>;
+    CurrentTag: string;
+    RedirectedTag: string;
+    Reasons: Record<string, string>;
 }
 
 export type MessageType = "None" | "ConnectionStatus" | "EndOfBatch" | "Data" | "Includes" | "Confirm" | "Error";

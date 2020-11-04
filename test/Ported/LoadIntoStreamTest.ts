@@ -41,7 +41,7 @@ describe("load into stream", function () {
             assert.ok(!targetStream.writable);
 
             const jsonNode = parseJsonVerbose(result);
-            const res = jsonNode.results;
+            const res = jsonNode.Results;
             assert.strictEqual(res.length, 3);
 
             const names = new Set(["Aviv", "Maxim", "Michael"]);
@@ -64,7 +64,7 @@ describe("load into stream", function () {
             assert.ok(!targetStream.writable);
 
             const jsonNode = parseJsonVerbose(result);
-            const res = jsonNode.results;
+            const res = jsonNode.Results;
             assert.strictEqual(res.length, 7);
 
             const names = new Set(["Aviv", "Iftah", "Tal", "Maxim", "Karmel", "Grisha", "Michael"]);

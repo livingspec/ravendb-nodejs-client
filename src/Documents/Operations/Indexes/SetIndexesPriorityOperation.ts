@@ -69,7 +69,7 @@ export class SetIndexPriorityCommand extends RavenCommand<void> implements IRaft
     }
 
     public createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/databases/" + node.database + "/indexes/set-priority";
+        const uri = node.Url + "/databases/" + node.Database + "/indexes/set-priority";
         const body = this._serializer.serialize(this._parameters);
         const headers = this._headers()
             .typeAppJson().build();

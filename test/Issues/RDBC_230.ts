@@ -31,14 +31,14 @@ describe("[RDBC-230] DocumentInfo", function () {
 
         {
             const session = store.openSession();
-            const loaded = await session.load<User>(user.id, User);
+            const loaded = await session.load<User>(user.Id, User);
             loaded["numbers"][0] = 60;
             await session.saveChanges();
         }
 
         {
             const session = store.openSession();
-            const loaded = await session.load<User>(user.id, User);
+            const loaded = await session.load<User>(user.Id, User);
             const docInfo = (session as DocumentSession).documentsByEntity.get(loaded);
             assert.notStrictEqual(docInfo.entity, docInfo.document);
             assert.notStrictEqual(docInfo.entity["stuff"], docInfo.document["stuff"]);

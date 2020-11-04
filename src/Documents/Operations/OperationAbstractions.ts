@@ -61,13 +61,13 @@ export class AwaitableOperation
 }
 
 export interface OperationIdResult {
-    operationId: number;
-    operationNodeTag: string;
+    OperationId: number;
+    OperationNodeTag: string;
 }
 
 export class OperationExceptionResult {
-    public type: string;
-    public message: string;
-    public error: string;
-    public statusCode: number;
+    public Type: string;
+    public Message: string;
+    public Error: string;
+    public StatusCode: number;
 }

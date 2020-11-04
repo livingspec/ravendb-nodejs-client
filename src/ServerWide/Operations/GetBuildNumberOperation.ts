@@ -22,7 +22,7 @@ class GetBuildNumberCommand extends RavenCommand<BuildNumber> {
     }
 
     createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/build/version";
+        const uri = node.Url + "/build/version";
 
         return {
             uri,

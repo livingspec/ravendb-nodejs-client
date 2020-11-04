@@ -24,7 +24,7 @@ describe("ExpirationConfigurationTest", function () {
         const configureExpirationOperation = new ConfigureExpirationOperation(expirationConfiguration);
 
         const expirationOperationResult = await store.maintenance.send(configureExpirationOperation);
-        assertThat(expirationOperationResult.raftCommandIndex)
+        assertThat(expirationOperationResult.RaftCommandIndex)
             .isNotNull();
     });
 });

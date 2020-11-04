@@ -47,7 +47,7 @@ class PromoteDatabaseNodeCommand extends RavenCommand<DatabasePutResult> impleme
     }
 
     createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/admin/databases/promote?name=" + this._databaseName + "&node=" + this._node;
+        const uri = node.Url + "/admin/databases/promote?name=" + this._databaseName + "&node=" + this._node;
 
         return {
             uri,

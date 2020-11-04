@@ -1,5 +1,5 @@
 
 export interface Revision<T> {
-    previous: T;
-    current: T;
+    Previous: T;
+    Current: T;
 }

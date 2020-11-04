@@ -31,8 +31,8 @@ describe("PutDocumentCommand", function () {
         await store.getRequestExecutor().execute(putDocCmd);
         const result = putDocCmd.result;
 
-        assert.strictEqual(result.id, "users/1");
-        assert.ok(result.changeVector);
+        assert.strictEqual(result.Id, "users/1");
+        assert.ok(result.ChangeVector);
 
         const session = store.openSession();
         const loadedUser = await session.load<User>("users/1", {

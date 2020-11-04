@@ -72,7 +72,7 @@ class CreateClientCertificateCommand extends RavenCommand<CertificateRawData> im
     }
 
     createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/admin/certificates";
+        const uri = node.Url + "/admin/certificates";
 
         const body = this._serializer
             .serialize({

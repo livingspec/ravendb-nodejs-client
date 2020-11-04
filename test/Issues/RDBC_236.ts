@@ -143,14 +143,14 @@ describe("[RDBC-236] Dates storage", function () {
             
             {
                 const cmd = new GetDocumentsCommand({
-                    ids: [ "date/1" ],
+                    Ids: [ "date/1" ],
                     start: 0,
                     pageSize: 1,
                     conventions: store.conventions
                 });
                 await store.getRequestExecutor().execute(cmd);
                 assert.strictEqual(
-                    cmd.result.results[0]["start"], "2018-10-12T13:10:10.0000000" + LOCAL_TIMEZONE_STRING);
+                    cmd.result.Results[0]["start"], "2018-10-12T13:10:10.0000000" + LOCAL_TIMEZONE_STRING);
             }
 
             {
@@ -195,7 +195,7 @@ describe("[RDBC-236] Dates storage", function () {
             
             {
                 const cmd = new GetDocumentsCommand({
-                    ids: [ "date/1" ],
+                    Ids: [ "date/1" ],
                     start: 0,
                     pageSize: 1,
                     conventions: store.conventions
@@ -204,7 +204,7 @@ describe("[RDBC-236] Dates storage", function () {
                 const hoursUtcString = StringUtil.leftPad(
                     (hoursLocal - LOCAL_TIMEZONE_OFFSET_HOURS).toString(), 2, "0");
                 assert.strictEqual(
-                    cmd.result.results[0]["start"], `2018-10-12T${hoursUtcString}:10:10.0000000Z`);
+                    cmd.result.Results[0]["start"], `2018-10-12T${hoursUtcString}:10:10.0000000Z`);
             }
 
             {
@@ -250,7 +250,7 @@ describe("[RDBC-236] Dates storage", function () {
             
             {
                 const cmd = new GetDocumentsCommand({
-                    ids: [ "date/1" ],
+                    Ids: [ "date/1" ],
                     start: 0,
                     pageSize: 1,
                     conventions: store.conventions
@@ -259,7 +259,7 @@ describe("[RDBC-236] Dates storage", function () {
                 const hoursUtcString = StringUtil.leftPad(
                     (hoursLocal - LOCAL_TIMEZONE_OFFSET_HOURS).toString(), 2, "0");
                 assert.strictEqual(
-                    cmd.result.results[0]["start"], 
+                    cmd.result.Results[0]["start"],
                     `2018-10-12T${hoursUtcString}:10:10.0000000+00:00`);
             }
 

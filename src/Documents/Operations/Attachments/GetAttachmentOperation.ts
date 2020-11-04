@@ -64,7 +64,7 @@ export class GetAttachmentCommand extends RavenCommand<AttachmentResult> {
     }
 
     public createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/databases/" + node.database + "/attachments?id="
+        const uri = node.Url + "/databases/" + node.Database + "/attachments?id="
             + encodeURIComponent(this._documentId) + "&name=" + encodeURIComponent(this._name);
 
         if (this._type !== "Document") {
@@ -94,12 +94,12 @@ export class GetAttachmentCommand extends RavenCommand<AttachmentResult> {
         }
 
         const details: AttachmentDetails = {
-            name: this._name,
-            documentId: this._documentId,
-            contentType,
-            hash,
-            changeVector,
-            size
+            Name: this._name,
+            DocumentId: this._documentId,
+            ContentType: contentType,
+            Hash: hash,
+            ChangeVector: changeVector,
+            Size: size
         };
 
         this.result = new AttachmentResult(bodyStream, details, response);

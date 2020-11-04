@@ -29,7 +29,7 @@ export class HeadDocumentCommand extends RavenCommand<string> {
     }
 
     public createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/databases/" + node.database + "/docs?id=" + encodeURIComponent(this._id);
+        const uri = node.Url + "/databases/" + node.Database + "/docs?id=" + encodeURIComponent(this._id);
 
         const headers = this._headers()
             .typeAppJson();

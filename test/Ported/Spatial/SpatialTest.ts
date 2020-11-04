@@ -58,7 +58,7 @@ describe("SpatialTest", function () {
                         coordinates = this.CreateSpatialField(((double ? ) this2.this1.lat), ((double ? ) this2.lng))
                     })`;
 
-            this.store("id", "Yes");
+            this.store("Id", "Yes");
             this.store("date", "Yes");
 
             this.store("latitude", "Yes");
@@ -96,11 +96,11 @@ describe("SpatialTest", function () {
                 .waitForNonStaleResults()
                 .withinRadiusOf("coordinates", 0, 12.3456789, 12.3456789)
                 .statistics($ => stats = $)
-                .selectFields<MyProjection>(["id", "latitude", "longitude"], MyProjection)
+                .selectFields<MyProjection>(["Id", "latitude", "longitude"], MyProjection)
                 .take(50)
                 .all();
 
-            assert.strictEqual(stats.totalResults, 0);
+            assert.strictEqual(stats.TotalResults, 0);
             assert.strictEqual(result.length, 0);
         }
     });
@@ -136,11 +136,11 @@ describe("SpatialTest", function () {
                 .waitForNonStaleResults()
                 .withinRadiusOf("coordinates", 0, 10, 10)
                 .statistics($ => stats = $)
-                .selectFields<MyProjection>(["id", "latitude", "longitude"], MyProjection)
+                .selectFields<MyProjection>(["Id", "latitude", "longitude"], MyProjection)
                 .take(50)
                 .all();
 
-            assert.strictEqual(stats.totalResults, 1);
+            assert.strictEqual(stats.TotalResults, 1);
             assert.strictEqual(result.length, 1);
         }
     });

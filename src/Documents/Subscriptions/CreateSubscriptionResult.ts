@@ -1,4 +1,4 @@
 
 export interface CreateSubscriptionResult {
-    name: string;
+    Name: string;
 }

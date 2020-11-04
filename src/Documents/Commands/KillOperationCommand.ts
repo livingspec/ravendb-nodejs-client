@@ -21,7 +21,7 @@ export class KillOperationCommand extends RavenCommand<void> {
     }
 
     public createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = `${node.url}/databases/${node.database}/operations/kill?id=${this._id}`;
+        const uri = `${node.Url}/databases/${node.Database}/operations/kill?id=${this._id}`;
         return {
             uri,
             method: "POST"

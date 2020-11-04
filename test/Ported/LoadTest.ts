@@ -196,7 +196,7 @@ describe("LoadTest - ported", function () {
             const users = await session.load<User>(ids);
             const user77 = users["users/77"];
             assert.ok(user77);
-            assert.strictEqual(user77.id, "users/77");
+            assert.strictEqual(user77.Id, "users/77");
             assert.strictEqual(user77.name, "Person 77");
         }
     });
@@ -221,14 +221,14 @@ describe("LoadTest - ported", function () {
             const session = store.openSession();
             const users = await session.advanced.loadStartingWith<User>("A");
 
-            assert.deepStrictEqual(users.map(x => x.id), ["Aaa", "Abc", "Afa", "Ala"]);
+            assert.deepStrictEqual(users.map(x => x.Id), ["Aaa", "Abc", "Afa", "Ala"]);
 
             const users2 = await session.advanced.loadStartingWith<User>("A", {
                 start: 1,
                 pageSize: 2
             });
 
-            assert.deepStrictEqual(users2.map(x => x.id), ["Abc", "Afa"]);
+            assert.deepStrictEqual(users2.map(x => x.Id), ["Abc", "Afa"]);
         }
     });
 });

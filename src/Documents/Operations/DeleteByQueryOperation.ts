@@ -58,9 +58,9 @@ export class DeleteByIndexCommand extends RavenCommand<OperationIdResult> {
     }
 
     public createRequest(node: ServerNode): HttpRequestParameters {
-        const path = new StringBuilder(node.url)
+        const path = new StringBuilder(node.Url)
             .append("/databases/")
-            .append(node.database)
+            .append(node.Database)
             .append("/queries")
             .append("?allowStale=")
             .append(this._options.allowStale || "");

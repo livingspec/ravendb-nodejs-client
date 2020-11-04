@@ -28,7 +28,7 @@ describe("[RDBC-213] Metadata is not saved", function () {
         await session.saveChanges();
 
         const session2 = store.openSession();
-        const loaded = await session2.load(expiringDocument["id"]);
+        const loaded = await session2.load(expiringDocument["Id"]);
         assert.strictEqual(expiresAt.toISOString(), loaded["@metadata"]["@expires"]);
     });
 
@@ -47,7 +47,7 @@ describe("[RDBC-213] Metadata is not saved", function () {
 
         // Load document and make changes to the metadata
         const session2 = store.openSession();
-        const loadedDocument = await session2.load(expiringDocument["id"]);
+        const loadedDocument = await session2.load(expiringDocument["Id"]);
         const metadata = session2.advanced.getMetadataFor(loadedDocument);
 
         const expiresAtNewTime = new Date(2020, 11, 12).toISOString();
@@ -59,7 +59,7 @@ describe("[RDBC-213] Metadata is not saved", function () {
 
         // Verify
         const session3 = store.openSession();
-        const updatedDocument = await session3.load(loadedDocument["id"]);
+        const updatedDocument = await session3.load(loadedDocument["Id"]);
 
         assert.strictEqual(updatedDocument["@metadata"]["@expires"], expiresAtNewTime);
         assert.strictEqual(updatedDocument["@metadata"]["customData"], customDataValue);
@@ -81,7 +81,7 @@ describe("[RDBC-213] Metadata is not saved", function () {
         await session.saveChanges();
 
         const session2 = store.openSession();
-        const loaded = await session2.load(expiringDocument["id"]);
+        const loaded = await session2.load(expiringDocument["Id"]);
         assert.strictEqual(expiresAt.toISOString(), loaded["@metadata"]["@expires"]);
     });
 });

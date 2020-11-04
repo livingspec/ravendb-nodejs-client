@@ -66,18 +66,18 @@ export class LazyQueryOperation<T extends object> implements ILazyOperation {
     }
 
     public async handleResponseAsync(response: GetResponse): Promise<void> {
-        if (response.forceRetry) {
+        if (response.ForceRetry) {
             this._result = null;
             this._requiresRetry = true;
             return;
         }
 
         let queryResult: QueryResult;
-        if (response.result !== "null") {
+        if (response.Result !== "null") {
             queryResult = await QueryCommand.parseQueryResultResponseAsync(
-                stringToReadable(response.result), this._conventions, false);
+                stringToReadable(response.Result), this._conventions, false);
         }
-        this._handleResponse(queryResult, response.elapsed);
+        this._handleResponse(queryResult, response.Elapsed);
     }
 
     private _handleResponse(queryResult: QueryResult, duration: number): void {

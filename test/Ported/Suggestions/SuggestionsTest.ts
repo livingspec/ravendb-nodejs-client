@@ -177,12 +177,12 @@ describe("SuggestionsTest", function () {
 
     const setup = async () => {
         const indexDefinition = new IndexDefinition();
-        indexDefinition.name = "test";
-        indexDefinition.maps = new Set(["from doc in docs.Users select new { doc.name }"]);
+        indexDefinition.Name = "test";
+        indexDefinition.Maps = new Set(["from doc in docs.Users select new { doc.name }"]);
 
         const indexFieldOptions = new IndexFieldOptions();
         indexFieldOptions.suggestions = true;
-        indexDefinition.fields = {
+        indexDefinition.Fields = {
             name: indexFieldOptions
         };
 

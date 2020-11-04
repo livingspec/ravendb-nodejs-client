@@ -94,10 +94,10 @@ export class GetCompareExchangeValuesCommand<T> extends RavenCommand<{ [key: str
     }
 
     public createRequest(node: ServerNode): HttpRequestParameters {
-        const pathBuilder = new StringBuilder(node.url);
+        const pathBuilder = new StringBuilder(node.Url);
 
         pathBuilder.append("/databases/")
-            .append(node.database)
+            .append(node.Database)
             .append("/cmpxchg?");
 
         if (this._operation.keys) {
@@ -131,7 +131,6 @@ export class GetCompareExchangeValuesCommand<T> extends RavenCommand<{ [key: str
         await this._pipeline()
             .collectBody(b => body = b)
             .parseJsonSync()
-            .objectKeysTransform("camel")
             .process(bodyStream)
             .then(results => {
                 this.result = CompareExchangeValueResultParser.getValues<T>(

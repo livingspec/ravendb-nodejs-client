@@ -37,7 +37,7 @@ describe("RavenDB-11166", function () {
         }
 
         const options: SubscriptionCreationOptions = {
-            query: "from dogs include owner"
+            Query: "from dogs include owner"
         };
         const id = await store.subscriptions.create(options);
 

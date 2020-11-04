@@ -81,7 +81,7 @@ export class CameraCostIndex extends AbstractIndexCreationTask {
 
     public createIndexDefinition() {
         const indexDefinition = new IndexDefinition();
-        indexDefinition.maps = new Set(["from camera in docs.Cameras select new  { camera.manufacturer,\n" +
+        indexDefinition.Maps = new Set(["from camera in docs.Cameras select new  { camera.manufacturer,\n" +
         "                            camera.model,\n" +
         "                            camera.cost,\n" +
         "                            camera.dateOfListing,\n" +

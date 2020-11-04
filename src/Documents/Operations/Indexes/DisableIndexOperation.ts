@@ -47,8 +47,8 @@ export class DisableIndexCommand extends RavenCommand<void> {
     }
 
     public createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/databases/"
-            + node.database + "/admin/indexes/disable?name=" + encodeURIComponent(this._indexName);
+        const uri = node.Url + "/databases/"
+            + node.Database + "/admin/indexes/disable?name=" + encodeURIComponent(this._indexName);
 
         return { method: "POST", uri };
     }

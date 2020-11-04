@@ -33,7 +33,7 @@ export class EntityToJson {
         const entityMapper = conventions.objectMapper;
 
         if (documentInfo) {
-            this._session.onBeforeConversionToDocumentInvoke(documentInfo.id, entity);
+            this._session.onBeforeConversionToDocumentInvoke(documentInfo.Id, entity);
         }
 
         let document = EntityToJson._convertEntityToJsonInternal(entity, this._session.conventions, documentInfo);
@@ -42,7 +42,7 @@ export class EntityToJson {
             const documentReference: Reference<object> = {
                 value: document
             };
-            this._session.onAfterConversionToDocumentInvoke(documentInfo.id, entity, documentReference);
+            this._session.onAfterConversionToDocumentInvoke(documentInfo.Id, entity, documentReference);
             document = documentReference.value;
         }
 
@@ -185,7 +185,7 @@ export class EntityToJson {
                 if (passedEntityTypeIsAssignableFromConventionsDocType) {
                     const mapper = conventions.objectMapper;
                     entity = mapper.fromObjectLiteral(
-                        document, entityTypeInfoFromMetadata);
+                        document, entityTypeInfoFromMetadata, trackEntity);
                 }
             }
 
@@ -198,7 +198,7 @@ export class EntityToJson {
                 }
 
                 entity = mapper.fromObjectLiteral(
-                    document, passedTypeInfo);
+                    document, passedTypeInfo, trackEntity);
             }
 
             const isProjection = !!document[CONSTANTS.Documents.Metadata.PROJECTION];

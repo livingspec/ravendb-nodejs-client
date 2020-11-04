@@ -168,7 +168,7 @@ export class ExceptionDispatcher {
         }
 
         const error = 
-            schema.error + os.EOL 
+            schema.error + os.EOL
             + "The server at " + schema.url + " responded with status code: " + code;
 
         const determinedType = this._getType(typeAsString) as RavenErrorType;

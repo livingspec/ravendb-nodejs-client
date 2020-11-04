@@ -27,8 +27,8 @@ describe("RavenDB_12257", function () {
             await session.store(category);
             await session.store(product);
 
-            product.category = category.id;
-            product.supplier = supplier.id;
+            product.category = category.Id;
+            product.supplier = supplier.Id;
 
             await session.store(product);
 
@@ -36,15 +36,15 @@ describe("RavenDB_12257", function () {
         }
 
         const options: SubscriptionCreationOptions = {
-            includes: builder => builder.includeDocuments("category").includeDocuments("supplier"),
-            documentType: Product
+            Includes: builder => builder.includeDocuments("category").includeDocuments("supplier"),
+            DocumentType: Product
         };
 
         const name = await store.subscriptions.create(options);
 
         const sub = store.subscriptions.getSubscriptionWorker<Product>({
-            subscriptionName: name,
-            documentType: Product
+            SubscriptionName: name,
+            DocumentType: Product
         });
 
         await new Promise(resolve => {

@@ -60,8 +60,8 @@ export class SessionDocumentCounters extends SessionCountersBase implements ISes
             const details = await this._session.operations.send(
                 new GetCountersOperation(this._docId), this._session.sessionInfo);
             cache.data.clear();
-            for (const counterDetail of details.counters) {
-                cache.data.set(counterDetail.counterName, counterDetail.totalValue);
+            for (const counterDetail of details.Counters) {
+                cache.data.set(counterDetail.CounterName, counterDetail.TotalValue);
             }
         }
         cache.gotAll = true;
@@ -115,11 +115,11 @@ export class SessionDocumentCounters extends SessionCountersBase implements ISes
             this._session.incrementRequestCount();
             const details = await this._session.operations.send(
                 new GetCountersOperation(this._docId, counter), this._session.sessionInfo);
-            if (details.counters && details.counters.length) {
-                const counterDetail = details.counters[0];
+            if (details.Counters && details.Counters.length) {
+                const counterDetail = details.Counters[0];
 
                 if (counterDetail) {
-                    value = counterDetail.totalValue;
+                    value = counterDetail.TotalValue;
                 }
             }
         }
@@ -167,9 +167,9 @@ export class SessionDocumentCounters extends SessionCountersBase implements ISes
 
             const details = await this._session.operations.send(
                 new GetCountersOperation(this._docId, counters), this._session.sessionInfo);
-            for (const counterDetail of details.counters) {
-                cache.data.set(counterDetail.counterName, counterDetail.totalValue);
-                result.set(counterDetail.counterName, counterDetail.totalValue);
+            for (const counterDetail of details.Counters) {
+                cache.data.set(counterDetail.CounterName, counterDetail.TotalValue);
+                result.set(counterDetail.CounterName, counterDetail.TotalValue);
             }
 
             break;

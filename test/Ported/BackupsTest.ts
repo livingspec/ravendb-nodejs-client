@@ -82,8 +82,8 @@ import { TimeUtil } from "../../src/Utility/TimeUtil";
                 encryptionMode: "UseProvidedKey"
             },
             retentionPolicy: {
-                disabled: false,
-                minimumBackupAgeToKeep: TimeUtil.millisToTimeSpan(3600 * 1000 * 25) // 25 hours
+                Disabled: false,
+                MinimumBackupAgeToKeep: TimeUtil.millisToTimeSpan(3600 * 1000 * 25) // 25 hours
             }
         };
 
@@ -93,9 +93,9 @@ import { TimeUtil } from "../../src/Utility/TimeUtil";
         const myBackup = await store.maintenance.send(
             new GetOngoingTaskInfoOperation("myBackup", "Backup")) as OngoingTaskBackup;
 
-        assertThat(myBackup.retentionPolicy.minimumBackupAgeToKeep)
+        assertThat(myBackup.RetentionPolicy.MinimumBackupAgeToKeep)
             .isEqualTo("1.01:00:00");
-        assertThat(myBackup.isEncrypted)
+        assertThat(myBackup.IsEncrypted)
             .isTrue();
     });
 });

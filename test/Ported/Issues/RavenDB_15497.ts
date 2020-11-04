@@ -27,9 +27,9 @@ describe("RavenDB_15497", function () {
 
         const indexStats = await store.maintenance.send(new GetIndexStatisticsOperation(index.getIndexName()));
 
-        assertThat(indexStats.state)
+        assertThat(indexStats.State)
             .isEqualTo("Disabled");
-        assertThat(indexStats.status)
+        assertThat(indexStats.Status)
             .isEqualTo("Disabled");
 
         {

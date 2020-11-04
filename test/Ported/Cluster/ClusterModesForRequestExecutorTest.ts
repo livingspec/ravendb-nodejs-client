@@ -38,7 +38,7 @@ describe("ClusterModesForRequestExecutorTest", function () {
             const numberOfNodes = 3;
 
             await cluster.createDatabase({
-                databaseName
+                DatabaseName: databaseName
             }, numberOfNodes, cluster.getInitialLeader().url);
 
             let leaderStore: DocumentStore;
@@ -122,7 +122,7 @@ describe("ClusterModesForRequestExecutorTest", function () {
                                 .all();
 
                             const currentNode = await session.advanced.getCurrentSessionNode();
-                            usedUrls.push(currentNode.url.toLocaleLowerCase());
+                            usedUrls.push(currentNode.Url.toLocaleLowerCase());
                         }
 
                         assertThat(usedUrls)
@@ -157,7 +157,7 @@ describe("ClusterModesForRequestExecutorTest", function () {
             const numberOfNodes = 3;
 
             await cluster.createDatabase({
-                databaseName
+                DatabaseName: databaseName
             }, numberOfNodes, cluster.getInitialLeader().url);
 
             let leaderStore: DocumentStore;
@@ -289,7 +289,7 @@ describe("ClusterModesForRequestExecutorTest", function () {
             const numberOfNodes = 3;
 
             await cluster.createDatabase({
-                databaseName
+                DatabaseName: databaseName
             }, numberOfNodes, cluster.getInitialLeader().url);
 
             {

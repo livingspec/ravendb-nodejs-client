@@ -11,8 +11,8 @@ export interface IndexConfiguration {
 
 export class IndexDefinition {
 
-    public name: string;
-    public priority: IndexPriority;
+    public Name: string;
+    public Priority: IndexPriority;
 
     /**
      * Index lock mode:
@@ -20,42 +20,42 @@ export class IndexDefinition {
      * - LockedIgnore - all index definition changes will be ignored, only log entry will be created
      * - LockedError - all index definition changes will raise exception
      */
-    public lockMode: IndexLockMode;
-    public indexType: IndexType;
-    public additionalSources: { [key: string]: string } = {};
-    public maps: Set<string> = new Set();
-    public reduce: string;
-    public fields: { [fieldName: string]: IndexFieldOptions } = {};
-    public configuration: IndexConfiguration = {};
-    public outputReduceToCollection: string;
-    public reduceOutputIndex: number;
-    public patternForOutputReduceToCollectionReferences: string;
-    public patternReferencesCollectionName: string;
+    public LockMode: IndexLockMode;
+    public IndexType: IndexType;
+    public AdditionalSources: { [key: string]: string } = {};
+    public Maps: Set<string> = new Set();
+    public Reduce: string;
+    public Fields: { [fieldName: string]: IndexFieldOptions } = {};
+    public Configuration: IndexConfiguration = {};
+    public OutputReduceToCollection: string;
+    public ReduceOutputIndex: number;
+    public PatternForOutputReduceToCollectionReferences: string;
+    public PatternReferencesCollectionName: string;
 
     public toString(): string {
-        return this.name;
+        return this.Name;
     }
 
     public get type(): IndexType {
-        if (!this.indexType || this.indexType === "None") {
-            this.indexType = this.detectStaticIndexType();
+        if (!this.IndexType || this.IndexType === "None") {
+            this.IndexType = this.detectStaticIndexType();
         }
 
-        return this.indexType;
+        return this.IndexType;
     }
 
     public set type(indexType) {
-        this.indexType = indexType;
+        this.IndexType = indexType;
     }
 
     public detectStaticIndexType(): IndexType {
-        const firstMap = this.maps.values().next().value;
+        const firstMap = this.Maps.values().next().value;
 
         if (!firstMap) {
             throwError("InvalidArgumentException", "Index  definitions contains no Maps");
         }
 
-        return IndexDefinitionHelper.detectStaticIndexType(firstMap, this.reduce);
+        return IndexDefinitionHelper.detectStaticIndexType(firstMap, this.Reduce);
     }
 }
 
@@ -103,13 +103,13 @@ export class IndexDefinitionBuilder {
 
         try {
             const indexDefinition = new IndexDefinition();
-            indexDefinition.name = this.indexName;
-            indexDefinition.reduce = this.reduce;
-            indexDefinition.lockMode = this.lockMode;
-            indexDefinition.priority = this.priority;
-            indexDefinition.outputReduceToCollection = this.outputReduceToCollection;
-            indexDefinition.patternForOutputReduceToCollectionReferences = this.patternForOutputReduceToCollectionReferences;
-            indexDefinition.patternReferencesCollectionName = this.patternReferencesCollectionName;
+            indexDefinition.Name = this.indexName;
+            indexDefinition.Reduce = this.reduce;
+            indexDefinition.LockMode = this.lockMode;
+            indexDefinition.Priority = this.priority;
+            indexDefinition.OutputReduceToCollection = this.outputReduceToCollection;
+            indexDefinition.PatternForOutputReduceToCollectionReferences = this.patternForOutputReduceToCollectionReferences;
+            indexDefinition.PatternReferencesCollectionName = this.patternReferencesCollectionName;
 
             const suggestions: { [suggestionOption: string]: boolean } = Array.from(this.suggestionsOptions)
                 .reduce((result, item) =>
@@ -129,11 +129,11 @@ export class IndexDefinitionBuilder {
                 (options, value) => options.suggestions = value);
 
             if (this.map) {
-                indexDefinition.maps.add(this.map);
+                indexDefinition.Maps.add(this.map);
             }
 
-            indexDefinition.additionalSources = this.additionalSources;
-            indexDefinition.configuration = this.configuration;
+            indexDefinition.AdditionalSources = this.additionalSources;
+            indexDefinition.Configuration = this.configuration;
             return indexDefinition;
         } catch (err) {
             throwError("IndexCompilationException", "Failed to create index " + this.indexName, err);
@@ -147,8 +147,8 @@ export class IndexDefinitionBuilder {
 
         for (const fieldName of Object.keys(values)) {
             const fieldVal: T = values[fieldName];
-            const field = indexDefinition.fields[fieldName] =
-                indexDefinition.fields[fieldName] || new IndexFieldOptions();
+            const field = indexDefinition.Fields[fieldName] =
+                indexDefinition.Fields[fieldName] || new IndexFieldOptions();
 
             action(field, fieldVal);
         }

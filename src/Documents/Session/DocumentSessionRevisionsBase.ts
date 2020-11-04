@@ -22,7 +22,7 @@ export class DocumentSessionRevisionsBase extends AdvancedSessionExtensionBase {
                 throwError("InvalidOperationException", "Cannot create a revision for the requested entity because it is Not tracked by the session");
             }
 
-            this._addIdToList(documentInfo.id, strategy);
+            this._addIdToList(documentInfo.Id, strategy);
         }
     }
 

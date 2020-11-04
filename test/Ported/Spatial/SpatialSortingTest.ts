@@ -19,7 +19,7 @@ describe("SpatialSortingTest", function () {
     const FILTERED_RADIUS = 100;
 
     class Shop {
-        public id: string;
+        public Id: string;
         public latitude: number;
         public longitude: number;
 
@@ -42,27 +42,27 @@ describe("SpatialSortingTest", function () {
     // tslint:disable-next-line:no-shadowed-variable
     async function createData(store: IDocumentStore) {
         const indexDefinition = new IndexDefinition();
-        indexDefinition.name = "eventsByLatLng";
-        indexDefinition.maps = new Set([`from e in docs.Shops 
+        indexDefinition.Name = "eventsByLatLng";
+        indexDefinition.Maps = new Set([`from e in docs.Shops 
             select new { e.venue, coordinates = CreateSpatialField(e.latitude, e.longitude) }`]);
 
         const fields: { [key: string]: IndexFieldOptions } = {};
         const options = new IndexFieldOptions();
         options.indexing = "Exact";
         fields["tag"] = options;
-        indexDefinition.fields = fields;
+        indexDefinition.Fields = fields;
 
         await store.maintenance.send(new PutIndexesOperation(indexDefinition));
 
         const indexDefinition2 = new IndexDefinition();
-        indexDefinition2.name = "eventsByLatLngWSpecialField";
-        indexDefinition2.maps = new Set([
+        indexDefinition2.Name = "eventsByLatLngWSpecialField";
+        indexDefinition2.Maps = new Set([
             "from e in docs.Shops select new { e.venue, mySpacialField = CreateSpatialField(e.latitude, e.longitude) }"
         ]);
 
         const indexFieldOptions = new IndexFieldOptions();
         indexFieldOptions.indexing = "Exact";
-        indexDefinition2.fields = { tag: indexFieldOptions };
+        indexDefinition2.Fields = { tag: indexFieldOptions };
 
         await store.maintenance.send(new PutIndexesOperation(indexDefinition2));
 
@@ -104,7 +104,7 @@ describe("SpatialSortingTest", function () {
             .orderByDistance("coordinates", SORTED_LAT, SORTED_LNG)
             .all();
 
-        assert.deepStrictEqual(shops.map(x => x.id), sortedExpectedOrder);
+        assert.deepStrictEqual(shops.map(x => x.Id), sortedExpectedOrder);
     });
 
     it("canSortByDistanceWOFilteringWDocQuery", async () => {
@@ -115,7 +115,7 @@ describe("SpatialSortingTest", function () {
             .orderByDistance("coordinates", SORTED_LAT, SORTED_LNG)
             .all();
 
-        assert.deepStrictEqual(shops.map(x => x.id), sortedExpectedOrder);
+        assert.deepStrictEqual(shops.map(x => x.Id), sortedExpectedOrder);
     });
 
     it("canSortByDistanceWOFilteringWDocQueryBySpecifiedField", async () => {
@@ -129,7 +129,7 @@ describe("SpatialSortingTest", function () {
                 .orderByDistance("mySpacialField", SORTED_LAT, SORTED_LNG)
                 .all();
 
-            assert.deepStrictEqual(shops.map(x => x.id), sortedExpectedOrder);
+            assert.deepStrictEqual(shops.map(x => x.Id), sortedExpectedOrder);
         }
     });
 
@@ -146,7 +146,7 @@ describe("SpatialSortingTest", function () {
                 .orderByDistance("coordinates", FILTERED_LAT, FILTERED_LNG)
                 .all();
 
-            assert.deepStrictEqual(shops.map(x => x.id), filteredExpectedOrder);
+            assert.deepStrictEqual(shops.map(x => x.Id), filteredExpectedOrder);
         }
 
         {
@@ -158,7 +158,7 @@ describe("SpatialSortingTest", function () {
                 .orderByDistanceDescending("coordinates", FILTERED_LAT, FILTERED_LNG)
                 .all();
 
-            const strings = shops.map(x => x.id);
+            const strings = shops.map(x => x.Id);
             strings.reverse();
             assert.deepStrictEqual(strings, filteredExpectedOrder);
         }
@@ -175,7 +175,7 @@ describe("SpatialSortingTest", function () {
                 .orderByDistance("mySpacialField", FILTERED_LAT, FILTERED_LNG)
                 .all();
 
-            assert.deepStrictEqual(shops.map(x => x.id), filteredExpectedOrder);
+            assert.deepStrictEqual(shops.map(x => x.Id), filteredExpectedOrder);
         }
 
         {
@@ -187,7 +187,7 @@ describe("SpatialSortingTest", function () {
                 .orderByDistanceDescending("mySpacialField", FILTERED_LAT, FILTERED_LNG)
                 .all();
 
-            const strings = shops.map(x => x.id);
+            const strings = shops.map(x => x.Id);
             strings.reverse();
             assert.deepStrictEqual(strings, filteredExpectedOrder);
         }

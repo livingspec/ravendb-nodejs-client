@@ -38,7 +38,7 @@ export class AbstractMultiMapIndexCreationTask extends AbstractIndexCreationTask
         indexDefinitionBuilder.priority = this.priority;
 
         const indexDefinition = indexDefinitionBuilder.toIndexDefinition(this.conventions, false);
-        indexDefinition.maps = new Set(this.maps);
+        indexDefinition.Maps = new Set(this.maps);
 
         return indexDefinition;
     }

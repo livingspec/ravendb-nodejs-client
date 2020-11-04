@@ -20,8 +20,8 @@ export class GetIndexesStatisticsOperation implements IMaintenanceOperation<Inde
 
 const typeInfo = {
     nestedTypes: {
-        "results[].collections": "Map",
-        "results[].collections$MAP": "CollectionStats"
+        "Results[].Collections": "Map",
+        "Results[].Collections$MAP": "CollectionStats"
     }
 };
 
@@ -35,7 +35,7 @@ export class GetIndexesStatisticsCommand extends RavenCommand<IndexStats[]> {
     }
 
     public createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/databases/" + node.database + "/indexes/stats";
+        const uri = node.Url + "/databases/" + node.Database + "/indexes/stats";
         return { uri };
     }
 
@@ -47,8 +47,8 @@ export class GetIndexesStatisticsCommand extends RavenCommand<IndexStats[]> {
         let body: string = null;
         await this._defaultPipeline(_ => body = _).process(bodyStream)
             .then(results => {
-                for (const r of results["results"]) {
-                    r.collections = Object.keys(r.collections)
+                for (const r of results["Results"]) {
+                    r.Collections = Object.keys(r.Collections)
                         .reduce((result, next) => [ ...result, [ next, result[next] ]], []);
                 }
 
@@ -58,7 +58,7 @@ export class GetIndexesStatisticsCommand extends RavenCommand<IndexStats[]> {
                     typeInfo, 
                     knownTypes);
 
-                this.result = obj["results"];
+                this.result = obj["Results"];
             });
         return body;
     }

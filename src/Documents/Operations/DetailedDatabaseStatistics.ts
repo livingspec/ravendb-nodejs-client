@@ -1,7 +1,7 @@
 import { DatabaseStatistics } from "./DatabaseStatistics";
 
 export interface DetailedDatabaseStatistics extends DatabaseStatistics {
-    countOfIdentities: number;
-    countOfCompareExchange: number;
-    countOfCompareExchangeTombstones: number;
+    CountOfIdentities: number;
+    CountOfCompareExchange: number;
+    CountOfCompareExchangeTombstones: number;
 }

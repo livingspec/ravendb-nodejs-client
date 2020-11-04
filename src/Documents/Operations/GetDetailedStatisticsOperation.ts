@@ -33,7 +33,7 @@ export class DetailedDatabaseStatisticsCommand extends RavenCommand<DetailedData
     }
 
     public createRequest(node: ServerNode): HttpRequestParameters {
-        let uri = node.url + "/databases/" + node.database + "/stats/detailed";
+        let uri = node.Url + "/databases/" + node.Database + "/stats/detailed";
         if (this._debugTag) {
             uri += "?" + this._debugTag;
         }

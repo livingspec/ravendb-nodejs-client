@@ -22,7 +22,7 @@ class GetServerWideBackupConfigurationsCommand extends RavenCommand<ServerWideBa
     }
 
     createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/admin/configuration/server-wide/backup";
+        const uri = node.Url + "/admin/configuration/server-wide/backup";
 
         return {
             method: "GET",
@@ -34,7 +34,7 @@ class GetServerWideBackupConfigurationsCommand extends RavenCommand<ServerWideBa
         let body: string = null;
         const result = await this._defaultPipeline(_ => body = _).process(bodyStream);
 
-        this.result = result["results"] as ServerWideBackupConfiguration[];
+        this.result = result["Results"] as ServerWideBackupConfiguration[];
 
         return body;
     }

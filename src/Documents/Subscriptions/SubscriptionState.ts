@@ -1,11 +1,11 @@
 
 export interface SubscriptionState {
-    query: string;
-    changeVectorForNextBatchStartingPoint: string;
-    subscriptionName: string;
-    mentorName: string;
-    nodeTag: string;
-    lastBatchAckTime: string;
-    lastClientConnectionTime: string;
-    disabled: boolean;
+    Query: string;
+    ChangeVectorForNextBatchStartingPoint: string;
+    SubscriptionName: string;
+    MentorName: string;
+    NodeTag: string;
+    LastBatchAckTime: string;
+    LastClientConnectionTime: string;
+    Disabled: boolean;
 }

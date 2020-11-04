@@ -32,7 +32,7 @@ describe("RavenDB_14109Test", function () {
 
             const queryStream = await session.advanced.stream(query, s => stats = s);
 
-            assertThat(stats.totalResults)
+            assertThat(stats.TotalResults)
                 .isEqualTo(2);
 
             const items = [];
@@ -43,7 +43,7 @@ describe("RavenDB_14109Test", function () {
             await StreamUtil.finishedAsync(queryStream);
 
             assertThat(items)
-                .hasSize(stats.totalResults);
+                .hasSize(stats.TotalResults);
         }
     });
 });

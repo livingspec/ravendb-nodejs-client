@@ -36,7 +36,7 @@ export class GetIndexNamesCommand extends RavenCommand<string[]> {
     }
 
     public createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/databases/" + node.database
+        const uri = node.Url + "/databases/" + node.Database
             + "/indexes?start=" + this._start + "&pageSize=" + this._pageSize + "&namesOnly=true";
         return { uri };
     }
@@ -49,7 +49,7 @@ export class GetIndexNamesCommand extends RavenCommand<string[]> {
         let body: string = null;
         await this._defaultPipeline(_ => body = _).process(bodyStream)
             .then(results => {
-                this.result = results["results"];
+                this.result = results["Results"];
             });
         return body;
     }

@@ -6,11 +6,11 @@ import * as stream from "readable-stream";
 import { NodeStatus } from "../../Http/RequestExecutor";
 
 export class ClusterTopologyResponse {
-    public leader: string;
-    public nodeTag: string;
-    public topology: ClusterTopology;
-    public etag: number;
-    public status: Map<string, NodeStatus>;
+    public Leader: string;
+    public NodeTag: string;
+    public Topology: ClusterTopology;
+    public Etag: number;
+    public Status: Map<string, NodeStatus>;
 }
 
 export class GetClusterTopologyCommand extends RavenCommand<ClusterTopologyResponse> {
@@ -24,7 +24,7 @@ export class GetClusterTopologyCommand extends RavenCommand<ClusterTopologyRespo
     }
 
     public createRequest(node: ServerNode): HttpRequestParameters {
-        let uri = node.url + "/cluster/topology";
+        let uri = node.Url + "/cluster/topology";
 
         if (this._debugTag) {
             uri += "?" + this._debugTag;
@@ -42,15 +42,11 @@ export class GetClusterTopologyCommand extends RavenCommand<ClusterTopologyRespo
         await this._pipeline<ClusterTopologyResponse>()
             .collectBody(b => body = b)
             .parseJsonSync()
-            .objectKeysTransform({
-                defaultTransform: "camel",
-                ignorePaths: [/topology\.(members|promotables|watchers|allNodes)\./i]
-            })
             .process(bodyStream)
             .then(result => {
-                const clusterTpl = Object.assign(new ClusterTopology(), result.topology);
-                this.result = Object.assign(result as ClusterTopologyResponse, { topology: clusterTpl });
-                this.result.status = new Map(Object.entries(this.result.status));
+                const clusterTpl = Object.assign(new ClusterTopology(), result.Topology);
+                this.result = Object.assign(result as ClusterTopologyResponse, { Topology: clusterTpl });
+                this.result.Status = new Map(Object.entries(this.result.Status));
             });
         return body;
     }

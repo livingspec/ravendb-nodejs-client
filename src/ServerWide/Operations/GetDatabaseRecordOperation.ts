@@ -39,7 +39,7 @@ export class GetDatabaseRecordCommand extends RavenCommand<DatabaseRecordWithEta
     }
 
     public createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/admin/databases?name=" + this._database;
+        const uri = node.Url + "/admin/databases?name=" + this._database;
         return {
             method: "GET",
             uri
@@ -54,22 +54,16 @@ export class GetDatabaseRecordCommand extends RavenCommand<DatabaseRecordWithEta
         let body: string = null;
         this.result = await this._defaultPipeline(_ => body = _)
             .collectBody()
-            .objectKeysTransform({
-                defaultTransform: "camel",
-                ignorePaths: [
-                    /^(indexes|sorters|autoIndexes|settings|indexesHistory|ravenConnectionStrings|sqlConnectionStrings)\.[^.]+$/i
-                ]
-            })
             .process(bodyStream);
 
-        const history = this.result.indexesHistory;
+        const history = this.result.IndexesHistory;
         if (history) {
             for (const indexName of Object.keys(history)) {
                 const indexHistory = history[indexName];
 
                 history[indexName] = indexHistory.map(item => this._conventions.objectMapper.fromObjectLiteral(item, {
                     nestedTypes: {
-                        createdAt: "date"
+                        CreatedAt: "date"
                     }
                 }));
             }

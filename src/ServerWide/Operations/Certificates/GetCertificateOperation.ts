@@ -46,7 +46,7 @@ class GetCertificateCommand extends RavenCommand<CertificateDefinition> {
     }
 
     createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/admin/certificates?thumbprint=" + encodeURIComponent(this._thumbprint);
+        const uri = node.Url + "/admin/certificates?thumbprint=" + encodeURIComponent(this._thumbprint);
 
         return {
             method: "GET",
@@ -64,7 +64,7 @@ class GetCertificateCommand extends RavenCommand<CertificateDefinition> {
             .then(results => {
                 const mapped = this._conventions.objectMapper.fromObjectLiteral<{ results: CertificateDefinition[] }>(results, {
                     nestedTypes: {
-                        "results[].notAfter": "date"
+                        "Results[].NotAfter": "date"
                     }
                 }).results;
 

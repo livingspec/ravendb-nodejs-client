@@ -45,7 +45,7 @@ class DeleteCertificateCommand extends RavenCommand<void> implements IRaftComman
     }
 
     createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/admin/certificates?thumbprint=" + encodeURIComponent(this._thumbprint);
+        const uri = node.Url + "/admin/certificates?thumbprint=" + encodeURIComponent(this._thumbprint);
 
         return {
             uri,

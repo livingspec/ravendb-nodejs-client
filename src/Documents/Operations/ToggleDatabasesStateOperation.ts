@@ -74,7 +74,7 @@ class ToggleDatabaseStateCommand extends RavenCommand<DisableDatabaseToggleResul
     createRequest(node: ServerNode): HttpRequestParameters {
         const toggle = this._disable ? "disable" : "enable";
 
-        const uri = node.url + "/admin/databases/" + toggle;
+        const uri = node.Url + "/admin/databases/" + toggle;
 
         const body = this._serializer.serialize(this._parameters);
 
@@ -98,7 +98,7 @@ class ToggleDatabaseStateCommand extends RavenCommand<DisableDatabaseToggleResul
         let body: string = null;
         const results = await this._defaultPipeline(_ => body = _).process(bodyStream);
 
-        const status = results["status"] as DisableDatabaseToggleResult[];
+        const status = results["Status"] as DisableDatabaseToggleResult[];
         if (!TypeUtil.isArray(status)) {
             this._throwInvalidResponse();
         }

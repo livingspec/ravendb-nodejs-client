@@ -39,7 +39,7 @@ describe("DetectIndexTypeTest", function () {
 
     function findIndexType(map: string): IndexType {
         const indexDefinition = new IndexDefinition();
-        indexDefinition.maps = new Set([map]);
+        indexDefinition.Maps = new Set([map]);
         return indexDefinition.type;
     }
 });

@@ -33,7 +33,7 @@ describe("RavenDB_14881", function () {
         try {
             for (let i = 0; i < 20; i++) {
                 const company = new Company();
-                company.id = "company/" + i;
+                company.Id = "company/" + i;
                 company.name = "name" + i;
                 await bulk.store(company);
             }
@@ -46,20 +46,20 @@ describe("RavenDB_14881", function () {
 
         const detailedCollectionStatistics = await store.maintenance.send(new GetDetailedCollectionStatisticsOperation());
 
-        assertThat(detailedCollectionStatistics.countOfDocuments)
+        assertThat(detailedCollectionStatistics.CountOfDocuments)
             .isEqualTo(20);
-        assertThat(detailedCollectionStatistics.countOfConflicts)
+        assertThat(detailedCollectionStatistics.CountOfConflicts)
             .isEqualTo(0);
 
-        assertThat(Object.keys(detailedCollectionStatistics.collections))
+        assertThat(Object.keys(detailedCollectionStatistics.Collections))
             .hasSize(1);
 
-        const companies = detailedCollectionStatistics.collections["companies"];
+        const companies = detailedCollectionStatistics.Collections["Companies"];
         assertThat(companies)
             .isNotNull();
-        assertThat(companies.countOfDocuments)
+        assertThat(companies.CountOfDocuments)
             .isEqualTo(20);
-        assertThat(companies.size.sizeInBytes)
+        assertThat(companies.Size.SizeInBytes)
             .isGreaterThan(0);
     });
 });

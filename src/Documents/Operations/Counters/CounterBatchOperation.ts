@@ -43,7 +43,7 @@ export class CounterBatchCommand extends RavenCommand<CountersDetail> {
     }
 
     public createRequest(node: ServerNode): HttpRequestParameters {
-    const uri = node.url + "/databases/" + node.database + "/counters";
+    const uri = node.Url + "/databases/" + node.Database + "/counters";
     const body = JSON.stringify(this._counterBatch.serialize(this._conventions));
     return {
         method: "POST",

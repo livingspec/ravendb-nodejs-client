@@ -1,5 +1,5 @@
 export interface CollectionStatistics {
-    countOfDocuments: number;
-    countOfConflicts: number;
-    collections: { [collection: string]: number };
+    CountOfDocuments: number;
+    CountOfConflicts: number;
+    Collections: { [collection: string]: number };
 }

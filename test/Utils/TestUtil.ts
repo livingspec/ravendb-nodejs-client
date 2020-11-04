@@ -278,7 +278,7 @@ export class RavenTestContext extends RavenTestDriver implements IDisposable {
             })
             .then(() => {
                 documentStore = RavenTestContext._getGlobalServer(secured);
-                const databaseRecord: DatabaseRecord = { databaseName };
+                const databaseRecord: DatabaseRecord = { DatabaseName: databaseName };
 
                 if (this._customizeDbRecord) {
                     this._customizeDbRecord(databaseRecord);
@@ -536,7 +536,7 @@ export class ClusterTestContext extends RavenTestDriver implements IDisposable {
         const stores: DocumentStore[] = [];
 
         for (const node of nodes) {
-            const store = new DocumentStore(node.url, node.database);
+            const store = new DocumentStore(node.Url, node.Database);
             store.conventions.disableTopologyUpdates = disableTopologyUpdates;
 
             store.initialize();
@@ -627,7 +627,7 @@ class ClusterController implements IDisposable {
         const command = new GetClusterTopologyCommand();
         await store.getRequestExecutor().execute(command);
 
-        return command.result.leader;
+        return command.result.Leader;
     }
 
     public async disposeServer(nodeTag: string) {
@@ -647,10 +647,10 @@ class ClusterController implements IDisposable {
     public async createDatabase(databaseRecord: DatabaseRecord, replicationFactor: number, leaderUrl: string);
     public async createDatabase(databaseRecordOrName: DatabaseRecord | string, replicationFactor: number, leaderUrl: string) {
         const databaseRecord: DatabaseRecord = TypeUtil.isString(databaseRecordOrName)
-            ? { databaseName: databaseRecordOrName }
+            ? { DatabaseName: databaseRecordOrName }
             : databaseRecordOrName;
 
-        const store = new DocumentStore(leaderUrl, databaseRecord.databaseName);
+        const store = new DocumentStore(leaderUrl, databaseRecord.DatabaseName);
 
         try {
             store.initialize();
@@ -658,7 +658,7 @@ class ClusterController implements IDisposable {
             const putResult = await store.maintenance.server.send(new CreateDatabaseOperation(databaseRecord, replicationFactor));
 
             for (const node of this.nodes) {
-                await this.executeJsScript(node.nodeTag, "server.ServerStore.Cluster.WaitForIndexNotification(\"" + putResult.raftCommandIndex + "\").Wait()");
+                await this.executeJsScript(node.nodeTag, "server.ServerStore.Cluster.WaitForIndexNotification(\"" + putResult.RaftCommandIndex + "\").Wait()");
             }
 
             return putResult;

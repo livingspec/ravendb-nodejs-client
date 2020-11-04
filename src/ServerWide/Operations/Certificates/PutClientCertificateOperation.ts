@@ -71,7 +71,7 @@ class PutClientCertificateCommand extends RavenCommand<void> implements IRaftCom
     }
 
     createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/admin/certificates";
+        const uri = node.Url + "/admin/certificates";
 
         const body = this._serializer
             .serialize({

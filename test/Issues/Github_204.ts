@@ -35,7 +35,7 @@ describe("GitHub-204", function () {
             await session.store(document, "foo/", Foo);
             await session.saveChanges();
 
-            docId = document["id"];
+            docId = document["Id"];
 
             const meta = session.advanced.getMetadataFor(document);
             assert.equal(meta["@collection"], "Foos");

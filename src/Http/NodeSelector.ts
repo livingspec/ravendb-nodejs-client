@@ -74,14 +74,14 @@ export class NodeSelector {
 
         for (let i = index; i < state.failures.length; i++) {
             if (state.failures[i] === 0
-                && state.nodes[i].serverRole === "Member") {
+                && state.nodes[i].ServerRole === "Member") {
                 return new CurrentIndexAndNode(i, state.nodes[i]);
             }
         }
 
         for (let i = 0; i < index; i++) {
             if (state.failures[i] === 0
-                && state.nodes[i].serverRole === "Member") {
+                && state.nodes[i].ServerRole === "Member") {
                 return new CurrentIndexAndNode(i, state.nodes[i]);
             }
         }
@@ -97,8 +97,8 @@ export class NodeSelector {
         const len = Math.min(serverNodes.length, stateFailures.length);
 
         for (let i = 0; i < len; i++) {
-            if (serverNodes[i].clusterTag === nodeTag) {
-                if (stateFailures[i] === 0 && !StringUtil.isNullOrEmpty(serverNodes[i].url)) {
+            if (serverNodes[i].ClusterTag === nodeTag) {
+                if (stateFailures[i] === 0 && !StringUtil.isNullOrEmpty(serverNodes[i].Url)) {
                     return new CurrentIndexAndNode(i, serverNodes[i]);
                 }
 
@@ -124,7 +124,7 @@ export class NodeSelector {
         const len = Math.min(serverNodes.length, stateFailures.length);
 
         for (let i = 0; i < len; i++) {
-            if (stateFailures[i] === 0 && serverNodes[i].url) {
+            if (stateFailures[i] === 0 && serverNodes[i].Url) {
                 return new CurrentIndexAndNode(i, serverNodes[i]);
             }
         }
@@ -156,7 +156,7 @@ export class NodeSelector {
     public getFastestNode(): CurrentIndexAndNode {
         const state = this._state;
         if (state.failures[state.fastest] === 0
-            && state.nodes[state.fastest].serverRole === "Member") {
+            && state.nodes[state.fastest].ServerRole === "Member") {
             return new CurrentIndexAndNode(state.fastest, state.nodes[state.fastest]);
         }
 

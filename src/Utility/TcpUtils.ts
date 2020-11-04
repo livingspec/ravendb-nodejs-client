@@ -65,8 +65,8 @@ export class TcpUtils {
 
     public static async connectWithPriority(info: TcpConnectionInfo, serverCertificate: string,
                                             clientCertificate: IAuthOptions): Promise<[Socket, string]> {
-        if (info.urls) {
-            for (const url of info.urls) {
+        if (info.Urls) {
+            for (const url of info.Urls) {
                 try {
                     const socket = await this.connect(url, serverCertificate, clientCertificate);
                     return [socket, url];
@@ -76,7 +76,7 @@ export class TcpUtils {
             }
         }
 
-        const socket = await this.connect(info.url, serverCertificate, clientCertificate);
-        return [socket, info.url];
+        const socket = await this.connect(info.Url, serverCertificate, clientCertificate);
+        return [socket, info.Url];
     }
 }

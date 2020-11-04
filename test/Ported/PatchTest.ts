@@ -36,7 +36,7 @@ describe("PatchTest", function () {
             null,
             PatchRequest.forScript("this.name = \"Patched\""));
         const status = await store.operations.send<User>(patchOperation);
-        assert.strictEqual(status.status, "Patched");
+        assert.strictEqual(status.Status, "Patched");
 
         {
             const session = store.openSession();

@@ -8,13 +8,13 @@ import { MetadataObject } from "./MetadataObject";
 
 export class DocumentInfo {
 
-    public id: string;
+    public Id: string;
 
-    public changeVector: string;
+    public ChangeVector: string;
 
-    public concurrencyCheckMode: ConcurrencyCheckMode;
+    public ConcurrencyCheckMode: ConcurrencyCheckMode;
 
-    public ignoreChanges: boolean;
+    public IgnoreChanges: boolean;
 
     public metadata: MetadataObject;
     public document: IRavenObject;
@@ -42,11 +42,11 @@ export class DocumentInfo {
         }
 
         const newDocumentInfo = new DocumentInfo();
-        newDocumentInfo.id = id;
+        newDocumentInfo.Id = id;
         newDocumentInfo.document = document;
         newDocumentInfo.metadata = metadata;
         newDocumentInfo.entity = null;
-        newDocumentInfo.changeVector = changeVector;
+        newDocumentInfo.ChangeVector = changeVector;
         return newDocumentInfo;
     }
 }

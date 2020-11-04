@@ -17,7 +17,7 @@ describe("ReplicationWriteAssuranceTest", function () {
             const numberOfNodes = 3;
 
             await cluster.createDatabase({
-                databaseName: database
+                DatabaseName: database
             }, numberOfNodes, cluster.getInitialLeader().url);
 
             const store = new DocumentStore(cluster.getInitialLeader().url, database);

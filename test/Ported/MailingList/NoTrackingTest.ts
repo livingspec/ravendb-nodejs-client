@@ -12,7 +12,7 @@ describe("NoTrackingTest", function () {
 
     beforeEach(async function () {
         testContext.customizeStore = async store => {
-            store.conventions.findCollectionNameForObjectLiteral = e => e["id"].split("/")[0];
+            store.conventions.findCollectionNameForObjectLiteral = e => e["Id"].split("/")[0];
         };
         store = await testContext.getDocumentStore();
     });
@@ -41,10 +41,10 @@ describe("NoTrackingTest", function () {
     async function createData(store: IDocumentStore): Promise<void> {
         const session = store.openSession();
         await session.store({
-            id: "a/1",
+            Id: "a/1",
             bs: ["b/1"]
         });
-        await session.store({ id: "b/1" });
+        await session.store({ Id: "b/1" });
         await session.saveChanges();
     }
 

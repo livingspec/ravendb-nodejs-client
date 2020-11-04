@@ -57,7 +57,7 @@ describe("Issue RavenDB-8328", function () {
                 .all();
 
             assert.strictEqual(results.length, 1);
-            assert.strictEqual(stats.indexName, "Auto/Items/BySpatial.point(latitude|longitude)");
+            assert.strictEqual(stats.IndexName, "Auto/Items/BySpatial.point(latitude|longitude)");
 
             stats = null;
 
@@ -67,7 +67,7 @@ describe("Issue RavenDB-8328", function () {
                 .all();
 
             assert.strictEqual(results.length, 1);
-            assert.strictEqual(stats.indexName,
+            assert.strictEqual(stats.IndexName,
                 "Auto/Items/BySpatial.point(latitude|longitude)AndSpatial.point(latitude2|longitude2)");
 
             stats = null;
@@ -78,7 +78,7 @@ describe("Issue RavenDB-8328", function () {
                 .all();
 
             assert.strictEqual(results.length, 1);
-            assert.strictEqual(stats.indexName,
+            assert.strictEqual(stats.IndexName,
                 "Auto/Items/BySpatial.point(latitude|longitude)" +
                 "AndSpatial.point(latitude2|longitude2)AndSpatial.wkt(shapeWkt)");
         }

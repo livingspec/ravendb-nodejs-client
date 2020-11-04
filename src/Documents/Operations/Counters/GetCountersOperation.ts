@@ -67,9 +67,9 @@ export class GetCounterValuesCommand extends RavenCommand<CountersDetail> {
     }
 
     public createRequest(node: ServerNode): HttpRequestParameters {
-        const pathBuilder = new StringBuilder(node.url);
+        const pathBuilder = new StringBuilder(node.Url);
         pathBuilder.append("/databases/")
-            .append(node.database)
+            .append(node.Database)
             .append("/counters?docId=")
             .append(encodeURIComponent(this._docId));
 

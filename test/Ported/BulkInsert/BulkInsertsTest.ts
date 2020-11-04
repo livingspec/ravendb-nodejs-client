@@ -195,11 +195,11 @@ describe("bulk insert", function () {
 
         {
             const session = store.openSession();
-            const loaded = await session.load(entity["id"]);
+            const loaded = await session.load(entity["Id"]);
 
             assert.ok(loaded);
             const metadata = loaded["@metadata"];
-            assert.ok(metadata["@id"], entity["id"]);
+            assert.ok(metadata["@id"], entity["Id"]);
             const nestedObjectTypes = metadata[CONSTANTS.Documents.Metadata.NESTED_OBJECT_TYPES];
             assert.ok(nestedObjectTypes);
             assert.strictEqual(Object.keys(nestedObjectTypes).length, 2);
@@ -210,11 +210,11 @@ describe("bulk insert", function () {
 
     it.skip("[RDBC-226] can insert object literals with default conventions", async () => {
         const bulk = store.bulkInsert();
-        const obj = { id: null, name: "blabli" };
+        const obj = { Id: null, name: "blabli" };
         await bulk.store(obj);
         await bulk.finish();
 
-        assert.ok(obj["id"]);
+        assert.ok(obj["Id"]);
     });
 
     // tslint:disable-next-line:max-line-length
@@ -228,7 +228,7 @@ describe("bulk insert", function () {
 
         const registeredAt = new Date();
         const camelCasedObj = {
-            id: null,
+            Id: null,
             name: "Jon",
             job: "white walker killer",
             fathersName: "Rhaegar",
@@ -248,7 +248,7 @@ describe("bulk insert", function () {
         {
             // use case transformless store to verify doc
             const session = store.openSession();
-            const loaded = await session.load(camelCasedObj["id"]);
+            const loaded = await session.load(camelCasedObj["Id"]);
             assert.ok(loaded);
             assert.ok("Name" in loaded);
             assert.strictEqual(loaded["Name"], camelCasedObj.name);

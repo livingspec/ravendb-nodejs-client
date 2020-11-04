@@ -24,7 +24,7 @@ describe("RevisionsTest", function () {
     it("can handle revisions", async () => {
         const configurationResult = await testContext.setupRevisions(store, false, 4);
         assert.ok(configurationResult instanceof ConfigureRevisionsOperationResult);
-        assert.ok(configurationResult.raftCommandIndex);
+        assert.ok(configurationResult.RaftCommandIndex);
 
         for (let i = 0; i < 4; i++) {
             const session = store.openSession();
@@ -130,8 +130,8 @@ describe("RevisionsTest", function () {
         await store.getRequestExecutor().execute(revisionsBinEntryCommand);
 
         const result = revisionsBinEntryCommand.result;
-        assert.strictEqual(result.results.length, 1);
-        assert.strictEqual(result.results[0]["@metadata"]["@id"], "users/1");
+        assert.strictEqual(result.Results.length, 1);
+        assert.strictEqual(result.Results[0]["@metadata"]["@id"], "users/1");
     });
 
     it("canGetRevisionsByChangeVectors", async () => {

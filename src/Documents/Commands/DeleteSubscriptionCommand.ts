@@ -13,7 +13,7 @@ export class DeleteSubscriptionCommand extends RavenCommand<void> implements IRa
     }
 
     public createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/databases/" + node.database + "/subscriptions?taskName=" + this._name;
+        const uri = node.Url + "/databases/" + node.Database + "/subscriptions?taskName=" + this._name;
         return {
             uri,
             method: "DELETE"

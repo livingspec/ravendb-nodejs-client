@@ -41,7 +41,7 @@ class DeleteSorterCommand extends RavenCommand<void> implements IRaftCommand {
     }
 
     public createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/databases/" + node.database + "/admin/sorters?name=" + encodeURIComponent(this._sorterName);
+        const uri = node.Url + "/databases/" + node.Database + "/admin/sorters?name=" + encodeURIComponent(this._sorterName);
 
         return {
             uri,

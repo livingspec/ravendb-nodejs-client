@@ -106,7 +106,7 @@ describe("MoreLikeThisTests", function () {
         const session = storeToUse.openSession();
 
         const options = {
-            fields: ["body"]
+            Fields: ["body"]
         } as MoreLikeThisOptions;
 
         const list = await session
@@ -180,7 +180,7 @@ describe("MoreLikeThisTests", function () {
             const session = store.openSession();
 
             const options = {
-                fields: ["body"]
+                Fields: ["body"]
             } as MoreLikeThisOptions;
 
             const list = await session
@@ -213,7 +213,7 @@ describe("MoreLikeThisTests", function () {
             const session = store.openSession();
 
             const options = {
-                fields: ["body"]
+                Fields: ["body"]
             } as MoreLikeThisOptions;
 
             const lazyList = await session
@@ -337,8 +337,8 @@ describe("MoreLikeThisTests", function () {
         {
             const session = store.openSession();
             const options = {
-                minimumTermFrequency: 2,
-                minimumDocumentFrequency: 5
+                MinimumTermFrequency: 2,
+                MinimumDocumentFrequency: 5
             } as MoreLikeThisOptions;
 
             const list = await session
@@ -403,8 +403,8 @@ describe("MoreLikeThisTests", function () {
         {
             const session = store.openSession();
             const options = {
-                fields: ["body"],
-                minimumDocumentFrequency: 2
+                Fields: ["body"],
+                MinimumDocumentFrequency: 2
             } as MoreLikeThisOptions;
 
             const list = await session
@@ -443,11 +443,11 @@ describe("MoreLikeThisTests", function () {
             const session = store.openSession();
 
             const options = {
-                fields: ["body"],
-                minimumWordLength: 3,
-                minimumDocumentFrequency: 1,
-                minimumTermFrequency: 2,
-                boost: true
+                Fields: ["body"],
+                MinimumWordLength: 3,
+                MinimumDocumentFrequency: 1,
+                MinimumTermFrequency: 2,
+                Boost: true
             } as MoreLikeThisOptions;
 
             const list = await session
@@ -485,8 +485,8 @@ describe("MoreLikeThisTests", function () {
             await factory("test");
 
             const stopWords = new MoreLikeThisStopWords();
-            stopWords.id = "Config/Stopwords";
-            stopWords.stopWords = ["I", "A", "Be"];
+            stopWords.Id = "Config/Stopwords";
+            stopWords.StopWords = ["I", "A", "Be"];
             await session.store(stopWords);
 
             await session.saveChanges();
@@ -498,9 +498,9 @@ describe("MoreLikeThisTests", function () {
         {
             const session = store.openSession();
             const options = {
-                minimumTermFrequency: 2,
-                minimumDocumentFrequency: 1,
-                stopWordsDocumentId: "Config/Stopwords"
+                MinimumTermFrequency: 2,
+                MinimumDocumentFrequency: 1,
+                StopWordsDocumentId: "Config/Stopwords"
             } as MoreLikeThisOptions;
 
             const list = await session
@@ -529,9 +529,9 @@ describe("MoreLikeThisTests", function () {
         {
             const session = store.openSession();
             const options = {
-                fields: ["body"],
-                minimumTermFrequency: 1,
-                minimumDocumentFrequency: 1
+                Fields: ["body"],
+                MinimumTermFrequency: 1,
+                MinimumDocumentFrequency: 1
             } as MoreLikeThisOptions;
 
             const list = await session
@@ -563,8 +563,8 @@ describe("MoreLikeThisTests", function () {
         {
             const session = store.openSession();
             const options = {
-                minimumTermFrequency: 1,
-                minimumDocumentFrequency: 1
+                MinimumTermFrequency: 1,
+                MinimumDocumentFrequency: 1
             } as MoreLikeThisOptions;
 
             const list = await session

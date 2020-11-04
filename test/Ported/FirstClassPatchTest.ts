@@ -31,7 +31,7 @@ describe("FirstClassPatchTest", function () {
 
         {
             const session = store.openSession();
-            const loaded = await session.load(user["id"]);
+            const loaded = await session.load(user["Id"]);
             assert.strictEqual(loaded["stuff"].length, 3);
             assert.strictEqual(loaded["stuff"][0].key, 6);
             assert.strictEqual(loaded["stuff"][1], null);

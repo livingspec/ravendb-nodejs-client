@@ -15,67 +15,67 @@ export class GetResponse {
         return Object.assign(new GetResponse(), data);
     }
 
-    public get elapsed(): number {
+    public get Elapsed(): number {
         return this._elapsed;
     }
 
-    public set elapsed(elapsed: number) {
+    public set Elapsed(elapsed: number) {
         this._elapsed = elapsed;
     }
 
     /**
      * Response result as JSON.
      */
-    public get result(): string {
+    public get Result(): string {
         return this._result;
     }
 
     /**
      * Response result as JSON.
      */
-    public set result(result: string) {
+    public set Result(result: string) {
         this._result = result;
     }
 
     /**
      * Request headers.
      */
-    public get headers(): { [key: string]: string } {
+    public get Headers(): { [key: string]: string } {
         return this._headers;
     }
 
     /**
      * Request headers.
      */
-    public set headers(headers: { [key: string]: string }) {
+    public set Headers(headers: { [key: string]: string }) {
         this._headers = headers;
     }
 
     /**
      * Response HTTP status code.
      */
-    public get statusCode(): number {
+    public get StatusCode(): number {
         return this._statusCode;
     }
 
     /**
      * Response HTTP status code.
      */
-    public set statusCode(statusCode) {
+    public set StatusCode(statusCode) {
         this._statusCode = statusCode;
     }
 
     /**
      * Indicates if request should be retried (forced).
      */
-    public get forceRetry(): boolean {
+    public get ForceRetry(): boolean {
         return this._forceRetry;
     }
 
     /**
      * Indicates if request should be retried (forced).
      */
-    public set forceRetry(forceRetry) {
+    public set ForceRetry(forceRetry) {
         this._forceRetry = forceRetry;
     }
 

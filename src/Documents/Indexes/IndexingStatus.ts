@@ -1,11 +1,11 @@
 export type IndexRunningStatus = "Running" | "Paused" | "Disabled";
 
 export interface IndexingStatus {
-    status: IndexRunningStatus;
-    indexes: IndexStatus[];
+    Status: IndexRunningStatus;
+    Indexes: IndexStatus[];
 }
 
 export interface IndexStatus {
-    name: string;
-    status: IndexRunningStatus;
+    Name: string;
+    Status: IndexRunningStatus;
 }

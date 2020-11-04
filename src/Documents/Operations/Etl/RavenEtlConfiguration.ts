@@ -3,7 +3,7 @@ import { RavenConnectionString, EtlType } from "./ConnectionString";
 import { DocumentConventions } from "../../Conventions/DocumentConventions";
 
 export class RavenEtlConfiguration extends EtlConfiguration<RavenConnectionString> {
-    public loadRequestTimeoutInSec: number;
+    public LoadRequestTimeoutInSec: number;
 
     public get etlType(): EtlType {
         return "Raven";

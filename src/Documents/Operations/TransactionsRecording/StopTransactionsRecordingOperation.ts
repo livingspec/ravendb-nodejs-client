@@ -22,7 +22,7 @@ class StopTransactionsRecordingCommand extends RavenCommand<void> {
     }
 
     createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/databases/" + node.database + "/admin/transactions/stop-recording";
+        const uri = node.Url + "/databases/" + node.Database + "/admin/transactions/stop-recording";
 
         return {
             uri,

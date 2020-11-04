@@ -37,7 +37,7 @@ export class ConfigureRevisionsCommand extends RavenCommand<ConfigureRevisionsOp
     }
 
     public createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/databases/" + node.database + "/admin/revisions/config";
+        const uri = node.Url + "/databases/" + node.Database + "/admin/revisions/config";
 
         const body = JSON.stringify(this._configuration.toRemoteFieldNames(), null, 0);
         return {
@@ -68,5 +68,5 @@ export class ConfigureRevisionsCommand extends RavenCommand<ConfigureRevisionsOp
 }
 
 export class ConfigureRevisionsOperationResult {
-    public raftCommandIndex: number;
+    public RaftCommandIndex: number;
 }

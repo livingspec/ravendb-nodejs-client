@@ -37,6 +37,6 @@ describe("PatchOnCountersTest", function () {
 
         await store.operations.send(new PatchOperation("users/1-A", null, patch));
         const getCounters = await store.operations.send(new GetCountersOperation("users/1-A", ["Downloads"]));
-        assert.strictEqual(getCounters.counters[0].totalValue, 200);
+        assert.strictEqual(getCounters.Counters[0].TotalValue, 200);
     });
 });

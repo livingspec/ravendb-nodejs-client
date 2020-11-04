@@ -65,14 +65,14 @@ export class LazyAggregationQueryOperation implements ILazyOperation {
     }
 
     public async handleResponseAsync(response: GetResponse): Promise<void> {
-        if (response.forceRetry) {
+        if (response.ForceRetry) {
             this._result = null;
             this._requiresRetry = true;
             return;
         }
 
         const result = await FacetQueryCommand.parseQueryResultResponseAsync(
-            stringToReadable(response.result), this._conventions, false);
+            stringToReadable(response.Result), this._conventions, false);
         this._handleResponse(result);
     }
 

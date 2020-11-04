@@ -25,7 +25,7 @@ describe("RDBC-265", function () {
             const user = Object.assign(new User(), { lastName: "Adi" });
             await session.store(user, "users|");
             await session.saveChanges();
-            assert.strictEqual(user.id, "users/1");
+            assert.strictEqual(user.Id, "users/1");
         }
 
         let identities = await store.maintenance.send(new GetIdentitiesOperation());

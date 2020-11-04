@@ -10,7 +10,7 @@ export class Event {
 }
 
 export class User {
-    public id: string;
+    public Id: string;
     public name: string;
     public lastName: string;
     public addressId: string;
@@ -19,7 +19,7 @@ export class User {
 }
 
 export class Person {
-    public id: string;
+    public Id: string;
     public name: string;
     public addressId: string;
 }
@@ -31,7 +31,7 @@ export class GeekPerson {
 }
 
 export class Address {
-    public id: string;
+    public Id: string;
     public country: string;
     public city: string;
     public street: string;
@@ -47,7 +47,7 @@ export class OrderLine {
 }
 
 export class Order {
-    public id: string;
+    public Id: string;
     public company: string;
     public employee: string;
     public orderedAt: Date;
@@ -62,13 +62,13 @@ export class Order {
 export type CompanyType = "Public" | "Private";
 
 export class Employee {
-    public id: string;
+    public Id: string;
     public firstName: string;
     public lastName: string;
 }
 
 export class Contact {
-    public id: string;
+    public Id: string;
     public firstName: string;
     public surname: string;
     public email: string;
@@ -76,7 +76,7 @@ export class Contact {
 
 export class Company {
     public accountsReceivable: number;
-    public id: string;
+    public Id: string;
     public name: string;
     public desc: string;
     public email: string;
@@ -90,7 +90,7 @@ export class Company {
 }
 
 export class Post {
-    public id: string;
+    public Id: string;
     public title: string;
     public desc: string;
     public comments: Post[];

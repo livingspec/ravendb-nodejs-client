@@ -22,7 +22,7 @@ export class StartIndexingCommand extends RavenCommand<void> {
     }
 
     public createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/databases/" + node.database + "/admin/indexes/start";
+        const uri = node.Url + "/databases/" + node.Database + "/admin/indexes/start";
 
         return {
             method: "POST",

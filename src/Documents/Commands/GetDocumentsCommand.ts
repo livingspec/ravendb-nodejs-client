@@ -24,14 +24,14 @@ export interface GetDocumentsCommandOptionsBase extends GetDocumentsCommandCount
 
 export interface GetDocumentsByIdCommandOptions
     extends GetDocumentsCommandOptionsBase {
-    id: string;
+    Id: string;
     includes?: string[];
     metadataOnly?: boolean;
 }
 
 export interface GetDocumentsByIdsCommandOptions
     extends GetDocumentsCommandOptionsBase {
-    ids: string[];
+    Ids: string[];
     includes?: string[];
     metadataOnly?: boolean;
 }
@@ -48,13 +48,13 @@ export interface GetDocumentsStartingWithOptions
 }
 
 export interface DocumentsResult {
-    counterIncludes: IRavenObject;
-    includes: IRavenObject;
-    results: any[];
+    CounterIncludes: IRavenObject;
+    Includes: IRavenObject;
+    Results: any[];
 }
 
 export interface GetDocumentsResult extends DocumentsResult {
-    nextPageStart: number;
+    NextPageStart: number;
 }
 
 export class GetDocumentsCommand extends RavenCommand<GetDocumentsResult> {
@@ -84,20 +84,20 @@ export class GetDocumentsCommand extends RavenCommand<GetDocumentsResult> {
 
         this._conventions = opts.conventions;
 
-        if (opts.hasOwnProperty("id")) {
+        if (opts.hasOwnProperty("Id")) {
             opts = opts as GetDocumentsByIdCommandOptions;
-            if (!opts.id) {
+            if (!opts.Id) {
                 throwError("InvalidArgumentException", "id cannot be null");
             }
-            this._id = opts.id;
+            this._id = opts.Id;
             this._includes = opts.includes;
             this._metadataOnly = opts.metadataOnly;
-        } else if (opts.hasOwnProperty("ids")) {
+        } else if (opts.hasOwnProperty("Ids")) {
             opts = opts as GetDocumentsByIdsCommandOptions;
-            if (!opts.ids || opts.ids.length === 0) {
+            if (!opts.Ids || opts.Ids.length === 0) {
                 throwError("InvalidArgumentException", "Please supply at least one id");
             }
-            this._ids = opts.ids;
+            this._ids = opts.Ids;
             this._includes = opts.includes;
             this._metadataOnly = opts.metadataOnly;
         } else if (opts.hasOwnProperty("start") && opts.hasOwnProperty("pageSize")) {
@@ -132,7 +132,7 @@ export class GetDocumentsCommand extends RavenCommand<GetDocumentsResult> {
     }
 
     public createRequest(node: ServerNode): HttpRequestParameters {
-        const uriPath = `${node.url}/databases/${node.database}/docs?`;
+        const uriPath = `${node.Url}/databases/${node.Database}/docs?`;
 
         let query = "";
         if (!TypeUtil.isNullOrUndefined(this._start)) {
@@ -253,8 +253,7 @@ export class GetDocumentsCommand extends RavenCommand<GetDocumentsResult> {
 
         return RavenCommandResponsePipeline.create<GetDocumentsResult>()
             .collectBody(bodyCallback)
-            .parseJsonAsync()
-            .jsonKeysTransform("DocumentLoad", conventions)
+            .parseJsonSync()
             .process(bodyStream);
     }
 

@@ -1,8 +1,8 @@
 export class CounterDetail {
-    public documentId: string;
-    public counterName: string;
-    public totalValue: number;
-    public etag: number;
-    public counterValues: { [key: string]: number };
-    public changeVector: string;
+    public DocumentId: string;
+    public CounterName: string;
+    public TotalValue: number;
+    public Etag: number;
+    public CounterValues: { [key: string]: number };
+    public ChangeVector: string;
 } 

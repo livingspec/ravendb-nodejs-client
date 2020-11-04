@@ -18,24 +18,24 @@ describe("RavenDB_10929Test", function () {
     it("canUpdateDatabaseRecord", async () => {
         let record = await store.maintenance.server.send(new GetDatabaseRecordOperation(store.database));
 
-        const etag = record.etag;
+        const etag = record.Etag;
         assertThat(record)
             .isNotNull();
         assertThat(etag)
             .isGreaterThan(0);
-        assertThat(record.disabled)
+        assertThat(record.Disabled)
             .isFalse();
 
-        record.disabled = true;
+        record.Disabled = true;
 
         await store.maintenance.server.send(new UpdateDatabaseOperation(record, etag));
 
         record = await store.maintenance.server.send(new GetDatabaseRecordOperation(store.database));
         assertThat(record)
             .isNotNull();
-        assertThat(record.etag)
+        assertThat(record.Etag)
             .isGreaterThan(etag);
-        assertThat(record.disabled)
+        assertThat(record.Disabled)
             .isTrue();
 
         await assertThrows(async () => await store.maintenance.server.send(new CreateDatabaseOperation(record)),
@@ -54,7 +54,7 @@ describe("RavenDB_10929Test", function () {
 
         await assertThrows(async () => {
             const session = store.openSession();
-            await session.store(new Company(), "id");
+            await session.store(new Company(), "Id");
             await session.saveChanges();
         }, err => {
             assertThat(err.name)

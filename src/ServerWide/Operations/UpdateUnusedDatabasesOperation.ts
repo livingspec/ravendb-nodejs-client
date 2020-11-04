@@ -44,7 +44,7 @@ class UpdateUnusedDatabasesCommand extends RavenCommand<void> implements IRaftCo
     }
 
     createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/admin/databases/unused-ids?name=" + this._database;
+        const uri = node.Url + "/admin/databases/unused-ids?name=" + this._database;
 
         const body = this._serializer.serialize(this._parameters);
 

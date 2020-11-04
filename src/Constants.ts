@@ -22,7 +22,7 @@ export const CONSTANTS = {
             KEY: "@metadata",
             ID: "@id",
             CONFLICT: "@conflict",
-            ID_PROPERTY: "id",
+            ID_PROPERTY: "Id",
             FLAGS: "@flags",
             ATTACHMENTS: "@attachments",
             INDEX_SCORE: "@index-score",

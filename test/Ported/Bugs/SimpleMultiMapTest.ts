@@ -21,7 +21,7 @@ describe("SimpleMultiMapTest", function () {
         await new CatsAndDogs().execute(store);
 
         const indexDefinition = await store.maintenance.send(new GetIndexOperation("CatsAndDogs"));
-        assert.strictEqual(indexDefinition.maps.size, 2);
+        assert.strictEqual(indexDefinition.Maps.size, 2);
     });
 
     it("can query using multi map", async () => {

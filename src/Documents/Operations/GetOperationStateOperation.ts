@@ -42,7 +42,7 @@ export class GetOperationStateCommand extends RavenCommand<IRavenResponse> {
     }
 
     public createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = `${node.url}/databases/${node.database}/operations/state?id=${this._id}`;
+        const uri = `${node.Url}/databases/${node.Database}/operations/state?id=${this._id}`;
         return { uri };
     }
 

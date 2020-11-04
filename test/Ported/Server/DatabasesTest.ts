@@ -18,7 +18,7 @@ describe("DatabasesTest", function () {
 
     it("canDisableAndEnableDatabase", async () => {
         const dbRecord: DatabaseRecord = {
-            databaseName: "enableDisable"
+            DatabaseName: "enableDisable"
         };
 
         const databaseOperation = new CreateDatabaseOperation(dbRecord);
@@ -29,11 +29,11 @@ describe("DatabasesTest", function () {
 
         assertThat(toggleResult)
             .isNotNull();
-        assertThat(toggleResult.name)
+        assertThat(toggleResult.Name)
             .isNotNull();
 
         const disabledDatabaseRecord = await store.maintenance.server.send(new GetDatabaseRecordOperation("enableDisable"));
-        assertThat(disabledDatabaseRecord.disabled)
+        assertThat(disabledDatabaseRecord.Disabled)
             .isTrue();
 
         // now enable database
@@ -43,11 +43,11 @@ describe("DatabasesTest", function () {
 
         assertThat(toggleResult)
             .isNotNull();
-        assertThat(toggleResult.name)
+        assertThat(toggleResult.Name)
             .isNotNull();
 
         const enabledDatabaseRecord = await store.maintenance.server.send(new GetDatabaseRecordOperation("enableDisable"));
-        assertThat(enabledDatabaseRecord.disabled)
+        assertThat(enabledDatabaseRecord.Disabled)
             .isFalse();
     });
 
@@ -75,43 +75,43 @@ describe("DatabasesTest", function () {
         const record = await store.maintenance.server
             .send(new GetDatabaseRecordOperation(store.database));
 
-        assertThat(record.autoIndexes)
+        assertThat(record.AutoIndexes)
             .hasSize(1);
-        assertThat(Object.keys(record.autoIndexes))
+        assertThat(Object.keys(record.AutoIndexes))
             .contains("Auto/Genres/Byname");
 
-        const autoIndexDefinition = record.autoIndexes["Auto/Genres/Byname"];
+        const autoIndexDefinition = record.AutoIndexes["Auto/Genres/Byname"];
         assertThat(autoIndexDefinition)
             .isNotNull();
 
-        assertThat(autoIndexDefinition.type)
+        assertThat(autoIndexDefinition.Type)
             .isEqualTo("AutoMap");
-        assertThat(autoIndexDefinition.name)
+        assertThat(autoIndexDefinition.Name)
             .isEqualTo("Auto/Genres/Byname");
-        assertThat(autoIndexDefinition.priority)
+        assertThat(autoIndexDefinition.Priority)
             .isEqualTo("Normal");
-        assertThat(autoIndexDefinition.collection)
+        assertThat(autoIndexDefinition.Collection)
             .isEqualTo("Genres");
-        assertThat(autoIndexDefinition.mapFields)
+        assertThat(autoIndexDefinition.MapFields)
             .hasSize(1);
-        assertThat(autoIndexDefinition.groupByFields)
+        assertThat(autoIndexDefinition.GroupByFields)
             .hasSize(0);
 
-        const fieldOptions = autoIndexDefinition.mapFields["name"];
+        const fieldOptions = autoIndexDefinition.MapFields["name"];
 
-        assertThat(fieldOptions.storage)
+        assertThat(fieldOptions.Storage)
             .isEqualTo("No");
-        assertThat(fieldOptions.indexing)
+        assertThat(fieldOptions.Indexing)
             .isEqualTo("Default");
-        assertThat(fieldOptions.aggregation)
+        assertThat(fieldOptions.Aggregation)
             .isEqualTo("None");
-        assertThat(fieldOptions.spatial)
+        assertThat(fieldOptions.Spatial)
             .isNull();
-        assertThat(fieldOptions.groupByArrayBehavior)
+        assertThat(fieldOptions.GroupByArrayBehavior)
             .isEqualTo("NotApplicable");
-        assertThat(fieldOptions.suggestions)
+        assertThat(fieldOptions.Suggestions)
             .isFalse();
-        assertThat(fieldOptions.isNameQuoted)
+        assertThat(fieldOptions.IsNameQuoted)
             .isFalse();
     });
 });

@@ -40,7 +40,7 @@ class ResetEtlCommand extends RavenCommand<void> implements IRaftCommand {
     }
 
     createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/databases/" + node.database + "/admin/etl?configurationName="
+        const uri = node.Url + "/databases/" + node.Database + "/admin/etl?configurationName="
             + encodeURIComponent(this._configurationName)
             + "&transformationName=" + encodeURIComponent(this._transformationName);
 

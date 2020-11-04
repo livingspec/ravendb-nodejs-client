@@ -38,7 +38,7 @@ class ConfigureExpirationCommand extends RavenCommand<ConfigureExpirationOperati
     }
 
     createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/databases/" + node.database + "/admin/expiration/config";
+        const uri = node.Url + "/databases/" + node.Database + "/admin/expiration/config";
 
         const body = this._serializer.serialize(this._configuration);
 
@@ -64,5 +64,5 @@ class ConfigureExpirationCommand extends RavenCommand<ConfigureExpirationOperati
 }
 
 export interface ConfigureExpirationOperationResult {
-    raftCommandIndex: number;
+    RaftCommandIndex: number;
 }

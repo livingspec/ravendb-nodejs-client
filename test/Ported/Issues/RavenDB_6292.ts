@@ -43,7 +43,7 @@ import { throwError } from "../../../src/Exceptions";
                         resolveToLatest: false,
                         resolveByCollection: {}
                     };
-                    r.conflictSolverConfig = conflictSolver;
+                    r.ConflictSolverConfig = conflictSolver;
                 };
             });
 
@@ -110,7 +110,7 @@ import { throwError } from "../../../src/Exceptions";
                             await destination.getRequestExecutor().execute(queryCommand);
 
                             const result = queryCommand.result;
-                            const address = result.includes["addresses/1"];
+                            const address = result.Includes["addresses/1"];
                             const metadata = address["@metadata"];
                             assert.strictEqual(metadata["@id"], "addresses/1");
 

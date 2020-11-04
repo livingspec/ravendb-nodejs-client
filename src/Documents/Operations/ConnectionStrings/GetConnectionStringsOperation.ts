@@ -7,8 +7,8 @@ import { RavenCommand } from "../../../Http/RavenCommand";
 import { ServerNode } from "../../../Http/ServerNode";
 
 export interface GetConnectionStringsResult {
-    ravenConnectionStrings: Record<string, RavenConnectionString>;
-    sqlConnectionStrings: Record<string, SqlConnectionString>;
+    RavenConnectionStrings: Record<string, RavenConnectionString>;
+    SqlConnectionStrings: Record<string, SqlConnectionString>;
 }
 
 export class GetConnectionStringsOperation implements IMaintenanceOperation<GetConnectionStringsResult> {
@@ -46,7 +46,7 @@ export class GetConnectionStringCommand extends RavenCommand<GetConnectionString
     }
 
     createRequest(node: ServerNode): HttpRequestParameters {
-        let uri = node.url + "/databases/" + node.database + "/admin/connection-strings";
+        let uri = node.Url + "/databases/" + node.Database + "/admin/connection-strings";
 
         if (this._connectionStringName) {
             uri += "?connectionStringName=" + encodeURIComponent(this._connectionStringName) + "&type=" + this._type;
@@ -66,16 +66,16 @@ export class GetConnectionStringCommand extends RavenCommand<GetConnectionString
         let body = "";
         this.result = await this._defaultPipeline(_ => body += _).process(bodyStream);
 
-        if (this.result.ravenConnectionStrings) {
-            this.result.ravenConnectionStrings = Object.entries(this.result.ravenConnectionStrings)
+        if (this.result.RavenConnectionStrings) {
+            this.result.RavenConnectionStrings = Object.entries(this.result.RavenConnectionStrings)
                 .reduce(((previousValue, currentValue) => {
                     previousValue[currentValue[0]] = Object.assign(new RavenConnectionString(), currentValue[1]);
                     return previousValue;
                 }), {} as Record<string, RavenConnectionString>);
         }
 
-        if (this.result.sqlConnectionStrings) {
-            this.result.sqlConnectionStrings = Object.entries(this.result.sqlConnectionStrings)
+        if (this.result.SqlConnectionStrings) {
+            this.result.SqlConnectionStrings = Object.entries(this.result.SqlConnectionStrings)
                 .reduce(((previousValue, currentValue) => {
                     previousValue[currentValue[0]] = Object.assign(new SqlConnectionString(), currentValue[1]);
                     return previousValue;

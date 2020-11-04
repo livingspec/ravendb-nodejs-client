@@ -19,7 +19,7 @@ describe("CanGetBuildNumberTest", function () {
 
         assertThat(buildNumber)
             .isNotNull();
-        assertThat(buildNumber.productVersion)
+        assertThat(buildNumber.ProductVersion)
             .isNotNull();
     });
 

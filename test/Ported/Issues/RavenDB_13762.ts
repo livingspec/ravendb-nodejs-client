@@ -19,7 +19,7 @@ describe("RavenDB_13762", function () {
 
     it("sessionInSubscriptionsShouldNotTrackRevisions", async () => {
         const subscriptionId = await store.subscriptions.createForRevisions({
-            documentType: User
+            DocumentType: User
         });
 
         const defaultConfiguration = Object.assign(new RevisionsCollectionConfiguration(), {
@@ -54,8 +54,8 @@ describe("RavenDB_13762", function () {
         }
 
         const sub = store.subscriptions.getSubscriptionWorkerForRevisions<User>({
-            documentType: User,
-            subscriptionName: subscriptionId
+            DocumentType: User,
+            SubscriptionName: subscriptionId
         });
 
         let exception: Error;
@@ -64,7 +64,7 @@ describe("RavenDB_13762", function () {
             sub.on("batch", async (x, callback) => {
                 try {
                     const session = x.openSession();
-                    x.items[0].result.current.name = "aaaa";
+                    x.items[0].result.Current.name = "aaaa";
 
                     await session.saveChanges();
                 } catch (err) {

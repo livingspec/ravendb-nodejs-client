@@ -101,6 +101,7 @@ export class DocumentSession extends InMemoryDocumentSessionOperations
 
     public numberOfRequestsInSession: number;
 
+    // @ts-ignore
     public conventions: DocumentConventions;
 
     public async load<TEntity extends object = IRavenObject>(
@@ -259,7 +260,7 @@ export class DocumentSession extends InMemoryDocumentSessionOperations
         this.incrementRequestCount();
 
         const command = new GetDocumentsCommand({
-            id: documentInfo.id,
+            Id: documentInfo.Id,
             conventions: this.conventions
         });
 
@@ -685,8 +686,8 @@ export class DocumentSession extends InMemoryDocumentSessionOperations
             let totalTime: number;
             let tempReqTime: string;
             const response = responses[i];
-            tempReqTime = response.headers[HEADERS.REQUEST_TIME];
-            response.elapsed = sw.elapsed;
+            tempReqTime = response.Headers[HEADERS.REQUEST_TIME];
+            response.Elapsed = sw.elapsed;
             totalTime = tempReqTime ? parseInt(tempReqTime, 10) : 0;
             const timeItem = {
                 url: requests[i].urlAndQuery,
@@ -697,7 +698,7 @@ export class DocumentSession extends InMemoryDocumentSessionOperations
             if (response.requestHasErrors()) {
                 throwError(
                     "InvalidOperationException",
-                    "Got an error from server, status code: " + response.statusCode + os.EOL + response.result);
+                    "Got an error from server, status code: " + response.StatusCode + os.EOL + response.Result);
             }
 
             await this._pendingLazyOperations[i].handleResponseAsync(response);
@@ -721,7 +722,7 @@ export class DocumentSession extends InMemoryDocumentSessionOperations
         this._pendingLazyOperations.push(operation);
         return new Lazy(async () => {
             await this.executeAllPendingLazyOperations();
-            return operation.queryResult.totalResults;
+            return operation.queryResult.TotalResults;
         });
     }
 
@@ -869,8 +870,7 @@ export class DocumentSession extends InMemoryDocumentSessionOperations
         isProjectInto: boolean) {
         return new stream.Transform({
             objectMode: true,
-            transform(chunk: object, encoding: string, callback: stream.TransformCallback) {
-                const doc = chunk["value"];
+            transform(doc: object, encoding: string, callback: stream.TransformCallback) {
                 const metadata = doc[CONSTANTS.Documents.Metadata.KEY];
                 const changeVector = metadata[CONSTANTS.Documents.Metadata.CHANGE_VECTOR];
                 // MapReduce indexes return reduce results that don't have @id property
@@ -880,7 +880,7 @@ export class DocumentSession extends InMemoryDocumentSessionOperations
                 callback(null, {
                     changeVector,
                     metadata,
-                    id,
+                    id: id,
                     document: entity
                 } as StreamResult<TEntity>);
             }

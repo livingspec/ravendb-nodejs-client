@@ -35,7 +35,7 @@ class UpdatePullEdgeReplication extends RavenCommand<ModifyOngoingTaskResult> im
     }
 
     createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/databases/" + node.database + "/admin/tasks/sink-pull-replication";
+        const uri = node.Url + "/databases/" + node.Database + "/admin/tasks/sink-pull-replication";
 
         const body = this._serializer.serialize({
             PullReplicationAsSink: this._pullReplication

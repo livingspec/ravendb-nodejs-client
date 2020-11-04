@@ -66,9 +66,9 @@ describe("SmugglerTest", function () {
             await operation.waitForCompletion();
 
             const stats = await dstStore.maintenance.send(new GetStatisticsOperation());
-            assertThat(stats.countOfIndexes)
+            assertThat(stats.CountOfIndexes)
                 .isEqualTo(1);
-            assertThat(stats.countOfDocuments)
+            assertThat(stats.CountOfDocuments)
                 .isEqualTo(3);
         } finally {
             dstStore.dispose();
@@ -90,9 +90,9 @@ describe("SmugglerTest", function () {
                 await exportOperation.waitForCompletion();
 
                 const stats = await targetStore.maintenance.send(new GetStatisticsOperation());
-                assertThat(stats.countOfIndexes)
+                assertThat(stats.CountOfIndexes)
                     .isEqualTo(0);  // we didn't request indexes to be copied
-                assertThat(stats.countOfDocuments)
+                assertThat(stats.CountOfDocuments)
                     .isEqualTo(3);
 
             } finally {

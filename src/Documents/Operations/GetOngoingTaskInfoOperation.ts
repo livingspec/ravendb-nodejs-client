@@ -64,8 +64,8 @@ class GetOngoingTaskInfoCommand extends RavenCommand<OngoingTask> {
 
     createRequest(node: ServerNode): HttpRequestParameters {
         const uri = this._taskName
-            ? node.url + "/databases/" + node.database + "/task?taskName=" + encodeURIComponent(this._taskName) + "&type=" + this._type
-            : node.url + "/databases/" + node.database + "/task?key=" + this._taskId + "&type=" + this._type;
+            ? node.Url + "/databases/" + node.Database + "/task?taskName=" + encodeURIComponent(this._taskName) + "&type=" + this._type
+            : node.Url + "/databases/" + node.Database + "/task?key=" + this._taskId + "&type=" + this._type;
 
         return {
             uri,
@@ -86,28 +86,28 @@ class GetOngoingTaskInfoCommand extends RavenCommand<OngoingTask> {
                         break;
                     case "RavenEtl":
                         nestedTypes = {
-                            configuration: "RavenEtlConfiguration"
+                            Configuration: "RavenEtlConfiguration"
                         };
                         break;
                     case "SqlEtl":
                         nestedTypes = {
-                            configuration: "SqlEtlConfiguration"
+                            Configuration: "SqlEtlConfiguration"
                         };
                         break;
                     case "Subscription":
                         nestedTypes = {
-                            lastBatchAckTime: "date",
-                            lastClientConnectionTime: "date"
+                            LastBatchAckTime: "date",
+                            LastClientConnectionTime: "date"
                         }
                         break;
                     case "PullReplicationAsSink":
                         break;
                     case "Backup":
                         nestedTypes = {
-                            lastFullBackup: "date",
-                            lastIncrementalBackup: "date",
-                            "onGoingBackup.startTime": "date",
-                            "nextBackup.dateTime": "date"
+                            LastFullBackup: "date",
+                            LastIncrementalBackup: "date",
+                            "OnGoingBackup.StartTime": "date",
+                            "NextBackup.DateTime": "date"
                         }
                         break;
                 }

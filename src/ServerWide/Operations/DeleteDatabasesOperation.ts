@@ -64,7 +64,7 @@ export class DeleteDatabaseCommand extends RavenCommand<DeleteDatabaseResult> im
     }
 
     public createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/admin/databases";
+        const uri = node.Url + "/admin/databases";
         return {
             uri,
             method: "DELETE",

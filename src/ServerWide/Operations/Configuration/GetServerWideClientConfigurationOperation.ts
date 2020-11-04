@@ -23,7 +23,7 @@ class GetServerWideClientConfigurationCommand extends RavenCommand<ClientConfigu
     }
 
     createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/configuration/client";
+        const uri = node.Url + "/configuration/client";
 
         return {
             uri,

@@ -30,9 +30,9 @@ describe("GetTopologyCommand", function () {
         assert.strictEqual(result.nodes.length, 1);
 
         const node = result.nodes[0];
-        assert.strictEqual(node.url, store.urls[0]);
-        assert.strictEqual(node.database, store.database);
-        assert.strictEqual(node.clusterTag, "A");
-        assert.strictEqual(node.serverRole, "Member" as ServerNodeRole);
+        assert.strictEqual(node.Url, store.urls[0]);
+        assert.strictEqual(node.Database, store.database);
+        assert.strictEqual(node.ClusterTag, "A");
+        assert.strictEqual(node.ServerRole, "Member" as ServerNodeRole);
     });
 });

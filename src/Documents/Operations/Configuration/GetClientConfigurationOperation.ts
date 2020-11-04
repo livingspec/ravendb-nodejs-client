@@ -28,7 +28,7 @@ export class GetClientConfigurationCommand extends RavenCommand<GetClientConfigu
     }
 
     public createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = `${ node.url }/databases/${ node.database }/configuration/client`;
+        const uri = `${ node.Url }/databases/${ node.Database }/configuration/client`;
         return { uri };
     }
 
@@ -42,7 +42,7 @@ export class GetClientConfigurationCommand extends RavenCommand<GetClientConfigu
         // since server can send etag bigger than Number.MAX_SAFE_INTEGER we need to parse Etag as string
         const match = body.match("\"Etag\":(-?[0-9]+)");
         if (match) {
-            this.result.etag = match[1];
+            this.result.Etag = match[1];
         }
 
         return body;
@@ -50,6 +50,6 @@ export class GetClientConfigurationCommand extends RavenCommand<GetClientConfigu
 }
 
 export interface GetClientConfigurationOperationResult {
-    etag: string;
-    configuration: ClientConfiguration;
+    Etag: string;
+    Configuration: ClientConfiguration;
 }

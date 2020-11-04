@@ -105,10 +105,10 @@ export class SubscriptionBatch<T extends object> {
                 continue;
             }
             const documentInfo = new DocumentInfo();
-            documentInfo.id = item.id;
+            documentInfo.Id = item.id;
             documentInfo.document = item.rawResult;
             documentInfo.metadata = item.rawMetadata;
-            documentInfo.changeVector = item.changeVector;
+            documentInfo.ChangeVector = item.changeVector;
             documentInfo.entity = item.result;
             documentInfo.newDocument = false;
             session.registerExternalLoadedIntoTheSession(documentInfo);
@@ -116,13 +116,13 @@ export class SubscriptionBatch<T extends object> {
      }
 
     public initialize(batch: BatchFromServer): string {
-        this._includes = batch.includes;
+        this._includes = batch.Includes;
         this._items.length = 0;
 
         let lastReceivedChangeVector: string;
 
-        for (const item of batch.messages) {
-            const curDoc = item.data;
+        for (const item of batch.Messages) {
+            const curDoc = item.Data;
             const metadata = curDoc[CONSTANTS.Documents.Metadata.KEY];
             if (!metadata) {
                 SubscriptionBatch._throwRequired("@metadata field");
@@ -146,7 +146,7 @@ export class SubscriptionBatch<T extends object> {
 
             let instance: T = null;
 
-            if (!item.exception) {
+            if (!item.Exception) {
                 instance = curDoc;
 
                 if (!StringUtil.isNullOrEmpty(id)) {
@@ -164,7 +164,7 @@ export class SubscriptionBatch<T extends object> {
             itemToAdd.rawResult = curDoc;
             itemToAdd.rawMetadata = metadata;
             itemToAdd.result = instance;
-            itemToAdd.exceptionMessage = item.exception;
+            itemToAdd.exceptionMessage = item.Exception;
             itemToAdd.projection = projection;
             itemToAdd.revision = this._revisions;
 

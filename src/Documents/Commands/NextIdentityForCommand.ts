@@ -30,7 +30,7 @@ export class NextIdentityForCommand extends RavenCommand<number> implements IRaf
     public createRequest(node: ServerNode): HttpRequestParameters {
         RavenCommand.ensureIsNotNullOrEmpty(this._id, "id");
 
-        const uri = node.url + "/databases/" + node.database + "/identity/next?name=" + encodeURIComponent(this._id);
+        const uri = node.Url + "/databases/" + node.Database + "/identity/next?name=" + encodeURIComponent(this._id);
         return {
             method: "POST",
             uri
@@ -45,11 +45,11 @@ export class NextIdentityForCommand extends RavenCommand<number> implements IRaf
         let body: string = null;
         await this._defaultPipeline(_ => body = _).process(bodyStream)
             .then(results => {
-                if (!results["newIdentityValue"]) {
+                if (!results["NewIdentityValue"]) {
                     this._throwInvalidResponse();
                 }
 
-                this.result = results["newIdentityValue"];
+                this.result = results["NewIdentityValue"];
             });
 
         return body;

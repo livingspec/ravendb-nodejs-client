@@ -6,13 +6,13 @@ import { ObjectUtil } from "../../../Utility/ObjectUtil";
 import { ClassConstructor } from "../../../Types";
 
 export interface CompareExchangeResultItem {
-    index: number;
-    key: string;
-    value: { object: object };
+    Index: number;
+    Key: string;
+    Value: { Object: object };
 }
 
 export interface GetCompareExchangeValuesResponse {
-    results: CompareExchangeResultItem[];
+    Results: CompareExchangeResultItem[];
 }
 
 export class CompareExchangeValueResultParser {
@@ -23,7 +23,7 @@ export class CompareExchangeValueResultParser {
         clazz?: ClassConstructor<T>)
         : { [key: string]: CompareExchangeValue<T> } {
 
-        const items = responseObj.results;
+        const items = responseObj.Results;
         if (!items) {
             throwError("InvalidOperationException", "Response is invalid. Results is missing.");
         }
@@ -34,19 +34,19 @@ export class CompareExchangeValueResultParser {
                 throwError("InvalidOperationException", "Response is invalid. Item is null");
             }
 
-            const key = item.key || throwError("InvalidOperationException", "Response is invalid. Key is missing.");
+            const key = item.Key || throwError("InvalidOperationException", "Response is invalid. Key is missing.");
 
-            const index = item.index;
+            const index = item.Index;
             if (TypeUtil.isNullOrUndefined(index)) {
-                throwError("InvalidOperationException", `Response is invalid. Index is ${item.index}.`);
+                throwError("InvalidOperationException", `Response is invalid. Index is ${item.Index}.`);
             }
 
-            const raw = item.value;
+            const raw = item.Value;
             if (TypeUtil.isNullOrUndefined(raw)) {
                 throwError("InvalidOperationException", "Response is invalid. Value is missing.");
             }
 
-            let rawValue = raw.object;
+            let rawValue = raw.Object;
             if (TypeUtil.isPrimitiveType(clazz) || !clazz) {
                 results[key] = new CompareExchangeValue(key, index, rawValue);
             } else {

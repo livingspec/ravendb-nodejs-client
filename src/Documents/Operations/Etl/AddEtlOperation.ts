@@ -41,7 +41,7 @@ class AddEtlCommand<T extends ConnectionString> extends RavenCommand<AddEtlOpera
     }
 
     createRequest(node: ServerNode): HttpRequestParameters {
-        const uri = node.url + "/databases/" + node.database + "/admin/etl";
+        const uri = node.Url + "/databases/" + node.Database + "/admin/etl";
 
         const body = JSON.stringify(this._configuration.serialize(this._conventions));
         const headers = this._headers().typeAppJson().build();

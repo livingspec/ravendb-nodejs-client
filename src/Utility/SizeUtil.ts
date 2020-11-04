@@ -1,20 +1,20 @@
 export class Size {
-    private _sizeInBytes: number;
-    private _humaneSize: string;
+    private _SizeInBytes: number;
+    private _HumaneSize: string;
 
-    public get sizeInBytes(): number {
-        return this._sizeInBytes;
+    public get SizeInBytes(): number {
+        return this._SizeInBytes;
     }
 
-    public get humaneSize(): string {
-        return this._humaneSize;
+    public get HumaneSize(): string {
+        return this._HumaneSize;
     }
 
-    public set sizeInBytes(value: number) {
-        this._sizeInBytes = value;
+    public set SizeInBytes(value: number) {
+        this._SizeInBytes = value;
     }
 
-    public set humaneSize(value: string) {
-        this._humaneSize = value;
+    public set HumaneSize(value: string) {
+        this._HumaneSize = value;
     }
 }
