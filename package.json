@@ -1,5 +1,5 @@
 {
-  "name": "ravendb",
+  "name": "ravendb-lightweight",
   "version": "4.2.1",
   "description": "RavenDB client for Node.js",
   "files": [
