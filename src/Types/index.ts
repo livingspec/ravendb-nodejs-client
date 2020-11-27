@@ -35,6 +35,8 @@ export interface EntityConstructor<T extends object = object>
 
 export type ObjectTypeDescriptor<T extends object = object> = EntityConstructor<T> | ObjectLiteralDescriptor<T>;
 
+export type ObjectTypeMap = Map<string, ObjectTypeDescriptor>;
+
 export abstract class EntityObjectLiteralDescriptor<T extends object> implements ObjectLiteralDescriptor {
     public abstract name: string;
 

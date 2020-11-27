@@ -8,8 +8,9 @@ import {
 } from "../../Commands/GetDocumentsCommand";
 import { TypeUtil } from "../../../Utility/TypeUtil";
 import { throwError } from "../../../Exceptions";
-import { ObjectTypeDescriptor, EntitiesCollectionObject } from "../../../Types";
+import { ObjectTypeDescriptor, EntitiesCollectionObject, ObjectTypeMap } from "../../../Types";
 import { StringUtil } from "../../../Utility/StringUtil";
+
 
 const log = getLogger({ module: "LoadOperation" });
 
@@ -92,7 +93,7 @@ export class LoadOperation {
         return this;
     }
 
-    public getDocument<T extends object>(clazz: ObjectTypeDescriptor<T>): T {
+    public getDocument<T extends object>(clazz: ObjectTypeDescriptor<T>, objectTypeOverrides?: ObjectTypeMap): T {
         if (this._session.noTracking) {
             if (!this._resultsSet && this._ids.length) {
                 throwError("InvalidOperationException", "Cannot execute getDocument before operation execution.");
@@ -108,13 +109,13 @@ export class LoadOperation {
             }
 
             const documentInfo = DocumentInfo.getNewDocumentInfo(document);
-            return this._session.trackEntity(clazz, documentInfo);
+            return this._session.trackEntity(clazz, documentInfo, objectTypeOverrides);
         }
 
         return this._getDocument(clazz, this._ids[0]);
     }
 
-    private _getDocument<T extends object>(clazz: ObjectTypeDescriptor<T>, id: string): T {
+    private _getDocument<T extends object>(clazz: ObjectTypeDescriptor<T>, id: string, objectTypeOverrides?: ObjectTypeMap): T {
         if (!id) {
             return null;
         }
@@ -125,18 +126,18 @@ export class LoadOperation {
 
         let doc = this._session.documentsById.getValue(id);
         if (doc) {
-            return this._session.trackEntity(clazz, doc);
+            return this._session.trackEntity(clazz, doc, objectTypeOverrides);
         }
 
         doc = this._session.includedDocumentsById.get(id);
         if (doc) {
-            return this._session.trackEntity(clazz, doc);
+            return this._session.trackEntity(clazz, doc, objectTypeOverrides);
         }
 
         return null;
     }
 
-    public getDocuments<T extends object>(clazz: ObjectTypeDescriptor<T>): EntitiesCollectionObject<T> {
+    public getDocuments<T extends object>(clazz: ObjectTypeDescriptor<T>, objectTypeOverrides?: ObjectTypeMap): EntitiesCollectionObject<T> {
         if (this._session.noTracking) {
             if (!this._resultsSet && this._ids.length) {
                 throwError(
@@ -159,7 +160,7 @@ export class LoadOperation {
                 }
 
                 const newDocumentInfo = DocumentInfo.getNewDocumentInfo(document);
-                finalResults[newDocumentInfo.Id] = this._session.trackEntity(clazz, newDocumentInfo);
+                finalResults[newDocumentInfo.Id] = this._session.trackEntity(clazz, newDocumentInfo, objectTypeOverrides);
             }
             
             return finalResults;
@@ -167,7 +168,7 @@ export class LoadOperation {
 
         return this._ids.filter(x => !!x)
             .reduce((result, id) => {
-                result[id] = this._getDocument(clazz, id);
+                result[id] = this._getDocument(clazz, id, objectTypeOverrides);
                 return result;
             }, {});
     }

@@ -15,6 +15,7 @@ import { TypeUtil } from "../../../Utility/TypeUtil";
 import { StringUtil } from "../../../Utility/StringUtil";
 import { Reference } from "../../../Utility/Reference";
 import { NESTED_OBJECT_TYPES_PROJECTION_FIELD } from "../DocumentQuery";
+import { ObjectTypeMap } from "../../../Types";
 
 const log = getLogger({ module: "QueryOperation" });
 
@@ -119,7 +120,7 @@ export class QueryOperation {
         return result;
     }
 
-    private _completeInternal<T extends object>(documentType: DocumentType<T>, queryResult: QueryResult, addToResult: (item: T) => void): void {
+    private _completeInternal<T extends object>(documentType: DocumentType<T>, queryResult: QueryResult, addToResult: (item: T) => void, objectTypeOverrides?: ObjectTypeMap): void {
         if (!this._noTracking) {
             this._session.registerIncludes(queryResult.Includes);
         }
@@ -147,7 +148,8 @@ export class QueryOperation {
                         this._noTracking,
                         this._session,
                         documentType,
-                        this._isProjectInto));
+                        this._isProjectInto,
+                        objectTypeOverrides));
             }
         } catch (err) {
             log.warn(err, "Unable to read query result JSON.");
@@ -172,14 +174,15 @@ export class QueryOperation {
         disableEntitiesTracking: boolean,
         session: InMemoryDocumentSessionOperations,
         clazz?: DocumentType<T>,
-        isProjectInto?: boolean
+        isProjectInto?: boolean,
+        objectTypeOverrides?: ObjectTypeMap
     ) {
         const { conventions } = session;
         const { entityFieldNameConvention } = conventions;
         const projection = metadata["@projection"];
         if (TypeUtil.isNullOrUndefined(projection) || projection === false) {
             const entityType = conventions.getJsTypeByDocumentType(clazz);
-            return session.trackEntity(entityType, id, document, metadata, disableEntitiesTracking);
+            return session.trackEntity(entityType, id, objectTypeOverrides, document, metadata, disableEntitiesTracking);
         }
 
         // return primitives only if type was not passed at all AND fields count is 1

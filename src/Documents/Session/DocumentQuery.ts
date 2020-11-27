@@ -48,6 +48,7 @@ import { Highlightings } from "../Queries/Highlighting/Hightlightings";
 import { HighlightingParameters } from "../Queries/Highlighting/HighlightingParameters";
 import { IQueryIncludeBuilder } from "./Loaders/IQueryIncludeBuilder";
 import { QueryIncludeBuilder } from "./Loaders/QueryIncludeBuilder";
+import { ObjectTypeMap } from "../../Types";
 
 export const NESTED_OBJECT_TYPES_PROJECTION_FIELD = "__PROJECTED_NESTED_OBJECT_TYPES__";
 
@@ -280,6 +281,11 @@ export class DocumentQuery<T extends object>
 
     public noCaching(): IDocumentQuery<T> {
         this._noCaching();
+        return this;
+    }
+
+    public withObjectTypeOverrides(objectTypeOverrides: ObjectTypeMap): IDocumentQuery<T> {
+        this._withObjectTypeOverrides(objectTypeOverrides);
         return this;
     }
 

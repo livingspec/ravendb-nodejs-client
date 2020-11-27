@@ -82,6 +82,7 @@ import { passResultToCallback } from "../../Utility/PromiseUtil";
 import * as os from "os";
 import { GraphQueryToken } from "./Tokens/GraphQueryToken";
 import { IncludesUtil } from "./IncludesUtil";
+import { ObjectTypeMap } from "../../Types";
 
 /**
  * A query against a Raven index
@@ -166,6 +167,8 @@ export abstract class AbstractDocumentQuery<T extends object, TSelf extends Abst
     protected _disableEntitiesTracking: boolean;
 
     protected _disableCaching: boolean;
+
+    protected _objectTypeOverrides?: ObjectTypeMap;
 
     private _parameterPrefix = "p";
 
@@ -1740,6 +1743,14 @@ export abstract class AbstractDocumentQuery<T extends object, TSelf extends Abst
 
     public _noCaching(): void {
         this._disableCaching = true;
+    }
+
+    public _withObjectTypeOverrides(objectTypeOverrides: ObjectTypeMap): void {
+        this._objectTypeOverrides = objectTypeOverrides;
+    }
+
+    public getObjectTypeOverrides(): ObjectTypeMap {
+        return this._objectTypeOverrides;
     }
 
     public _includeTimings(timingsCallback: (timings: QueryTimings) => void): void {

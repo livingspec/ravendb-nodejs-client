@@ -3,7 +3,7 @@ import { EntityToJson } from "./EntityToJson";
 import { IDisposable } from "../../Types/Contracts";
 import { SessionInfo, ConcurrencyCheckMode, StoreOptions } from "./IDocumentSession";
 import { IMetadataDictionary } from "./IMetadataDictionary";
-import { ObjectTypeDescriptor, ClassConstructor } from "../../Types";
+import { ObjectTypeDescriptor, ClassConstructor, ObjectTypeMap } from "../../Types";
 import {
     SessionEventsEmitter,
     SessionBeforeStoreEventArgs,
@@ -473,16 +473,18 @@ export abstract class InMemoryDocumentSessionOperations
      * Tracks the entity inside the unit of work
      */
     public trackEntity<T extends object>(
-        entityType: ObjectTypeDescriptor<T>, documentFound: DocumentInfo): T;
+        entityType: ObjectTypeDescriptor<T>, documentFound: DocumentInfo, objectTypeOverrides?: ObjectTypeMap): T;
     public trackEntity<T extends object>(
         entityType: ObjectTypeDescriptor<T>,
         id: string,
+        objectTypeOverrides: ObjectTypeMap,
         document: object,
         metadata: object,
         noTracking: boolean): object;
     public trackEntity<T extends object>(
         entityType: ObjectTypeDescriptor<T>,
         idOrDocumentInfo: string | DocumentInfo,
+        objectTypeOverrides?: ObjectTypeMap,
         document?: object,
         metadata?: object,
         noTracking?: boolean): T {
@@ -490,7 +492,7 @@ export abstract class InMemoryDocumentSessionOperations
         let id: string;
         if (TypeUtil.isObject(idOrDocumentInfo)) {
             const info = idOrDocumentInfo as DocumentInfo;
-            return this.trackEntity(entityType, info.Id, info.document, info.metadata, this.noTracking) as T;
+            return this.trackEntity(entityType, info.Id, objectTypeOverrides, info.document, info.metadata, this.noTracking) as T;
         } else {
             id = idOrDocumentInfo as string;
         }
@@ -499,7 +501,7 @@ export abstract class InMemoryDocumentSessionOperations
         noTracking = this.noTracking || noTracking;  
 
         if (!id) {
-            return this._deserializeFromTransformer(entityType, null, document, false) as T;
+            return this._deserializeFromTransformer(entityType, null, document, false, objectTypeOverrides) as T;
         }
 
         let docInfo: DocumentInfo = this.documentsById.getValue(id);
@@ -508,7 +510,7 @@ export abstract class InMemoryDocumentSessionOperations
             // instance, and return that, ignoring anything new.
 
             if (!docInfo.entity) {
-                docInfo.entity = this.entityToJson.convertToEntity(entityType, id, document, !noTracking);
+                docInfo.entity = this.entityToJson.convertToEntity(entityType, id, document, !noTracking, objectTypeOverrides);
                 this._makeMetadataInstance(docInfo);
             }
 
@@ -523,7 +525,7 @@ export abstract class InMemoryDocumentSessionOperations
         docInfo = this.includedDocumentsById.get(id);
         if (docInfo) {
             if (!docInfo.entity) {
-                docInfo.entity = this.entityToJson.convertToEntity(entityType, id, document, !noTracking);
+                docInfo.entity = this.entityToJson.convertToEntity(entityType, id, document, !noTracking, objectTypeOverrides);
                 this._makeMetadataInstance(docInfo);
             }
 
@@ -536,7 +538,7 @@ export abstract class InMemoryDocumentSessionOperations
             return docInfo.entity as T;
         }
 
-        const entity = this.entityToJson.convertToEntity(entityType, id, document, !noTracking);
+        const entity = this.entityToJson.convertToEntity(entityType, id, document, !noTracking, objectTypeOverrides);
 
         const changeVector = metadata[CONSTANTS.Documents.Metadata.CHANGE_VECTOR];
         if (!changeVector) {
@@ -593,8 +595,8 @@ export abstract class InMemoryDocumentSessionOperations
         this.includedDocumentsById.delete(info.Id);
      }
 
-    private _deserializeFromTransformer(clazz: ObjectTypeDescriptor, id: string, document: object, trackEntity: boolean): object {
-        return this.entityToJson.convertToEntity(clazz, id, document, trackEntity);
+    private _deserializeFromTransformer(clazz: ObjectTypeDescriptor, id: string, document: object, trackEntity: boolean, objectTypeOverrides?: ObjectTypeMap): object {
+        return this.entityToJson.convertToEntity(clazz, id, document, trackEntity, objectTypeOverrides);
     }
 
     public registerIncludes(includes: object): void {
@@ -1523,7 +1525,7 @@ export abstract class InMemoryDocumentSessionOperations
     }
 
     protected _refreshInternal<T extends object>(
-        entity: T, cmd: RavenCommand<GetDocumentsResult>, documentInfo: DocumentInfo): void {
+        entity: T, cmd: RavenCommand<GetDocumentsResult>, documentInfo: DocumentInfo, objectTypeOverrides?: ObjectTypeMap): void {
         const document = cmd.result.Results[0];
         if (!document) {
             throwError("InvalidOperationException",
@@ -1543,7 +1545,7 @@ export abstract class InMemoryDocumentSessionOperations
         }
 
         const entityType = this.conventions.getTypeDescriptorByEntity(entity);
-        documentInfo.entity = this.entityToJson.convertToEntity(entityType, documentInfo.Id, document, !this.noTracking);
+        documentInfo.entity = this.entityToJson.convertToEntity(entityType, documentInfo.Id, document, !this.noTracking, objectTypeOverrides);
         documentInfo.document = document;
 
         Object.assign(entity, documentInfo.entity);

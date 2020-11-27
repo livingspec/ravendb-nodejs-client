@@ -3,7 +3,7 @@ import { DocumentConventions } from "../Conventions/DocumentConventions";
 import { IDisposable } from "../../Types/Contracts";
 import { ErrorFirstCallback } from "../../Types/Callbacks";
 import { DocumentType } from "../DocumentAbstractions";
-import { EntitiesCollectionObject, ObjectTypeDescriptor } from "../../Types";
+import { EntitiesCollectionObject, ObjectTypeDescriptor, ObjectTypeMap } from "../../Types";
 import { IAdvancedSessionOperations } from "./IAdvancedSessionOperations";
 import { ILoaderWithInclude } from "./Loaders/ILoaderWithInclude";
 import { DocumentQueryOptions } from "./QueryOptions";
@@ -218,6 +218,11 @@ export interface LoadOptions<T extends object> {
      * Expected change vector
      */
     expectedChangeVector?: string;
+
+    /**
+     * Optional types that, if specified for a query, override the default registered types in the session conventions.
+     */
+    objectTypeOverrides?: ObjectTypeMap;
 }
 
 export interface SessionLoadStartingWithOptions<T extends object> extends StartingWithOptions {
@@ -243,6 +248,7 @@ export interface SessionLoadInternalParameters<TResult extends object> {
     documentType?: DocumentType<TResult>;
     counterIncludes?: string[];
     includeAllCounters?: boolean;
+    objectTypeOverrides?: ObjectTypeMap;
 }
 
 export interface IDocumentSessionImpl extends IDocumentSession {

@@ -14,7 +14,7 @@ import {
 import { DocumentConventions } from "../Conventions/DocumentConventions";
 import { ErrorFirstCallback } from "../../Types/Callbacks";
 import { TypeUtil } from "../../Utility/TypeUtil";
-import { EntitiesCollectionObject, IRavenObject, ObjectTypeDescriptor } from "../../Types";
+import { EntitiesCollectionObject, IRavenObject, ObjectTypeDescriptor, ObjectTypeMap } from "../../Types";
 import { throwError } from "../../Exceptions";
 import { DocumentType } from "../DocumentAbstractions";
 import { LoadOperation } from "./Operations/LoadOperation";
@@ -182,7 +182,10 @@ export class DocumentSession extends InMemoryDocumentSessionOperations
                 internalOpts.includeAllCounters = builder.isAllCounters;
             } else {
                 internalOpts.includes = options.includes as string[];
-            } 
+            }
+        }
+        if ("objectTypeOverrides" in options) {
+            internalOpts.objectTypeOverrides = options.objectTypeOverrides;
         }
 
         return internalOpts;
@@ -251,7 +254,7 @@ export class DocumentSession extends InMemoryDocumentSessionOperations
     /**
      * Refreshes the specified entity from Raven server.
      */
-    public async refresh<TEntity extends object>(entity: TEntity): Promise<void> {
+    public async refresh<TEntity extends object>(entity: TEntity, objectTypeOverrides?: ObjectTypeMap): Promise<void> {
         const documentInfo = this.documentsByEntity.get(entity);
         if (!documentInfo) {
             throwError("InvalidOperationException", "Cannot refresh a transient instance");
@@ -265,7 +268,7 @@ export class DocumentSession extends InMemoryDocumentSessionOperations
         });
 
         await this._requestExecutor.execute(command, this._sessionInfo);
-        this._refreshInternal(entity, command, documentInfo);
+        this._refreshInternal(entity, command, documentInfo, objectTypeOverrides);
     }
 
     /**
@@ -423,7 +426,7 @@ export class DocumentSession extends InMemoryDocumentSessionOperations
         }
 
         const clazz = this.conventions.getJsTypeByDocumentType(opts.documentType);
-        return loadOperation.getDocuments(clazz);
+        return loadOperation.getDocuments(clazz, opts.objectTypeOverrides);
     }
 
     /**
@@ -841,7 +844,7 @@ export class DocumentSession extends InMemoryDocumentSessionOperations
         const docsReadable = streamOperation.setResult(command.result);
 
         const result = this._getStreamResultTransform(
-            this, (query as any).getQueryType(), (query as any).fieldsToFetchToken, query.isProjectInto);
+            this, (query as any).getQueryType(), (query as any).fieldsToFetchToken, query.isProjectInto, query.getObjectTypeOverrides());
 
         docsReadable.once("stats", stats => {
             (streamQueryStatsCallback || TypeUtil.NOOP)(stats);
@@ -867,7 +870,8 @@ export class DocumentSession extends InMemoryDocumentSessionOperations
         session: DocumentSession,
         clazz: ObjectTypeDescriptor<TEntity>,
         fieldsToFetchToken: any,
-        isProjectInto: boolean) {
+        isProjectInto: boolean,
+        objectTypeOverrides?: ObjectTypeMap) {
         return new stream.Transform({
             objectMode: true,
             transform(doc: object, encoding: string, callback: stream.TransformCallback) {
@@ -876,7 +880,7 @@ export class DocumentSession extends InMemoryDocumentSessionOperations
                 // MapReduce indexes return reduce results that don't have @id property
                 const id = metadata[CONSTANTS.Documents.Metadata.ID] || null;
                 const entity = QueryOperation.deserialize(
-                    id, doc, metadata, fieldsToFetchToken || null, true, session, clazz, isProjectInto);
+                    id, doc, metadata, fieldsToFetchToken || null, true, session, clazz, isProjectInto, objectTypeOverrides);
                 callback(null, {
                     changeVector,
                     metadata,

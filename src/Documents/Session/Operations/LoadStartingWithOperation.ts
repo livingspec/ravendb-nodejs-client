@@ -5,7 +5,7 @@ import { DocumentInfo } from "../DocumentInfo";
 import { DocumentType } from "../../DocumentAbstractions";
 import { TypeUtil } from "../../../Utility/TypeUtil";
 import { throwError } from "../../../Exceptions";
-import { ObjectTypeDescriptor } from "../../../Types";
+import { ObjectTypeDescriptor, ObjectTypeMap } from "../../../Types";
 
 export class LoadStartingWithOperation {
 
@@ -84,7 +84,7 @@ export class LoadStartingWithOperation {
         }
     }
 
-    public getDocuments<T extends object>(docType: DocumentType<T>): T[] {
+    public getDocuments<T extends object>(docType: DocumentType<T>, objectTypeOverrides?: ObjectTypeMap): T[] {
         const entityType = this._session.conventions.getJsTypeByDocumentType<T>(docType);
 
         if (this._session.noTracking) {
@@ -100,16 +100,16 @@ export class LoadStartingWithOperation {
             return this._results.Results
                 .map(doc => {
                     const newDocumentInfo = DocumentInfo.getNewDocumentInfo(doc);
-                    return this._session.trackEntity(entityType, newDocumentInfo);
+                    return this._session.trackEntity(entityType, newDocumentInfo, objectTypeOverrides);
                 });
         }
 
         return this._returnedIds.map(id => {
-            return this._getDocument(entityType, id);
+            return this._getDocument(entityType, id, objectTypeOverrides);
         });
     }
 
-    private _getDocument<T extends object>(entityType: ObjectTypeDescriptor<T>, id: string): T {
+    private _getDocument<T extends object>(entityType: ObjectTypeDescriptor<T>, id: string, objectTypeOverrides?: ObjectTypeMap): T {
         if (!id) {
             return null;
         }
@@ -120,7 +120,7 @@ export class LoadStartingWithOperation {
 
         const doc = this._session.documentsById.getValue(id);
         if (doc) {
-            return this._session.trackEntity<T>(entityType, doc);
+            return this._session.trackEntity<T>(entityType, doc, objectTypeOverrides);
         }
 
         return null;

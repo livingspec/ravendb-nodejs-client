@@ -6,6 +6,7 @@ import { QueryOperator } from "../Queries/QueryOperator";
 import { QueryStatistics } from "./QueryStatistics";
 import { QueryTimings } from "../Queries/Timings/QueryTimings";
 import { ValueCallback } from "../../Types/Callbacks";
+import {ObjectTypeMap} from "../../Types";
 
 export class RawDocumentQuery<T extends object>
     extends AbstractDocumentQuery<T, RawDocumentQuery<T>> implements IRawDocumentQuery<T> {
@@ -45,6 +46,15 @@ export class RawDocumentQuery<T extends object>
     public noCaching(): IRawDocumentQuery<T> {
         this._noCaching();
         return this;
+    }
+
+    public withObjectTypeOverrides(objectTypeOverrides: ObjectTypeMap): IRawDocumentQuery<T> {
+        this._withObjectTypeOverrides(objectTypeOverrides);
+        return this;
+    }
+
+    public getObjectTypeOverrides(): ObjectTypeMap {
+        return this._objectTypeOverrides;
     }
 
     public usingDefaultOperator(queryOperator: QueryOperator): IRawDocumentQuery<T> {

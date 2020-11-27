@@ -5,6 +5,7 @@ import { DocumentConventions } from "../Conventions/DocumentConventions";
 import { QueryEventsEmitter } from "../Session/QueryEvents";
 import { ValueCallback } from "../../Types/Callbacks";
 import { QueryTimings } from "../Queries/Timings/QueryTimings";
+import {ObjectTypeMap} from "../../Types";
 
 export interface IQueryBase<T, TSelf extends IQueryBase<T, TSelf>> extends QueryEventsEmitter {
 
@@ -23,6 +24,12 @@ export interface IQueryBase<T, TSelf extends IQueryBase<T, TSelf>> extends Query
      * Usage of TSelf option will prevent holding query results in memory.
      */
     noTracking(): TSelf;
+
+    /**
+     * Overrides the session conventions object type map with the provided set, for the current query.
+     * @param typeOverrides A map of type names to object type descriptors
+     */
+    withObjectTypeOverrides(objectTypeOverrides: ObjectTypeMap): TSelf;
 
     /**
      *  Enables calculation of timings for various parts of a query (Lucene search, loading documents, transforming

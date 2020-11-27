@@ -14,6 +14,7 @@ import { DocumentQueryOptions } from "./QueryOptions";
 import { WithEdgesToken } from "./Tokens/WithEdgesToken";
 import { throwError } from "../../Exceptions/index";
 import { WithToken } from "./Tokens/WithToken";
+import { ObjectTypeMap } from "../../Types";
 
 export class GraphDocumentQuery<T extends object> extends AbstractDocumentQuery<T, GraphDocumentQuery<T>> implements IGraphDocumentQuery<T> {
     public constructor(session: InMemoryDocumentSessionOperations, graphQuery: string, clazz: DocumentType<T>) {
@@ -61,6 +62,11 @@ export class GraphDocumentQuery<T extends object> extends AbstractDocumentQuery<
 
     public noTracking(): IGraphDocumentQuery<T> {
         this._noTracking();
+        return this;
+    }
+
+    public withObjectTypeOverrides(objectTypeOverrides: ObjectTypeMap): IGraphDocumentQuery<T> {
+        this._withObjectTypeOverrides(objectTypeOverrides);
         return this;
     }
 

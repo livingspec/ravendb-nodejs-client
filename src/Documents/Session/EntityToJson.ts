@@ -8,7 +8,7 @@ import { TypeInfo } from "../../Mapping/ObjectMapper";
 import { throwError } from "../../Exceptions";
 import { SetupDocumentBase } from "../SetupDocumentBase";
 import { MetadataObject } from "./MetadataObject";
-import { ObjectTypeDescriptor } from "../../Types";
+import { ObjectTypeDescriptor, ObjectTypeMap } from "../../Types";
 import { Reference } from "../../Utility/Reference";
 
 export class EntityToJson {
@@ -154,8 +154,8 @@ export class EntityToJson {
      * Converts a json object to an entity.
      */
     public convertToEntity(targetEntityType: DocumentType, id: string, document: object): object;
-    public convertToEntity(targetEntityType: DocumentType, id: string, document: object, trackEntity: boolean): object;
-    public convertToEntity(targetEntityType: DocumentType, id: string, document: object, trackEntity: boolean = true): object {
+    public convertToEntity(targetEntityType: DocumentType, id: string, document: object, trackEntity: boolean, objectTypeOverrides: ObjectTypeMap): object;
+    public convertToEntity(targetEntityType: DocumentType, id: string, document: object, trackEntity: boolean = true, objectTypeOverrides: ObjectTypeMap = undefined): object {
         const conventions = this._session.conventions;
 
         const entityType: ObjectTypeDescriptor = conventions.getJsTypeByDocumentType(targetEntityType);
@@ -185,7 +185,7 @@ export class EntityToJson {
                 if (passedEntityTypeIsAssignableFromConventionsDocType) {
                     const mapper = conventions.objectMapper;
                     entity = mapper.fromObjectLiteral(
-                        document, entityTypeInfoFromMetadata, trackEntity);
+                        document, entityTypeInfoFromMetadata, trackEntity, objectTypeOverrides);
                 }
             }
 
@@ -198,7 +198,7 @@ export class EntityToJson {
                 }
 
                 entity = mapper.fromObjectLiteral(
-                    document, passedTypeInfo, trackEntity);
+                    document, passedTypeInfo, trackEntity, objectTypeOverrides);
             }
 
             const isProjection = !!document[CONSTANTS.Documents.Metadata.PROJECTION];
